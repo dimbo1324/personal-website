@@ -8,7 +8,10 @@ const config = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testMatch: ["<rootDir>/src/**/*.{test,spec}.{ts,tsx}"],
-  moduleNameMapper: { "^@/(.*)$": "<rootDir>/src/$1" },
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^next-intl$": "<rootDir>/src/test/mocks/next-intl.tsx",
+  },
   clearMocks: true,
   restoreMocks: true,
   coverageProvider: "v8",
@@ -18,6 +21,7 @@ const config = {
     "!src/**/*.{test,spec}.{ts,tsx}",
     "!src/app/**/layout.tsx",
     "!src/env.ts",
+    "!src/test/**",
   ],
 };
 

@@ -5,32 +5,43 @@
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, monospace;
 
-  --color-background: oklch(1 0 0);
-  --color-foreground: oklch(0.145 0 0);
+  /* Palette: #06151E navy, #5D6466 slate, #898A8C stone, #CDCBC6 sand, #F1E9E1 cream */
+  --color-navy: #06151e;
+  --color-slate: #5d6466;
+  --color-stone: #898a8c;
+  --color-sand: #cdcbc6;
+  --color-cream: #f1e9e1;
 
-  --color-muted: oklch(0.97 0 0);
-  --color-muted-foreground: oklch(0.556 0 0);
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-navy);
 
-  --color-primary: oklch(0.205 0 0);
-  --color-primary-foreground: oklch(0.985 0 0);
+  --color-surface: #ffffff;
+  --color-muted: var(--color-sand);
+  --color-muted-foreground: var(--color-slate);
 
-  --color-border: oklch(0.922 0 0);
-  --color-ring: oklch(0.708 0 0);
+  --color-primary: var(--color-navy);
+  --color-primary-foreground: var(--color-cream);
+
+  --color-border: color-mix(in oklab, var(--color-stone) 35%, transparent);
+  --color-ring: var(--color-slate);
+
+  --ease-swift: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 @layer base {
   :root.dark {
-    --color-background: oklch(0.145 0 0);
-    --color-foreground: oklch(0.985 0 0);
+    --color-background: var(--color-navy);
+    --color-foreground: var(--color-cream);
 
-    --color-muted: oklch(0.269 0 0);
-    --color-muted-foreground: oklch(0.708 0 0);
+    --color-surface: color-mix(in oklab, var(--color-navy) 88%, white);
+    --color-muted: color-mix(in oklab, var(--color-navy) 80%, var(--color-slate));
+    --color-muted-foreground: var(--color-stone);
 
-    --color-primary: oklch(0.985 0 0);
-    --color-primary-foreground: oklch(0.205 0 0);
+    --color-primary: var(--color-cream);
+    --color-primary-foreground: var(--color-navy);
 
-    --color-border: oklch(1 0 0 / 12%);
-    --color-ring: oklch(0.556 0 0);
+    --color-border: color-mix(in oklab, var(--color-slate) 45%, transparent);
+    --color-ring: var(--color-stone);
   }
 
   * {
@@ -38,8 +49,19 @@
     outline-color: var(--color-ring);
   }
 
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    transition:
+      background-color 0.3s var(--ease-swift),
+      color 0.3s var(--ease-swift);
   }
 }
