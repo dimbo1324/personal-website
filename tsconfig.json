@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "//": "Root config: only covers repo-level tooling files. Each app/package owns its own tsconfig.",
+  "extends": "@repo/tsconfig/base.json",
+  "compilerOptions": { "types": ["node"], "allowJs": true, "checkJs": false },
+  "include": ["*.mjs", "*.ts", "scripts/**/*"],
+  "exclude": ["node_modules", "apps", "packages"]
+}

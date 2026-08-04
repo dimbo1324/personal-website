@@ -1,0 +1,31 @@
+{
+  "name": "@repo/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./define": "./src/define.js",
+    "./base": "./src/base.js",
+    "./react": "./src/react.js",
+    "./next": "./src/next.js",
+    "./node": "./src/node.js",
+    "./test": "./src/test.js"
+  },
+  "dependencies": {
+    "@eslint/js": "catalog:",
+    "@next/eslint-plugin-next": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "eslint-plugin-perfectionist": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "globals": "catalog:",
+    "typescript-eslint": "catalog:"
+  },
+  "devDependencies": {
+    "eslint": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "eslint": "catalog:"
+  }
+}

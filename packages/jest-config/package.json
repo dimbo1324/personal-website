@@ -1,0 +1,19 @@
+{
+  "name": "@repo/jest-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Shared Jest presets. SWC-based, no Babel and no Vite.",
+  "exports": {
+    "./node": "./src/node.js",
+    "./react": "./src/react.js"
+  },
+  "dependencies": {
+    "@swc/core": "catalog:",
+    "@swc/jest": "catalog:"
+  },
+  "devDependencies": {
+    "jest": "catalog:"
+  }
+}

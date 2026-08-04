@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@repo/tsconfig/react-library.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@repo/ui/*": ["./src/*"] }
+  },
+  "include": ["src/**/*", "*.mjs", "*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
