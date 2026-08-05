@@ -13,16 +13,13 @@ function renderWithIntl() {
 }
 
 describe("HomePage", () => {
-  it("renders the heading", () => {
+  it("renders the hero heading", () => {
     renderWithIntl();
-    expect(screen.getByRole("heading", { name: messages.home.heading })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Инженерные решения/ })).toBeInTheDocument();
   });
 
-  it("renders a contact link", () => {
+  it("renders a contact form", () => {
     renderWithIntl();
-    expect(screen.getByRole("link", { name: messages.home.cta })).toHaveAttribute(
-      "href",
-      "mailto:dimaprihodko180@gmail.com",
-    );
+    expect(screen.getByRole("button", { name: "Отправить" })).toBeInTheDocument();
   });
 });

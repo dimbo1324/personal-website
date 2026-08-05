@@ -1,22 +1,15 @@
 "use client";
 
-import { cn } from "@repo/ui/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-
-interface NavLink {
-  label: string;
-}
 
 export function MobileNav({
   open,
   links,
-  activeIndex,
   onSelect,
 }: {
   open: boolean;
-  links: NavLink[];
-  activeIndex: number;
-  onSelect: (index: number) => void;
+  links: string[];
+  onSelect: () => void;
 }) {
   return (
     <AnimatePresence>
@@ -26,25 +19,20 @@ export function MobileNav({
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
-          className="overflow-hidden border-b border-border bg-background/95 backdrop-blur-md md:hidden"
+          className="mx-auto max-w-4xl overflow-hidden md:hidden"
         >
-          <nav className="flex flex-col gap-1 px-4 py-3">
-            {links.map((link, index) => (
+          <nav className="mt-2 flex flex-col gap-1 rounded-2xl border border-border bg-ink/90 p-2 backdrop-blur-xl">
+            {links.map((label, index) => (
               <motion.button
-                key={link.label}
+                key={label}
                 type="button"
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.04 }}
-                onClick={() => onSelect(index)}
-                className={cn(
-                  "rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors active:scale-[0.98]",
-                  activeIndex === index
-                    ? "bg-muted text-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                )}
+                onClick={onSelect}
+                className="rounded-xl px-4 py-2.5 text-left text-sm font-medium text-ash transition-colors duration-300 hover:text-paper active:scale-[0.98]"
               >
-                {link.label}
+                {label}
               </motion.button>
             ))}
           </nav>

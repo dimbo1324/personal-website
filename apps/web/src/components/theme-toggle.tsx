@@ -3,37 +3,41 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
-
-import { useHasMounted } from "@/lib/use-has-mounted";
+import { useState } from "react";
 
 export function ThemeToggle() {
   const t = useTranslations("theme");
-  const { resolvedTheme, setTheme } = useTheme();
-  const mounted = useHasMounted();
-
-  const isDark = mounted && resolvedTheme === "dark";
+  const [isDark, setIsDark] = useState(true);
 
   return (
     <button
       type="button"
+      role="switch"
+      aria-checked={isDark}
       aria-label={t("toggle")}
       title={t("toggle")}
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative inline-flex size-9 items-center justify-center overflow-hidden rounded-full text-foreground transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-90"
+      onClick={() => setIsDark((prev) => !prev)}
+      className="relative inline-flex h-8 w-[52px] shrink-0 items-center rounded-full border border-border bg-surface/60 px-[3px] transition-colors duration-300 hover:border-brass/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass/60"
     >
-      <AnimatePresence initial={false} mode="wait">
-        <motion.span
-          key={isDark ? "moon" : "sun"}
-          initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
-          animate={{ opacity: 1, rotate: 0, scale: 1 }}
-          exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
-          transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
-          className="flex"
-        >
-          {isDark ? <MoonIcon className="size-[18px]" /> : <SunIcon className="size-[18px]" />}
-        </motion.span>
-      </AnimatePresence>
+      <motion.span
+        layout
+        transition={{ type: "spring", stiffness: 500, damping: 32 }}
+        className="relative flex size-[22px] items-center justify-center rounded-full bg-brass text-ink shadow-sm"
+        style={{ marginLeft: isDark ? 0 : "auto" }}
+      >
+        <AnimatePresence initial={false} mode="popLayout">
+          <motion.span
+            key={isDark ? "moon" : "sun"}
+            initial={{ opacity: 0, rotate: -110, scale: 0.3 }}
+            animate={{ opacity: 1, rotate: 0, scale: 1 }}
+            exit={{ opacity: 0, rotate: 110, scale: 0.3 }}
+            transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+            className="flex"
+          >
+            {isDark ? <MoonIcon className="size-3.5" /> : <SunIcon className="size-3.5" />}
+          </motion.span>
+        </AnimatePresence>
+      </motion.span>
     </button>
   );
 }

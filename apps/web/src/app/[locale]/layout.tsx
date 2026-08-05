@@ -5,8 +5,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
-import { ThemeProvider } from "@/components/theme-provider";
 import { routing } from "@/i18n/routing";
 
 import "./globals.css";
@@ -39,13 +39,12 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} className="dark">
       <body className="min-h-screen antialiased">
         <NextIntlClientProvider>
-          <ThemeProvider>
-            <Navbar />
-            {children}
-          </ThemeProvider>
+          <Navbar />
+          {children}
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
