@@ -1,69 +1,134 @@
-import {
-  ClipboardCheckIcon,
-  CompassIcon,
-  CpuIcon,
-  HardHatIcon,
-  RulerIcon,
-  SearchCheckIcon,
-} from "lucide-react";
+"use client";
 
-const services = [
-  {
-    icon: CompassIcon,
-    title: "Проектирование",
-    description: "Заглушка описания услуги проектирования и разработки технической документации.",
-  },
-  {
-    icon: RulerIcon,
-    title: "Расчёты и моделирование",
-    description: "Заглушка описания: инженерные расчёты, 3D-моделирование, проверка нагрузок.",
-  },
-  {
-    icon: SearchCheckIcon,
-    title: "Технический аудит",
-    description: "Заглушка описания: оценка состояния объекта и выявление рисков.",
-  },
-  {
-    icon: HardHatIcon,
-    title: "Шефмонтаж",
-    description: "Заглушка описания: авторский надзор и сопровождение на площадке.",
-  },
-  {
-    icon: ClipboardCheckIcon,
-    title: "Экспертиза",
-    description: "Заглушка описания: независимая экспертиза проектных решений.",
-  },
-  {
-    icon: CpuIcon,
-    title: "Консультации",
-    description: "Заглушка описания: консультирование по инженерным вопросам проекта.",
-  },
+import { cn } from "@repo/ui/lib/utils";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRightIcon } from "lucide-react";
+
+import { SectionHeading } from "@/components/chrome/section-heading";
+import { Panel } from "@/components/motion/panel";
+import { type Domain, type Service, services } from "@/content/site";
+import { ease, viewportOnce } from "@/lib/motion";
+
+/**
+ * Six-column bento. Each group's four cards read 3+3 / 4+2 (or 4+2 / 3+3), so
+ * the rhythm shifts between rows without any card growing a dead zone.
+ * Tailwind needs the full class names, hence the literal map.
+ */
+const SPAN: Record<Service["span"], string> = {
+  2: "lg:col-span-2",
+  3: "lg:col-span-3",
+  4: "lg:col-span-4",
+};
+
+const GROUPS: Array<{ domain: Domain; label: string; note: string }> = [
+  { domain: "engineering", label: "Инженерия", note: "объект, документация, железо" },
+  { domain: "it", label: "IT и данные", note: "софт, телеметрия, инфраструктура" },
 ];
 
 export function Services() {
   return (
-    <section id="services" className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-      <div className="mx-auto max-w-xl text-center">
-        <span className="text-xs font-medium tracking-widest text-brass uppercase">Услуги</span>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-paper sm:text-4xl">
-          Чем я могу помочь
-        </h2>
-      </div>
+    <section id="services" className="relative py-24 sm:py-32 lg:py-36">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <SectionHeading
+          index="02"
+          eyebrow="Услуги"
+          title="Две половины одной задачи"
+          lede="Инженерная часть и цифровая часть закрываются одним подрядом — без потерь на стыке между исполнителями."
+        />
 
-      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map(({ icon: Icon, title, description }) => (
-          <div
-            key={title}
-            className="group rounded-2xl border border-border bg-surface p-6 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-brass/40 hover:shadow-[0_20px_40px_-24px_rgba(0,0,0,0.6)]"
-          >
-            <div className="inline-flex size-11 items-center justify-center rounded-xl border border-border bg-ink/60 text-brass transition-colors duration-300 group-hover:text-paper">
-              <Icon className="size-5" strokeWidth={1.5} />
+        <div className="mt-16 space-y-16">
+          {GROUPS.map((group) => (
+            <div key={group.domain} data-domain={group.domain}>
+              <div className="flex items-center gap-4">
+                <span
+                  className={cn(
+                    "size-2 rotate-45",
+                    group.domain === "it" ? "bg-signal" : "bg-ember",
+                  )}
+                />
+                <h3 className="font-display text-[15px] font-semibold tracking-tight text-chalk">
+                  {group.label}
+                </h3>
+                <span className="font-mono text-[10px] tracking-[0.18em] text-mist/70 lowercase">
+                  {group.note}
+                </span>
+                <span className="h-px flex-1 bg-linear-to-r from-iron to-transparent" />
+              </div>
+
+              <div className="mt-6 grid gap-3.5 sm:grid-cols-2 lg:grid-cols-6">
+                {services
+                  .filter((service) => service.domain === group.domain)
+                  .map((service, index) => (
+                    <ServiceCard key={service.id} service={service} index={index} />
+                  ))}
+              </div>
             </div>
-            <h3 className="mt-5 text-base font-semibold text-paper">{title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-ash">{description}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
+  );
+}
+
+function ServiceCard({ service, index }: { service: Service; index: number }) {
+  const reduced = useReducedMotion();
+  const Icon = service.icon;
+  const wide = service.span === 4;
+
+  return (
+    <motion.div
+      initial={reduced ? undefined : { opacity: 0, y: 26 }}
+      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+      viewport={viewportOnce}
+      transition={{ duration: 0.7, delay: index * 0.07, ease: ease.expo }}
+      className={SPAN[service.span]}
+    >
+      <Panel className={cn("flex h-full flex-col p-6", wide && "sm:p-8")}>
+        <div className="flex items-start justify-between gap-4">
+          <span className="relative flex size-11 shrink-0 items-center justify-center rounded-xl border border-iron/80 bg-carbon/70 text-accent">
+            {/* icon lifts and the ring rotates behind it on hover */}
+            <span className="absolute inset-0 rounded-xl border border-accent/0 transition-[transform,border-color] duration-700 ease-(--ease-expo) group-hover/panel:rotate-45 group-hover/panel:border-accent/30" />
+            <Icon
+              className="relative size-5 transition-transform duration-500 ease-(--ease-back) group-hover/panel:-translate-y-0.5 group-hover/panel:scale-110"
+              strokeWidth={1.5}
+            />
+          </span>
+
+          <ArrowUpRightIcon
+            className="size-4 shrink-0 translate-y-1 text-mist opacity-0 transition-all duration-500 ease-(--ease-expo) group-hover/panel:translate-y-0 group-hover/panel:text-accent group-hover/panel:opacity-100"
+            strokeWidth={1.8}
+          />
+        </div>
+
+        <h4
+          className={cn(
+            "mt-6 font-display font-semibold tracking-tight text-chalk",
+            wide ? "text-[19px] sm:text-[22px]" : "text-[16px]",
+          )}
+        >
+          {service.title}
+        </h4>
+
+        <p
+          className={cn(
+            "mt-2.5 flex-1 leading-relaxed text-mist",
+            wide ? "text-[14.5px]" : "text-[13.5px]",
+          )}
+        >
+          {service.description}
+        </p>
+
+        <ul className="mt-6 flex flex-wrap gap-1.5">
+          {service.bullets.map((bullet) => (
+            <li
+              key={bullet}
+              className="rounded-lg border border-iron/70 bg-steel/40 px-2.5 py-1 font-mono text-[10px] tracking-wide text-silver/80 transition-colors duration-500 group-hover/panel:border-accent/25 group-hover/panel:text-silver"
+            >
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      </Panel>
+    </motion.div>
   );
 }
