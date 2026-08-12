@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sess
 from sqlalchemy.future import select
 from sqlalchemy import delete, update
 
-from .models import Base, Reminder, Quote, UserSettings, ReminderFrequency
+from .models import Base, Reminder, Quote, UserSettings, ReminderFrequency, SentMessage
 
 T = TypeVar('T')
 
@@ -49,9 +49,10 @@ class Database:
         title: str,
         description: Optional[str] = None,
         frequency: ReminderFrequency = ReminderFrequency.DAILY,
-        times_per_day: int = 1,
         scheduled_times: Optional[List[str]] = None,
         attach_quote: bool = True,
+        days_of_week: Optional[List[int]] = None,
+        day_of_month: Optional[int] = None,
     ) -> Reminder:
         """Создать новое напоминание."""
         async with self.async_session_maker() as session:
@@ -60,9 +61,10 @@ class Database:
                 title=title,
                 description=description,
                 frequency=frequency,
-                times_per_day=times_per_day,
                 scheduled_times=scheduled_times,
                 attach_quote=attach_quote,
+                days_of_week=days_of_week,
+                day_of_month=day_of_month,
                 next_scheduled_at=datetime.utcnow(),  # Будет пересчитано
             )
             session.add(reminder)
@@ -170,6 +172,16 @@ class Database:
             result = await session.execute(select(Quote))
             return list(result.scalars().all())
     
+    async def delete_quote(self, quote_id: int) -> bool:
+        """Мягко удалить цитату (установить is_active=False)."""
+        async with self.async_session_maker() as session:
+            quote = await session.get(Quote, quote_id)
+            if not quote:
+                return False
+            quote.is_active = False
+            await session.commit()
+            return True
+    
     # User settings operations
     async def get_user_settings(self, user_id: str) -> Optional[UserSettings]:
         """Получить настройки пользователя."""
@@ -222,6 +234,80 @@ class Database:
             await session.commit()
             await session.refresh(settings)
             return settings
+    
+    # SentMessage operations (для автоочистки)
+    async def create_sent_message(
+        self,
+        chat_id: str,
+        message_id: int,
+        message_type: str,
+    ) -> SentMessage:
+        """Сохранить информацию об отправленном сообщении."""
+        async with self.async_session_maker() as session:
+            sent_msg = SentMessage(
+                chat_id=chat_id,
+                message_id=message_id,
+                message_type=message_type,
+                sent_at=datetime.utcnow(),
+            )
+            session.add(sent_msg)
+            await session.commit()
+            await session.refresh(sent_msg)
+            return sent_msg
+    
+    async def get_messages_for_cleanup(
+        self,
+        chat_id: str,
+        cleanup_period_days: int,
+    ) -> List[SentMessage]:
+        """
+        Получить сообщения для очистки.
+        
+        Возвращает сообщения старше cleanup_period_days дней,
+        но не старше 48 часов (ограничение Telegram API).
+        """
+        async with self.async_session_maker() as session:
+            now = datetime.utcnow()
+            cutoff_date = now - timedelta(days=cleanup_period_days)
+            max_age_hours = 48
+            min_date = now - timedelta(hours=max_age_hours)
+            
+            query = select(SentMessage).where(
+                SentMessage.chat_id == chat_id,
+                SentMessage.sent_at <= cutoff_date,
+                SentMessage.sent_at >= min_date,
+            )
+            result = await session.execute(query)
+            return list(result.scalars().all())
+    
+    async def delete_sent_message(self, message_id: int) -> bool:
+        """Удалить запись об отправленном сообщении из БД."""
+        async with self.async_session_maker() as session:
+            result = await session.execute(
+                delete(SentMessage).where(SentMessage.id == message_id)
+            )
+            await session.commit()
+            return result.rowcount > 0
+    
+    async def cleanup_old_sent_messages_locally(
+        self,
+        chat_id: str,
+        hours: int = 48,
+    ) -> int:
+        """
+        Удалить локальные записи о сообщениях старше N часов.
+        Используется для сообщений, которые уже нельзя удалить через Telegram API.
+        """
+        async with self.async_session_maker() as session:
+            cutoff = datetime.utcnow() - timedelta(hours=hours)
+            result = await session.execute(
+                delete(SentMessage).where(
+                    SentMessage.chat_id == chat_id,
+                    SentMessage.sent_at < cutoff,
+                )
+            )
+            await session.commit()
+            return result.rowcount
     
     # Cleanup operations
     async def cleanup_old_messages(self, user_id: str, days: int) -> int:
