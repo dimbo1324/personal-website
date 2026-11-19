@@ -1,2 +1,0 @@
-# Turbo caches aggressively, so an unchanged tree finishes in a second or two.
-pnpm turbo run typecheck test
