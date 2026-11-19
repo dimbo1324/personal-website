@@ -1,0 +1,77 @@
+/* ==========================================================================
+   Tile — the ONLY place the "laser" lives.
+   A tile is a whole clickable card (gallery item, telemetry panel, media
+   frame, widget banner). On hover a thin light comet orbits the border.
+   Nothing else changes: no glow, no lift, no scale.
+
+   Nesting rule (fixes the "double laser"):
+   when the pointer is over an interactive descendant (or a nested tile),
+   the outer tile's comet stops and collapses into a calm static ring —
+   the inner element keeps the attention.
+   ========================================================================== */
+@property --tile-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.tile {
+  position: relative;
+  isolation: isolate;
+  cursor: pointer;
+}
+
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  padding: var(--laser-width);
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--tile-angle),
+    transparent 0deg 200deg,
+    color-mix(in srgb, var(--laser-tail) 0%, transparent) 220deg,
+    var(--laser-tail) 300deg,
+    var(--laser-mid) 340deg,
+    var(--laser-head) 355deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity var(--dur-base) ease;
+}
+
+@media (hover: hover) {
+  .tile:hover::after {
+    opacity: 1;
+    animation: tile-orbit 3.4s linear infinite;
+  }
+
+  /* the outer tile yields to an inner interactive element */
+  .tile:hover:has(:is(a, button, input, select, textarea, [role="button"], [role="tab"], .tile):hover)::after {
+    animation: none;
+    background: linear-gradient(var(--tile-ring), var(--tile-ring));
+  }
+}
+
+.tile:focus-visible {
+  outline: none;
+}
+.tile:focus-visible::after {
+  opacity: 1;
+  animation: tile-orbit 3.4s linear infinite;
+}
+
+@keyframes tile-orbit {
+  to {
+    --tile-angle: 360deg;
+  }
+}

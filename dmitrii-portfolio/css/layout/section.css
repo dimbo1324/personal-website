@@ -1,0 +1,17 @@
+.section {
+  position: relative;
+  padding-block: var(--space-section);
+}
+
+.section--surface {
+  background: var(--bg-surface);
+}
+
+/* a hairline that fades at the edges instead of a hard full-width border */
+.section + .section::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-subtle) 20%, var(--line-subtle) 80%, transparent);
+}

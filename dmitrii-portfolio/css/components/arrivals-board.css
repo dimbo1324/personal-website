@@ -1,0 +1,192 @@
+/* ==========================================================================
+   Arrivals board — the footer sign.
+   A split-flap "Solari" board spells MONTEVIDEO over the flag; under it a
+   glass flight row: passenger, route, status, live local time, coordinates.
+   Tiles stay dark in both themes, like a real airport board.
+   ========================================================================== */
+.arrivals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 60rem;
+}
+
+.arrivals__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-6);
+  max-width: 52rem;
+}
+.arrivals__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fbbf24;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+.arrivals__label--muted {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+[data-theme="light"] .arrivals__label {
+  color: #b45309;
+  text-shadow: none;
+}
+[data-theme="light"] .arrivals__label--muted {
+  color: var(--text-secondary);
+}
+
+/* little "plane" glyph made of CSS (no icon dependency) */
+.arrivals__plane {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.arrivals__plane::before,
+.arrivals__plane::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  background: currentColor;
+  border-radius: 2px;
+  transform: translateX(-50%) rotate(135deg);
+}
+.arrivals__plane::before {
+  top: 1px;
+  width: 2.5px;
+  height: 12px;
+}
+.arrivals__plane::after {
+  top: 5px;
+  width: 12px;
+  height: 2.5px;
+}
+
+/* ---------- the split-flap board ---------- */
+.flap-board {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(3px, 0.5vw, 7px);
+  font-family: var(--font-sans);
+  font-size: clamp(1.7rem, 0.9rem + 4.2vw, 4.75rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.flap-tile {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 0.92em;
+  height: 1.28em;
+  border-radius: 0.09em;
+  background: linear-gradient(180deg, #232c31 0%, #1a2125 49.5%, #12181b 50.5%, #0d1214 100%);
+  box-shadow:
+    0 0.06em 0 rgba(0, 0, 0, 0.55),
+    0 0.2em 0.5em rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  perspective: 2.5em;
+  overflow: hidden;
+}
+/* the hinge across the middle of each flap */
+.flap-tile::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: translateY(-50%);
+}
+
+.flap-tile__char {
+  display: inline-block;
+  color: #f7f1e3;
+  text-shadow: 0 0.02em 0 rgba(0, 0, 0, 0.6);
+  transform-origin: 50% 50%;
+  transition: color var(--dur-base) ease;
+}
+.flap-tile__char.is-scrambling {
+  color: #fbbf24;
+}
+
+/* ---------- flight row ---------- */
+.arrivals__row {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  justify-content: start;
+  gap: var(--space-2) clamp(1rem, 2.5vw, 2.25rem);
+  width: fit-content;
+  max-width: 100%;
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(8, 14, 17, 0.62);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+[data-theme="light"] .arrivals__row {
+  border-color: var(--line-subtle);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.arrivals__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.arrivals__cell dt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.arrivals__cell dd {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.arrivals__cell dd.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+.arrivals__cell--status dd {
+  color: var(--accent);
+}
+.arrivals__arrow {
+  color: #fbbf24;
+}
+[data-theme="light"] .arrivals__arrow {
+  color: #b45309;
+}
+
+@media (max-width: 960px) {
+  .arrivals__row {
+    grid-template-columns: repeat(2, auto);
+  }
+}
+@media (max-width: 480px) {
+  .arrivals__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .arrivals__cell--status {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+}

@@ -1,0 +1,13 @@
+/* Scroll reveal. Hidden state applies only once JS has booted (.js-ready),
+   so content is never lost if scripts fail. */
+.js-ready .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+}
+.js-ready .reveal.is-inview {
+  opacity: 1;
+  transform: none;
+}

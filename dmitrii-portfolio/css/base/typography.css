@@ -1,0 +1,35 @@
+h1,
+h2,
+h3 {
+  color: var(--text-primary);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.mono,
+code,
+time {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* shared "mono label" look used across components */
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}

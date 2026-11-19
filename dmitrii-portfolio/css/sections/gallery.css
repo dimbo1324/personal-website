@@ -1,0 +1,4 @@
+/* Gallery layout is entirely the bento component; the section only spaces it. */
+#gallery .section-head {
+  margin-bottom: var(--space-8);
+}

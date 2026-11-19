@@ -1,0 +1,24 @@
+{
+  "videos": [
+    {
+      "file": "01-oil-terminal-digital-twin.mp4",
+      "title": "Oil Terminal · Digital Twin",
+      "description": "Aerial pass over a tank farm — process lines light up as live telemetry streams into the twin."
+    },
+    {
+      "file": "02-iiot-architecture-keynote.mp4",
+      "title": "IIoT Architecture · Keynote",
+      "description": "Talking multi-vendor IIoT architecture — from PLC/SCADA layers to MQTT/OPC UA pipelines and digital twins."
+    },
+    {
+      "file": "03-live-dashboards-talk.mp4",
+      "title": "Live Dashboards · Talk",
+      "description": "Walking through real-time plant dashboards: KPIs, trends and the data paths behind them."
+    },
+    {
+      "file": "04-smart-factory-line.mp4",
+      "title": "Smart Factory Line",
+      "description": "Robotic assembly cells, PLC logic on screen and data flowing along the line."
+    }
+  ]
+}

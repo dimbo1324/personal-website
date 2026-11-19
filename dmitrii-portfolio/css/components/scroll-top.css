@@ -1,0 +1,56 @@
+.scroll-top {
+  position: fixed;
+  right: clamp(1rem, 2.4vw, 2rem);
+  bottom: clamp(1rem, 2.4vw, 2rem);
+  z-index: var(--z-floating);
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-card);
+  color: var(--accent);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    visibility var(--dur-base),
+    transform var(--dur-base) var(--ease-out),
+    background-color var(--dur-fast) ease;
+}
+.scroll-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.scroll-top:hover {
+  background: var(--bg-hover);
+}
+
+.scroll-top__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+.scroll-top__track {
+  fill: none;
+  stroke: var(--line-subtle);
+  stroke-width: 1.8;
+}
+.scroll-top__progress {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+/* hidden while a full-screen layer (menu, lightbox) holds the scroll lock */
+.is-scroll-locked .scroll-top {
+  opacity: 0;
+  visibility: hidden;
+}

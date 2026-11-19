@@ -1,0 +1,67 @@
+/* Theme-independent design tokens */
+:root {
+  /* typography */
+  --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --fs-micro: 0.625rem; /* 10px — mono labels */
+  --fs-xs: 0.6875rem; /* 11px */
+  --fs-sm: 0.8125rem; /* 13px */
+  --fs-base: 1rem;
+  --fs-lead: clamp(1rem, 0.94rem + 0.3vw, 1.125rem);
+  --fs-h3: 1.125rem;
+  --fs-h2: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+  --fs-display: clamp(3rem, 1.8rem + 5.4vw, 6.25rem);
+
+  --tracking-label: 0.14em;
+
+  /* spacing (4px scale) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-section: clamp(4.5rem, 3rem + 6vw, 8rem);
+
+  /* layout */
+  --container-max: 1280px;
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 3rem);
+  --header-h: 72px;
+
+  /* shape */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-slow: 520ms;
+
+  /* layering */
+  --z-base: 1;
+  --z-header: 100;
+  --z-drawer: 95;
+  --z-floating: 120;
+  --z-dock: 210;
+  --z-window: 220;
+  --z-toast: 260;
+  --z-lightbox: 300;
+  --z-guard: 400;
+}
+
+@media (max-width: 820px) {
+  :root {
+    --header-h: 64px;
+  }
+}

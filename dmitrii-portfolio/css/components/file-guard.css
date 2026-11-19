@@ -1,0 +1,18 @@
+.file-guard {
+  position: fixed;
+  left: 50%;
+  top: calc(var(--header-h) + var(--space-3));
+  z-index: var(--z-guard);
+  width: min(720px, calc(100vw - 2rem));
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--amber);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-window);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  transform: translateX(-50%);
+}
+.file-guard strong {
+  color: var(--amber);
+}

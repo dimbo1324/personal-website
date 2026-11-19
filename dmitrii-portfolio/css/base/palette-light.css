@@ -1,0 +1,53 @@
+/* Daylight theme. Accents are darkened for WCAG AA on light surfaces. */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-void: #f3f7f7;
+  --bg-surface: #e9f0f0;
+  --bg-elevated: #ffffff;
+  --bg-hover: #f2f7f7;
+  --bg-glass: rgba(243, 247, 247, 0.82);
+
+  --line-subtle: rgba(11, 23, 27, 0.09);
+  --line-strong: rgba(11, 23, 27, 0.18);
+
+  --text-muted: #50666e;
+  --text-secondary: #26383f;
+  --text-primary: #0b1518;
+
+  --accent: #0b7a66;
+  --accent-bright: #0f8a74;
+  --accent-deep: #0b6b5a;
+  --on-accent: #ffffff;
+  --amber: #b45309;
+  --steel: #546e7a;
+  --rose: #c81e3a;
+
+  --tint-accent: rgba(11, 122, 102, 0.1);
+  --tint-amber: rgba(180, 83, 9, 0.1);
+  --tint-steel: rgba(84, 110, 122, 0.1);
+  --tint-rose: rgba(200, 30, 58, 0.1);
+
+  --chart-grid: rgba(11, 23, 27, 0.08);
+  --chart-fill: rgba(11, 122, 102, 0.1);
+  --chart-fill-strong: rgba(11, 122, 102, 0.16);
+
+  --shadow-sm: 0 1px 2px rgba(11, 23, 27, 0.06);
+  --shadow-card: 0 18px 40px -22px rgba(11, 23, 27, 0.22);
+  --shadow-window: 0 40px 100px rgba(11, 23, 27, 0.22);
+
+  --hero-photo-opacity: 0.42;
+  --hero-scrim:
+    linear-gradient(96deg, rgba(243, 247, 247, 0.95) 0%, rgba(243, 247, 247, 0.7) 50%, rgba(243, 247, 247, 0.36) 100%),
+    linear-gradient(180deg, rgba(243, 247, 247, 0.74) 0%, rgba(243, 247, 247, 0.16) 38%, rgba(243, 247, 247, 0.97) 100%);
+  --dot-grid: rgba(11, 23, 27, 0.08);
+
+  /* on light surfaces teal disappears — the laser switches to an
+     electric blue → violet comet with a magenta spark, and gets thicker */
+  --tile-ring: rgba(124, 58, 237, 0.28);
+  --laser-tail: #2563eb;
+  --laser-mid: #7c3aed;
+  --laser-head: #db2777;
+  --laser-width: 2.25px;
+  --focus-ring: rgba(11, 122, 102, 0.6);
+}

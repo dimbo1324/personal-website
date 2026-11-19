@@ -1,0 +1,77 @@
+/* ==========================================================================
+   Entry stylesheet.
+   Every file is imported into an explicit cascade layer, so specificity
+   is governed by layer order — not by selector weight or import order.
+   ========================================================================== */
+@layer reset, tokens, base, layout, components, sections, utilities, motion;
+
+/* ---------- base ---------- */
+@import url("base/reset.css") layer(reset);
+@import url("base/fonts.css") layer(tokens);
+@import url("base/tokens.css") layer(tokens);
+@import url("base/palette-dark.css") layer(tokens);
+@import url("base/palette-light.css") layer(tokens);
+@import url("base/global.css") layer(base);
+@import url("base/typography.css") layer(base);
+
+/* ---------- layout ---------- */
+@import url("layout/container.css") layer(layout);
+@import url("layout/section.css") layer(layout);
+@import url("layout/section-head.css") layer(layout);
+
+/* ---------- components ---------- */
+@import url("components/icon.css") layer(components);
+@import url("components/button.css") layer(components);
+@import url("components/pill-button.css") layer(components);
+@import url("components/badge.css") layer(components);
+@import url("components/chip.css") layer(components);
+@import url("components/live-dot.css") layer(components);
+@import url("components/tile.css") layer(components);
+@import url("components/panel.css") layer(components);
+@import url("components/kpi.css") layer(components);
+@import url("components/brand-mark.css") layer(components);
+@import url("components/theme-toggle.css") layer(components);
+@import url("components/site-nav.css") layer(components);
+@import url("components/menu-toggle.css") layer(components);
+@import url("components/mobile-drawer.css") layer(components);
+@import url("components/role-ticker.css") layer(components);
+@import url("components/kinetic-title.css") layer(components);
+@import url("components/media-frame.css") layer(components);
+@import url("components/scene-switcher.css") layer(components);
+@import url("components/chart.css") layer(components);
+@import url("components/widget-banner.css") layer(components);
+@import url("components/bento.css") layer(components);
+@import url("components/timeline.css") layer(components);
+@import url("components/segmented.css") layer(components);
+@import url("components/channel.css") layer(components);
+@import url("components/contact-card.css") layer(components);
+@import url("components/form-field.css") layer(components);
+@import url("components/flag-backdrop.css") layer(components);
+@import url("components/arrivals-board.css") layer(components);
+@import url("components/scada-window.css") layer(components);
+@import url("components/schematic.css") layer(components);
+@import url("components/widget-dock.css") layer(components);
+@import url("components/lightbox.css") layer(components);
+@import url("components/theater.css") layer(components);
+@import url("components/scroll-progress.css") layer(components);
+@import url("components/scroll-top.css") layer(components);
+@import url("components/toast.css") layer(components);
+@import url("components/file-guard.css") layer(components);
+
+/* ---------- sections ---------- */
+@import url("sections/header.css") layer(sections);
+@import url("sections/hero.css") layer(sections);
+@import url("sections/telemetry.css") layer(sections);
+@import url("sections/gallery.css") layer(sections);
+@import url("sections/dossier.css") layer(sections);
+@import url("sections/contact.css") layer(sections);
+@import url("sections/request.css") layer(sections);
+@import url("sections/footer.css") layer(sections);
+
+/* ---------- utilities ---------- */
+@import url("utilities/visually-hidden.css") layer(utilities);
+@import url("utilities/text.css") layer(utilities);
+@import url("utilities/reveal.css") layer(utilities);
+
+/* ---------- accessibility: reduced motion (always last) ---------- */
+@import url("base/reduced-motion.css") layer(motion);

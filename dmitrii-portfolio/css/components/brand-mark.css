@@ -1,0 +1,197 @@
+/* ==========================================================================
+   Brand mark — a two-sided 3D card.
+   front : the classic "DP" monogram (white D, teal P)
+   back  : the helmet avatar
+   auto  : every few seconds the card turns over to the avatar and back
+   hover : front → split-flap flip of the letters
+           back  → the helmet "tips" in greeting
+   press : the card turns over, a ripple leaves the tile, the name flips
+           language; landing on the front scrambles the letters
+   (orchestrated by BrandMark.js + EmblemFlipper.js + SplitFlap.js)
+   ========================================================================== */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: var(--radius-sm);
+}
+
+.brand-mark {
+  position: relative;
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  perspective: 220px;
+}
+
+.brand-mark__card {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 900ms var(--ease-spring);
+}
+.brand.is-flipped .brand-mark__card {
+  transform: rotateY(180deg);
+}
+
+.brand-mark__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.brand-mark__face--front {
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elevated);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  perspective: 80px;
+  transition: border-color var(--dur-base) ease;
+}
+
+.brand-mark__face--back {
+  transform: rotateY(180deg);
+  border-radius: 50%;
+}
+
+.brand-mark__avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform-origin: 50% 85%;
+}
+
+.brand-mark__letter {
+  display: inline-block;
+  transform-origin: 50% 55%;
+  transition: color var(--dur-base) ease;
+}
+.brand-mark__letter--d {
+  color: var(--text-primary);
+}
+.brand-mark__letter--p {
+  color: var(--accent);
+}
+.brand-mark__letter.is-scrambling {
+  color: var(--amber);
+}
+
+.brand-mark__ripple {
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-xs);
+  border: 1.5px solid var(--amber);
+  opacity: 0;
+  pointer-events: none;
+}
+.brand.is-flipped .brand-mark__ripple {
+  border-radius: 50%;
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brand__name {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.brand__hint {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur-base) ease;
+}
+
+/* ---------- hover ---------- */
+@media (hover: hover) {
+  .brand:hover .brand-mark__face--front {
+    border-color: var(--accent);
+  }
+  .brand:not(.is-flipped):hover .brand-mark__letter {
+    animation: brand-flap 620ms var(--ease-in-out) both;
+  }
+  .brand:not(.is-flipped):hover .brand-mark__letter--p {
+    animation-delay: 140ms;
+  }
+  .brand.is-flipped:hover .brand-mark__avatar {
+    animation: helmet-tip 900ms var(--ease-out) both;
+  }
+  .brand:hover .brand__hint {
+    color: var(--accent);
+  }
+}
+
+/* ---------- press ---------- */
+.brand.is-rebooting .brand-mark__ripple {
+  animation: brand-ripple 800ms var(--ease-out) both;
+}
+
+@keyframes brand-flap {
+  0% {
+    transform: rotateX(0deg);
+  }
+  45% {
+    transform: rotateX(-190deg);
+  }
+  70% {
+    transform: rotateX(-350deg);
+  }
+  100% {
+    transform: rotateX(-360deg);
+  }
+}
+
+/* the avatar tips its helmet: a quick nod with a little bounce */
+@keyframes helmet-tip {
+  0% {
+    transform: rotate(0) scale(1);
+  }
+  25% {
+    transform: rotate(-12deg) scale(1.12);
+  }
+  50% {
+    transform: rotate(8deg) scale(1.08);
+  }
+  72% {
+    transform: rotate(-4deg) scale(1.03);
+  }
+  100% {
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes brand-ripple {
+  from {
+    opacity: 0.9;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+@media (max-width: 540px) {
+  .brand__text {
+    display: none;
+  }
+}
