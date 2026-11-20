@@ -26,14 +26,17 @@ export class RasterRenderer {
 
   #isDark;
   #ambientEnabled;
+  #ambientInterval;
+  #lastAmbient = 0;
   #removeTick = null;
   #job = null; // { from, to, start, onFrame, onComplete }
 
   /**
    * @param {HTMLCanvasElement} canvas
-   * @param {{ isDark: () => boolean, ambient: boolean }} options
+   * @param {{ isDark: () => boolean, ambient: boolean, ambientFps?: number }} options
    */
-  constructor(canvas, { isDark, ambient }) {
+  constructor(canvas, { isDark, ambient, ambientFps = 30 }) {
+    this.#ambientInterval = 1000 / ambientFps;
     this.#canvas = canvas;
     this.#context = canvas.getContext("2d");
     this.#isDark = isDark;
@@ -102,11 +105,15 @@ export class RasterRenderer {
     const { width, height } = this.#size;
     const context = this.#context;
     const isDark = this.#isDark();
-    context.clearRect(0, 0, width, height);
 
     if (this.#job) {
+      context.clearRect(0, 0, width, height);
       this.#drawJob(context, now, isDark);
     } else if (this.#ambientEnabled) {
+      // the idle field is decoration: drawn at a reduced frame rate (effects budget)
+      if (now - this.#lastAmbient < this.#ambientInterval) return;
+      this.#lastAmbient = now;
+      context.clearRect(0, 0, width, height);
       this.#ambient.draw(context, now, width, height, isDark);
     }
   }

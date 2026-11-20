@@ -17,17 +17,20 @@ export class RoleTicker extends Component {
 
   /**
    * @param {HTMLButtonElement} root
-   * @param {{ text: HTMLElement, phrases: readonly string[], viewport: import("../../core/ViewportObserver.js").ViewportObserver }} options
+   * @param {{ text: HTMLElement, phrases: readonly (string | Record<string, string>)[],
+   *           i18n: import("../../i18n/I18nService.js").I18nService,
+   *           viewport: import("../../core/ViewportObserver.js").ViewportObserver }} options
    */
-  constructor(root, { text, phrases, viewport }) {
+  constructor(root, { text, phrases, i18n, viewport }) {
     super(root);
+    this.i18n = i18n;
     this.#phrases = phrases;
     this.#scramble = new ScrambleText(text);
     this.viewport = viewport;
   }
 
   mount() {
-    this.#scramble.play(this.#phrases[0]);
+    this.own(this.i18n.subscribe(() => this.#play()));
     this.on(this.root, "click", () => this.#advance());
     this.own(
       this.viewport.watch(this.root, (entry) => {
@@ -51,6 +54,10 @@ export class RoleTicker extends Component {
 
   #advance() {
     this.#index = (this.#index + 1) % this.#phrases.length;
-    this.#scramble.play(this.#phrases[this.#index]);
+    this.#play();
+  }
+
+  #play() {
+    this.#scramble.play(this.i18n.pick(this.#phrases[this.#index]));
   }
 }

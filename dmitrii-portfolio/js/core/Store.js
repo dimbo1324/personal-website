@@ -11,6 +11,7 @@ export class Store {
     this.#state = { ...initialState };
   }
 
+  /** @param {string} key @returns {any} */
   get(key) {
     return this.#state[key];
   }
@@ -34,7 +35,7 @@ export class Store {
 
   /**
    * @param {string} key
-   * @param {(value: unknown, previous: unknown) => void} listener
+   * @param {(value: any, previous: any) => void} listener
    * @param {{ immediate?: boolean }} [options]
    * @returns {() => void} unsubscribe
    */

@@ -1,5 +1,6 @@
 /**
- * Reads playlist.json: { "videos": [{ "file", "title", "description" }] }.
+ * Reads playlist.json:
+ * { "videos": [{ "file", "title", "description", "generated", "poster", "mobile" }] }
  * Used for metadata everywhere and as the file list on static hosts.
  */
 export class ManifestSource {
@@ -10,7 +11,7 @@ export class ManifestSource {
     this.#url = new URL(manifest, document.baseURI);
   }
 
-  /** @returns {Promise<{ file: string, title?: string, description?: string }[]|null>} */
+  /** @returns {Promise<object[]|null>} */
   async load() {
     try {
       const response = await fetch(this.#url, { cache: "no-store" });

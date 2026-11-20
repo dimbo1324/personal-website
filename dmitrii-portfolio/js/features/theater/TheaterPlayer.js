@@ -12,15 +12,18 @@ export class TheaterPlayer {
   #video;
   #el;
   #controller = new AbortController();
+  #i18n;
 
   /**
    * @param {HTMLVideoElement} video
    * @param {{ controls: HTMLElement, play: HTMLButtonElement, playIcon: SVGUseElement,
    *           progress: HTMLElement, fill: HTMLElement, time: HTMLElement }} elements
+   * @param {import("../../i18n/I18nService.js").I18nService} i18n
    */
-  constructor(video, elements) {
+  constructor(video, elements, i18n) {
     this.#video = video;
     this.#el = elements;
+    this.#i18n = i18n;
   }
 
   get video() {
@@ -34,10 +37,14 @@ export class TheaterPlayer {
 
     this.#el.play.addEventListener("click", () => this.toggle(), { signal });
     ["play", "pause"].forEach((type) => video.addEventListener(type, () => this.#renderState(), { signal }));
-    ["timeupdate", "loadedmetadata", "seeked"].forEach((type) => video.addEventListener(type, () => this.#renderTime(), { signal }));
+    ["timeupdate", "loadedmetadata", "seeked"].forEach((type) =>
+      video.addEventListener(type, () => this.#renderTime(), { signal }),
+    );
 
     this.#el.progress.addEventListener("pointerdown", (event) => this.#startScrub(event), { signal });
     this.#el.progress.addEventListener("keydown", (event) => this.#onKey(event), { signal });
+    const unsubscribe = this.#i18n.subscribe(() => this.#renderState());
+    signal.addEventListener("abort", unsubscribe, { once: true });
     return this;
   }
 
@@ -45,9 +52,11 @@ export class TheaterPlayer {
     this.#controller.abort();
   }
 
-  /** Switch the source (no-op if already loaded). */
-  load(src) {
+  /** Switch the source (no-op if already loaded); the poster shows until the first frame. */
+  load(src, poster = null) {
     this.#video.preload = "auto";
+    if (poster) this.#video.poster = poster;
+    else this.#video.removeAttribute("poster");
     if (this.#video.dataset.src !== src) {
       this.#video.dataset.src = src;
       this.#video.src = src;
@@ -93,7 +102,7 @@ export class TheaterPlayer {
   #renderState() {
     const playing = !this.#video.paused;
     this.#el.playIcon.setAttribute("href", playing ? TheaterPlayer.ICONS.pause : TheaterPlayer.ICONS.play);
-    this.#el.play.setAttribute("aria-label", playing ? "Pause" : "Play");
+    this.#el.play.setAttribute("aria-label", this.#i18n.t(playing ? "theater.pause" : "theater.play"));
   }
 
   #renderTime() {

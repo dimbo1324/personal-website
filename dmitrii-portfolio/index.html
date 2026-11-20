@@ -9,11 +9,60 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta
       name="description"
+      data-js="meta-description"
       content="Dmitrii Prikhodko — Industrial Automation, IIoT & Software Engineer based in Montevideo. Bridging OT and IT across oil & gas, nuclear and thermal power."
     />
+    <meta name="author" content="Dmitrii Prikhodko" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#0a1114" />
     <meta name="color-scheme" content="dark light" />
     <title>Dmitrii Prikhodko — Automation, IIoT &amp; Software</title>
+
+    <!-- %SITE_URL% is replaced at build time (VITE_SITE_URL, see .env.example) -->
+    <link rel="canonical" href="%SITE_URL%/" />
+    <link rel="alternate" hreflang="en" href="%SITE_URL%/?lang=en" />
+    <link rel="alternate" hreflang="es" href="%SITE_URL%/?lang=es" />
+    <link rel="alternate" hreflang="ru" href="%SITE_URL%/?lang=ru" />
+    <link rel="alternate" hreflang="x-default" href="%SITE_URL%/" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Dmitrii Prikhodko" />
+    <meta property="og:title" content="Dmitrii Prikhodko — Automation, IIoT &amp; Software" data-js="og-title" />
+    <meta
+      property="og:description"
+      content="Industrial Automation, IIoT &amp; Software Engineer based in Montevideo. PLC/DCS/SIS commissioning, digital twins, C++/Python backends."
+      data-js="og-description"
+    />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/assets/social/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dmitrii Prikhodko — Industrial Automation, IIoT &amp; Software Engineer" />
+    <meta property="og:locale" content="en_US" data-js="og-locale" />
+    <meta property="og:locale:alternate" content="es_UY" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+    <meta property="profile:first_name" content="Dmitrii" />
+    <meta property="profile:last_name" content="Prikhodko" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="%SITE_URL%/assets/social/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Dmitrii Prikhodko",
+        "alternateName": ["Дмитрий Приходько", "Dmitri Prijodko"],
+        "jobTitle": "Industrial Automation, IIoT & Software Engineer",
+        "url": "%SITE_URL%/",
+        "image": "%SITE_URL%/assets/images/portrait.webp",
+        "email": "mailto:dmitriiprikhodko9@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Montevideo", "addressCountry": "UY" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Nizhny Novgorod State Technical University n.a. R. E. Alekseev" },
+        "knowsAbout": ["Industrial automation", "IIoT", "PLC", "DCS", "SIS", "SCADA", "IEC 61131-3", "OPC UA", "MQTT", "Digital twins", "C++", "Python"],
+        "knowsLanguage": ["ru", "en", "es"],
+        "sameAs": ["https://linkedin.com/in/dimbo1324", "https://github.com/dimbo1324"]
+      }
+    </script>
 
     <link rel="icon" href="assets/icons/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="assets/icons/favicon-64.png" type="image/png" sizes="64x64" />
@@ -32,16 +81,18 @@
       type="font/woff2"
       crossorigin
     />
+    <link rel="preload" href="assets/video/hero/01-oil-terminal-digital-twin.webp" as="image" fetchpriority="high" data-first-poster vite-ignore />
     <link rel="stylesheet" href="css/main.css" />
 
     <!-- Theme is applied before first paint to avoid a flash of the wrong theme -->
     <script src="js/boot/theme-preload.js"></script>
+    <script src="js/boot/lang-preload.js"></script>
     <script src="js/boot/file-protocol-guard.js" defer></script>
     <script type="module" src="js/main.js"></script>
   </head>
 
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a data-i18n="ui.skip-to-content" class="skip-link" href="#main">Skip to content</a>
 
     <div class="scroll-progress" aria-hidden="true">
       <div class="scroll-progress__bar" data-js="scroll-progress"></div>
@@ -74,53 +125,60 @@
           </span>
         </a>
 
-        <nav class="site-nav" aria-label="Primary">
+        <nav data-i18n-attr="aria-label:nav.primary" class="site-nav" aria-label="Primary">
           <span class="site-nav__indicator" data-js="nav-indicator" aria-hidden="true"></span>
           <ul class="site-nav__list">
             <li>
               <a href="#overview" class="site-nav__link is-active" data-nav="overview">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-compass" /></svg>
-                <span>Overview</span>
+                <span data-i18n="nav.overview">Overview</span>
               </a>
             </li>
             <li>
               <a href="#telemetry" class="site-nav__link" data-nav="telemetry">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-activity" /></svg>
-                <span>Telemetry</span>
+                <span data-i18n="nav.telemetry">Telemetry</span>
+              </a>
+            </li>
+            <li>
+              <a href="#cases" class="site-nav__link" data-nav="cases">
+                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-layers" /></svg>
+                <span data-i18n="nav.cases">Cases</span>
               </a>
             </li>
             <li>
               <a href="#gallery" class="site-nav__link" data-nav="gallery">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-images" /></svg>
-                <span>Gallery</span>
+                <span data-i18n="nav.gallery">Gallery</span>
               </a>
             </li>
             <li>
               <a href="#dossier" class="site-nav__link" data-nav="dossier">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-briefcase" /></svg>
-                <span>Dossier</span>
+                <span data-i18n="nav.dossier">Dossier</span>
               </a>
             </li>
             <li>
               <a href="#contact" class="site-nav__link" data-nav="contact">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-mail" /></svg>
-                <span>Contact</span>
-              </a>
-            </li>
-            <li>
-              <a href="#request" class="site-nav__link" data-nav="request">
-                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-clipboard-list" /></svg>
-                <span>Request</span>
+                <span data-i18n="nav.contact">Contact</span>
               </a>
             </li>
           </ul>
         </nav>
 
         <div class="site-header__controls">
-          <button type="button" class="pill-button" data-js="open-widget" title="Open the interactive ACS widget">
+          <div class="lang-switch" data-js="lang-switch" role="group" aria-label="Language" data-i18n-attr="aria-label:header.language">
+            <span class="lang-switch__indicator" aria-hidden="true"></span>
+            <button type="button" class="lang-switch__option is-active" data-lang="en" aria-pressed="true" lang="en" title="English">EN</button>
+            <button type="button" class="lang-switch__option" data-lang="es" aria-pressed="false" lang="es" title="Español">ES</button>
+            <button type="button" class="lang-switch__option" data-lang="ru" aria-pressed="false" lang="ru" title="Русский">RU</button>
+          </div>
+
+          <button data-i18n-attr="title:header.open-the-interactive-acs-widget" type="button" class="pill-button" data-js="open-widget" title="Open the interactive ACS widget">
             <span class="live-dot" aria-hidden="true"></span>
             <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-cpu" /></svg>
-            <span class="pill-button__label">ACS Widget</span>
+            <span data-i18n="header.acs-widget" class="pill-button__label">ACS Widget</span>
           </button>
 
           <button
@@ -165,12 +223,12 @@
 
     <div class="mobile-drawer" id="mobile-drawer" data-js="mobile-drawer" aria-hidden="true">
       <ul class="mobile-drawer__list">
-        <li><a href="#overview" class="mobile-drawer__link is-active" data-nav="overview"><span>00</span>Overview</a></li>
-        <li><a href="#telemetry" class="mobile-drawer__link" data-nav="telemetry"><span>01</span>Telemetry</a></li>
-        <li><a href="#gallery" class="mobile-drawer__link" data-nav="gallery"><span>02</span>Gallery</a></li>
-        <li><a href="#dossier" class="mobile-drawer__link" data-nav="dossier"><span>03</span>Dossier</a></li>
-        <li><a href="#contact" class="mobile-drawer__link" data-nav="contact"><span>04</span>Contact</a></li>
-        <li><a href="#request" class="mobile-drawer__link" data-nav="request"><span>05</span>Request</a></li>
+        <li><a href="#overview" class="mobile-drawer__link is-active" data-nav="overview"><span>00</span><b data-i18n="nav.overview">Overview</b></a></li>
+        <li><a href="#telemetry" class="mobile-drawer__link" data-nav="telemetry"><span>01</span><b data-i18n="nav.telemetry">Telemetry</b></a></li>
+        <li><a href="#cases" class="mobile-drawer__link" data-nav="cases"><span>02</span><b data-i18n="nav.cases">Cases</b></a></li>
+        <li><a href="#gallery" class="mobile-drawer__link" data-nav="gallery"><span>03</span><b data-i18n="nav.gallery">Gallery</b></a></li>
+        <li><a href="#dossier" class="mobile-drawer__link" data-nav="dossier"><span>04</span><b data-i18n="nav.dossier">Dossier</b></a></li>
+        <li><a href="#contact" class="mobile-drawer__link" data-nav="contact"><span>05</span><b data-i18n="nav.contact">Contact</b></a></li>
       </ul>
     </div>
 
@@ -182,7 +240,9 @@
           <img
             class="hero__slide is-visible"
             data-js="hero-slide"
-            src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&amp;fit=crop&amp;w=1920&amp;q=80"
+            src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&amp;fit=crop&amp;w=1600&amp;q=75"
+            srcset="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&amp;fit=crop&amp;w=480&amp;q=75 480w, https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&amp;fit=crop&amp;w=960&amp;q=75 960w, https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&amp;fit=crop&amp;w=1600&amp;q=75 1600w"
+            sizes="100vw"
             crossorigin="anonymous"
             alt=""
             fetchpriority="high"
@@ -192,13 +252,17 @@
             class="hero__slide"
             data-js="hero-slide"
             src="assets/images/stage-wide.webp"
+            srcset="assets/images/stage-wide-640.webp 640w, assets/images/stage-wide.webp 1280w"
+            sizes="100vw"
             alt=""
             decoding="async"
           />
           <img
             class="hero__slide"
             data-js="hero-slide"
-            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1920&amp;q=80"
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=75"
+            srcset="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=480&amp;q=75 480w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=960&amp;q=75 960w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=75 1600w"
+            sizes="100vw"
             crossorigin="anonymous"
             alt=""
             decoding="async"
@@ -212,7 +276,7 @@
         <div class="container hero__grid">
           <div class="hero__copy">
             <div class="hero__meta">
-              <button type="button" class="role-ticker" data-js="role-ticker" title="Cycle discipline">
+              <button data-i18n-attr="title:overview.cycle-discipline" type="button" class="role-ticker" data-js="role-ticker" title="Cycle discipline">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-terminal" /></svg>
                 <span class="role-ticker__text" data-js="role-ticker-text">Industrial Automation · IIoT</span>
                 <span class="role-ticker__caret" aria-hidden="true"></span>
@@ -227,51 +291,51 @@
             <div class="availability">
               <span class="availability__status">
                 <span class="live-dot" aria-hidden="true"></span>
-                Open to work &amp; collaboration
+                <span data-i18n="overview.open-to-work-collaboration">Open to work &amp; collaboration</span>
               </span>
               <span class="availability__meta">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-map-pin" /></svg>
-                Montevideo · on-site · hybrid · remote
+                <span data-i18n="overview.montevideo-on-site-hybrid-remote">Montevideo · on-site · hybrid · remote</span>
               </span>
             </div>
 
             <div class="hero__actions">
               <button type="button" class="button button--primary" data-js="open-widget">
                 <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-monitor-cog" /></svg>
-                <span>Launch ACS Widget</span>
+                <span data-i18n="overview.launch-acs-widget">Launch ACS Widget</span>
               </button>
-              <a href="#gallery" class="button button--secondary">
-                <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-images" /></svg>
-                <span>View Gallery</span>
+              <a href="assets/cv/Dmitrii-Prikhodko-CV-EN.pdf" class="button button--secondary" download data-track="cv_download" data-i18n-attr="href:cv.href">
+                <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-download" /></svg>
+                <span><span data-i18n="overview.download-cv">Download CV</span> <small class="button__note">PDF</small></span>
               </a>
               <button type="button" class="button button--ghost" data-copy="dmitriiprikhodko9@gmail.com">
                 <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-copy" /></svg>
-                <span>Copy Email</span>
+                <span data-i18n="overview.copy-email">Copy Email</span>
               </button>
             </div>
 
             <dl class="kpi-row">
               <div class="kpi">
-                <dt class="kpi__label">OT / IT Track</dt>
-                <dd class="kpi__value">5+ <small>yrs</small></dd>
+                <dt data-i18n="overview.ot-it-track" class="kpi__label">OT / IT Track</dt>
+                <dd class="kpi__value">5+ <small data-i18n="overview.yrs">yrs</small></dd>
               </div>
               <div class="kpi kpi--accent">
-                <dt class="kpi__label">Refinery I/O</dt>
+                <dt data-i18n="overview.refinery-i-o" class="kpi__label">Refinery I/O</dt>
                 <dd class="kpi__value">2,500+</dd>
               </div>
               <div class="kpi kpi--amber">
-                <dt class="kpi__label">PLC Delivery</dt>
+                <dt data-i18n="overview.plc-delivery" class="kpi__label">PLC Delivery</dt>
                 <dd class="kpi__value">&minus;25%</dd>
               </div>
               <div class="kpi kpi--steel">
-                <dt class="kpi__label">Plant Yield</dt>
+                <dt data-i18n="overview.plant-yield" class="kpi__label">Plant Yield</dt>
                 <dd class="kpi__value">+12%</dd>
               </div>
             </dl>
           </div>
 
           <div class="hero__visual">
-            <div
+            <div data-i18n-attr="aria-label:overview.video-reel-open-theater-mode"
               class="media-frame"
               data-js="hero-media"
               role="button"
@@ -280,12 +344,18 @@
               aria-haspopup="dialog"
             >
               <span class="media-frame__screen">
-                <video class="media-frame__video" data-js="reel-video" muted playsinline preload="auto"></video>
+                <!-- the first clip's poster is in the markup so it paints before any script runs (LCP);
+                     the build points both [data-first-poster] at the playlist's actual first clip -->
+                <video class="media-frame__video is-active" data-js="reel-video" muted playsinline preload="none" poster="assets/video/hero/01-oil-terminal-digital-twin.webp" data-first-poster vite-ignore></video>
                 <video class="media-frame__video" data-js="reel-video" muted playsinline preload="none"></video>
-                <img class="media-frame__fallback" data-js="reel-fallback" src="assets/images/keynote.webp" alt="" hidden />
+                <img class="media-frame__fallback" data-js="reel-fallback" src="assets/images/keynote.webp" alt="" loading="lazy" hidden />
                 <span class="media-frame__iris" data-js="reel-iris" aria-hidden="true"></span>
                 <span class="media-frame__shade" aria-hidden="true"></span>
                 <span class="media-frame__segments" data-js="reel-segments" aria-hidden="true" hidden></span>
+                <span class="concept-badge media-frame__concept" data-js="reel-concept" hidden>
+                  <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-sparkles" /></svg>
+                  <span data-i18n="media.concept">Concept visual</span>
+                </span>
                 <span class="media-frame__dwell" aria-hidden="true">
                   <svg class="icon icon--sm" focusable="false"><use href="assets/icons/sprite.svg#i-maximize-2" /></svg>
                   <span data-js="dwell-text">Keep hovering · theater in 5</span>
@@ -297,21 +367,21 @@
                   <span class="media-frame__counter" data-js="reel-counter"></span>
                 </span>
                 <span class="media-frame__cta">
-                  Theater
+                  <span data-i18n="overview.theater">Theater</span>
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-play" /></svg>
                 </span>
               </span>
             </div>
 
-            <div class="scene-switcher" role="group" aria-label="Render backdrop scene">
+            <div data-i18n-attr="aria-label:overview.render-backdrop-scene" class="scene-switcher" role="group" aria-label="Render backdrop scene">
               <span class="scene-switcher__status" data-js="scene-status">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-sparkles" /></svg>
                 <span data-js="scene-status-text">Rendered · 01 Plant</span>
               </span>
               <span class="scene-switcher__options">
-                <button type="button" class="scene-switcher__option is-active" data-scene="0" aria-pressed="true">01 Plant</button>
-                <button type="button" class="scene-switcher__option" data-scene="1" aria-pressed="false">02 Stage</button>
-                <button type="button" class="scene-switcher__option" data-scene="2" aria-pressed="false">03 PLC</button>
+                <button data-i18n="scene.plant" type="button" class="scene-switcher__option is-active" data-scene="0" aria-pressed="true">01 Plant</button>
+                <button data-i18n="scene.stage" type="button" class="scene-switcher__option" data-scene="1" aria-pressed="false">02 Stage</button>
+                <button data-i18n="scene.plc" type="button" class="scene-switcher__option" data-scene="2" aria-pressed="false">03 PLC</button>
               </span>
             </div>
           </div>
@@ -323,12 +393,6 @@
               <a href="mailto:dmitriiprikhodko9@gmail.com">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-mail" /></svg>
                 dmitriiprikhodko9@gmail.com
-              </a>
-            </li>
-            <li>
-              <a href="tel:+59896671725">
-                <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-phone" /></svg>
-                +598 96 671 725
               </a>
             </li>
             <li>
@@ -345,7 +409,7 @@
             </li>
           </ul>
           <a href="#telemetry" class="scroll-cue">
-            <span>Scroll</span>
+            <span data-i18n="overview.scroll">Scroll</span>
             <span class="scroll-cue__track" aria-hidden="true"><span class="scroll-cue__thumb"></span></span>
           </a>
         </div>
@@ -357,14 +421,14 @@
           <header class="section-head reveal">
             <div>
               <span class="section-head__index">01</span>
-              <h2 class="section-head__title" id="telemetry-title">Dynamic <span>Telemetry.</span></h2>
-              <p class="section-head__lead">Live models of what I build — click any panel to drive it.</p>
+              <h2 class="section-head__title" id="telemetry-title"><span data-i18n="telemetry.dynamic">Dynamic</span> <span class="section-head__accent" data-i18n="telemetry.telemetry">Telemetry.</span></h2>
+              <p data-i18n="telemetry.live-models-of-what-i" class="section-head__lead">Live models of what I build — click any panel to drive it.</p>
             </div>
             <div class="section-head__tools">
               <span class="section-head__counter" data-js="sim-cycle">Cycle #001</span>
               <button type="button" class="button button--small button--secondary" data-js="sim-resample">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-refresh-cw" /></svg>
-                <span>Resample</span>
+                <span data-i18n="telemetry.resample">Resample</span>
               </button>
               <button type="button" class="button button--small button--toggle is-on" data-js="sim-toggle" aria-pressed="true">
                 <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-radio" /></svg>
@@ -374,14 +438,14 @@
           </header>
 
           <div class="telemetry-grid reveal">
-            <article class="panel tile" data-js="radar-panel" tabindex="0" role="button" aria-label="OT/IT load radar — cycle scenario">
+            <article data-i18n-attr="aria-label:telemetry.ot-it-load-radar-cycle" class="panel tile" data-js="radar-panel" tabindex="0" role="button" aria-label="OT/IT load radar — cycle scenario">
               <header class="panel__head">
                 <div>
                   <span class="panel__eyebrow">
                     <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-hexagon" /></svg>
-                    01.A · Dynamic polygon
+                    <span data-i18n="telemetry.01-a-dynamic-polygon">01.A · Dynamic polygon</span>
                   </span>
-                  <h3 class="panel__title">OT / IT Load</h3>
+                  <h3 data-i18n="telemetry.ot-it-load" class="panel__title">OT / IT Load</h3>
                 </div>
                 <span class="badge" data-js="radar-scenario">Balanced</span>
               </header>
@@ -393,19 +457,19 @@
                 <g data-js="radar-labels"></g>
               </svg>
               <footer class="panel__foot">
-                <span>Core peak</span>
+                <span data-i18n="telemetry.core-peak">Core peak</span>
                 <strong class="text-accent" data-js="radar-peak">PLC/SIS · 96%</strong>
               </footer>
             </article>
 
-            <article class="panel tile" data-js="pid-panel" tabindex="0" role="button" aria-label="Cascaded PID response — generate new response">
+            <article data-i18n-attr="aria-label:telemetry.cascaded-pid-response-generate-new" class="panel tile" data-js="pid-panel" tabindex="0" role="button" aria-label="Cascaded PID response — generate new response">
               <header class="panel__head">
                 <div>
                   <span class="panel__eyebrow">
                     <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-activity" /></svg>
-                    01.B · ODE virtual PLC
+                    <span data-i18n="telemetry.01-b-ode-virtual-plc">01.B · ODE virtual PLC</span>
                   </span>
-                  <h3 class="panel__title">Cascaded PID</h3>
+                  <h3 data-i18n="telemetry.cascaded-pid" class="panel__title">Cascaded PID</h3>
                 </div>
                 <span class="badge badge--amber" data-js="pid-mode">Step</span>
               </header>
@@ -431,17 +495,17 @@
                 <circle class="chart-pid__marker" data-js="pid-marker" cx="140" cy="62" r="4" />
               </svg>
               <footer class="panel__foot">
-                <span>ODE solver</span>
+                <span data-i18n="telemetry.ode-solver">ODE solver</span>
                 <strong data-js="pid-meta">Ts 26s · OS 3.1%</strong>
               </footer>
             </article>
 
-            <article class="panel tile" data-js="spectrum-panel" tabindex="0" role="button" aria-label="MQTT / OPC UA throughput — inject burst">
+            <article data-i18n-attr="aria-label:telemetry.mqtt-opc-ua-throughput-inject" class="panel tile" data-js="spectrum-panel" tabindex="0" role="button" aria-label="MQTT / OPC UA throughput — inject burst">
               <header class="panel__head">
                 <div>
                   <span class="panel__eyebrow">
                     <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chart-column" /></svg>
-                    01.C · Live bus
+                    <span data-i18n="telemetry.01-c-live-bus">01.C · Live bus</span>
                   </span>
                   <h3 class="panel__title">MQTT / OPC UA</h3>
                 </div>
@@ -454,7 +518,7 @@
                 <g data-js="spectrum-bars"></g>
               </svg>
               <footer class="panel__foot">
-                <span>Broker throughput</span>
+                <span data-i18n="telemetry.broker-throughput">Broker throughput</span>
                 <strong class="text-amber" data-js="spectrum-peak">1,440 msg/s</strong>
               </footer>
             </article>
@@ -465,44 +529,156 @@
               <svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-sliders-horizontal" /></svg>
             </span>
             <span class="widget-banner__copy">
-              <span class="widget-banner__title">Interactive ACS TP / SCADA workspace</span>
-              <span class="widget-banner__meta">Draggable · Resizable · Pump P-101 · Valve CV-301 · PID setpoint · SIS/ESD interlock</span>
+              <span data-i18n="telemetry.interactive-acs-tp-scada-workspace" class="widget-banner__title">Interactive ACS TP / SCADA workspace</span>
+              <span data-i18n="telemetry.draggable-resizable-pump-p-101" class="widget-banner__meta">Draggable · Resizable · Pump P-101 · Valve CV-301 · PID setpoint · SIS/ESD interlock</span>
             </span>
             <span class="widget-banner__action">
-              Open window
+              <span data-i18n="telemetry.open-window">Open window</span>
               <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-external-link" /></svg>
             </span>
           </button>
         </div>
       </section>
 
-      <!-- ============================== 02 GALLERY ============================== -->
-      <section class="section" id="gallery" aria-labelledby="gallery-title">
+      <!-- ============================== 02 CASES ============================== -->
+      <section class="section" id="cases" aria-labelledby="cases-title">
         <div class="container">
           <header class="section-head reveal">
             <div>
               <span class="section-head__index">02</span>
-              <h2 class="section-head__title" id="gallery-title">Field &amp; <span>Gallery.</span></h2>
-              <p class="section-head__lead">On site, on stage and on the bench.</p>
+              <h2 class="section-head__title" id="cases-title"><span data-i18n="cases.case">Case</span> <span class="section-head__accent" data-i18n="cases.studies">Studies.</span></h2>
+              <p data-i18n="cases.three-projects-each-as-problem" class="section-head__lead">Three projects, each as problem → approach → result.</p>
             </div>
-            <span class="section-head__counter">
-              <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-maximize-2" /></svg>
-              <span data-js="gallery-count">08</span> frames · click to inspect
-            </span>
           </header>
 
-          <ul class="bento reveal" data-js="gallery-grid" aria-label="Photo gallery"></ul>
+          <div class="case-grid">
+            <article class="case-card reveal">
+              <header class="case-card__head">
+                <span class="case-card__index">02.A</span>
+                <span data-i18n="cases.transneft-a-m-2023-2025" class="case-card__meta">Transneft A&amp;M · 2023 – 2025</span>
+              </header>
+              <h3 data-i18n="cases.reusable-plc-library" class="case-card__title">Reusable PLC library</h3>
+              <p class="case-card__metric"><strong>&minus;25%</strong> <span data-i18n="cases.delivery-time">delivery time</span></p>
+              <dl class="case-card__steps">
+                  <div class="case-card__step">
+                    <dt class="case-card__step-label">
+                      <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-target" /></svg>
+                      <span data-i18n="cases.problem">Problem</span>
+                    </dt>
+                    <dd data-i18n="cases.every-new-plc-project-rebuilt">Every new PLC project rebuilt standard logic from scratch, and one delivery took four weeks.</dd>
+                  </div>
+                  <div class="case-card__step">
+                    <dt class="case-card__step-label">
+                      <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-wrench" /></svg>
+                      <span data-i18n="cases.approach">Approach</span>
+                    </dt>
+                    <dd data-i18n="cases.created-a-reusable-iec-61131">Created a reusable IEC 61131-3 function-block library and a no-code FBD DSL on top of it, then used it in SAT/FAT at three oil pumping stations.</dd>
+                  </div>
+                  <div class="case-card__step">
+                    <dt class="case-card__step-label">
+                      <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-trending-up" /></svg>
+                      <span data-i18n="cases.result">Result</span>
+                    </dt>
+                    <dd data-i18n="cases.delivery-went-from-4-to">Delivery went from 4 to 3 weeks. SAT/FAT at the three stations covered Siemens, Schneider, B&amp;R and Prosoft equipment.</dd>
+                  </div>
+              </dl>
+              <ul class="chip-list case-card__stack"><li class="chip chip--accent">IEC 61131-3</li><li class="chip chip--amber">FBD DSL</li><li class="chip">Siemens / Schneider</li><li class="chip">B&amp;R</li></ul>
+            </article>
+            <article class="case-card reveal">
+              <header class="case-card__head">
+                <span class="case-card__index">02.B</span>
+                <span data-i18n="cases.lukoil-kstovo-refinery-2025-2026" class="case-card__meta">LUKOIL · Kstovo refinery · 2025 – 2026</span>
+              </header>
+              <h3 data-i18n="cases.live-refinery-commissioning" class="case-card__title">Live refinery commissioning</h3>
+              <p class="case-card__metric"><strong>2,500+</strong> <span data-i18n="cases.field-i-o-signals">field I/O signals</span></p>
+              <dl class="case-card__steps">
+                  <div class="case-card__step">
+                    <dt class="case-card__step-label">
+                      <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-target" /></svg>
+                      <span data-i18n="cases.problem">Problem</span>
+                    </dt>
+                    <dd data-i18n="cases.units-l-24-7-and">Units L-24/7 and AVT-5 had to be commissioned while connected to a live safety system.</dd>
+                  </div>
+                  <div class="case-card__step">
+                    <dt class="case-card__step-label">
+                      <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-wrench" /></svg>
+                      <span data-i18n="cases.approach">Approach</span>
+                    </dt>
+                    <dd data-i18n="cases.ran-full-cycle-sat-fat">Ran full-cycle SAT/FAT with live SIS/ESD validation on Prosoft / Elara controllers.</dd>
+                  </div>
+                  <div class="case-card__step">
+                    <dt class="case-card__step-label">
+                      <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-trending-up" /></svg>
+                      <span data-i18n="cases.result">Result</span>
+                    </dt>
+                    <dd data-i18n="cases.more-than-2-500-field">More than 2,500 field I/O signals verified and the SIS/ESD logic validated on the running units.</dd>
+                  </div>
+              </dl>
+              <ul class="chip-list case-card__stack"><li class="chip chip--accent">SAT / FAT</li><li class="chip chip--amber">SIS / ESD</li><li class="chip">Prosoft / Elara</li><li class="chip">MQTT / OPC UA</li></ul>
+            </article>
+            <article class="case-card reveal">
+              <header class="case-card__head">
+                <span class="case-card__index">02.C</span>
+                <span data-i18n="cases.niitop-2021-2022" class="case-card__meta">NIITOP · 2021 – 2022</span>
+              </header>
+              <h3 data-i18n="cases.electroplating-line-automation" class="case-card__title">Electroplating line automation</h3>
+              <p class="case-card__metric"><strong>+12%</strong> <span data-i18n="cases.line-yield">line yield</span></p>
+              <dl class="case-card__steps">
+                  <div class="case-card__step">
+                    <dt class="case-card__step-label">
+                      <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-target" /></svg>
+                      <span data-i18n="cases.problem">Problem</span>
+                    </dt>
+                    <dd data-i18n="cases.an-operator-had-to-work">An operator had to work by hand in a toxic zone of an electroplating line.</dd>
+                  </div>
+                  <div class="case-card__step">
+                    <dt class="case-card__step-label">
+                      <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-wrench" /></svg>
+                      <span data-i18n="cases.approach">Approach</span>
+                    </dt>
+                    <dd data-i18n="cases.automated-the-line-and-also">Automated the line, and also built an ATmega48 cooling controller for a 5 kW microwave load.</dd>
+                  </div>
+                  <div class="case-card__step">
+                    <dt class="case-card__step-label">
+                      <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-trending-up" /></svg>
+                      <span data-i18n="cases.result">Result</span>
+                    </dt>
+                    <dd data-i18n="cases.the-operator-no-longer-works">The operator no longer works in the toxic zone, and line yield went up 12%.</dd>
+                  </div>
+              </dl>
+              <ul class="chip-list case-card__stack"><li class="chip chip--accent">Automation</li><li class="chip chip--amber">ATmega48</li><li class="chip">C++</li></ul>
+            </article>
+          </div>
         </div>
       </section>
 
-      <!-- ============================== 03 DOSSIER ============================== -->
-      <section class="section section--surface" id="dossier" aria-labelledby="dossier-title">
+      <!-- ============================== 03 GALLERY ============================== -->
+      <section class="section section--surface" id="gallery" aria-labelledby="gallery-title">
         <div class="container">
           <header class="section-head reveal">
             <div>
               <span class="section-head__index">03</span>
-              <h2 class="section-head__title" id="dossier-title">Track Record <span>&amp; Stack.</span></h2>
-              <p class="section-head__lead">
+              <h2 class="section-head__title" id="gallery-title"><span data-i18n="gallery.field">Field &amp;</span> <span class="section-head__accent" data-i18n="gallery.gallery">Gallery.</span></h2>
+              <p data-i18n="gallery.on-site-on-stage-and" class="section-head__lead">On site, on stage and on the bench.</p>
+            </div>
+            <span class="section-head__counter">
+              <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-maximize-2" /></svg>
+              <span data-js="gallery-count">08 frames · click to inspect</span>
+            </span>
+          </header>
+
+          <ul data-i18n-attr="aria-label:gallery.photo-gallery" class="bento reveal" data-js="gallery-grid" aria-label="Photo gallery"></ul>
+        </div>
+      </section>
+
+      <!-- ============================== 04 DOSSIER ============================== -->
+      <section class="section" id="dossier" aria-labelledby="dossier-title">
+        <div class="container">
+          <header class="section-head reveal">
+            <div>
+              <span class="section-head__index">04</span>
+              <h2 class="section-head__title" id="dossier-title"><span data-i18n="dossier.track-record">Track Record</span> <span class="section-head__accent" data-i18n="dossier.stack">&amp; Stack.</span></h2>
+              <p data-i18n="dossier.bridging-ot-and-it-across" class="section-head__lead">
                 Bridging OT and IT across oil &amp; gas, nuclear and thermal power — from live refinery
                 PLC/DCS/SIS commissioning to C++/Python digital twins.
               </p>
@@ -516,14 +692,14 @@
                   <span class="timeline__years">2025 – 2026</span>
                   <span class="timeline__heading">
                     <span class="timeline__company">Infrastruktura TK</span>
-                    <span class="timeline__role">IIoT &amp; Industrial Systems Engineer · Moscow</span>
+                    <span data-i18n="dossier.iiot-industrial-systems-engineer-moscow" class="timeline__role">IIoT &amp; Industrial Systems Engineer · Moscow</span>
                   </span>
                   <span class="timeline__metric">2,500+ I/O</span>
                   <svg class="icon icon--sm timeline__chevron" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chevron-right" /></svg>
                 </button>
                 <div class="timeline__body" id="job-1" role="region" aria-labelledby="job-1-trigger">
                   <div class="timeline__body-inner">
-                    <p>
+                    <p data-i18n="dossier.full-cycle-sat-fat-at">
                       Full-cycle SAT/FAT at LUKOIL Kstovo refinery (units L-24/7 &amp; AVT-5) with live SIS/ESD
                       validation. Built an ODE thermal power plant digital twin with 4 cascaded virtual PID loops,
                       Python/gRPC services and InfluxDB/PostgreSQL storage.
@@ -543,14 +719,14 @@
                   <span class="timeline__years">2025</span>
                   <span class="timeline__heading">
                     <span class="timeline__company">Intelligent Security Systems</span>
-                    <span class="timeline__role">C++ Backend Developer · Remote contract</span>
+                    <span data-i18n="dossier.c-backend-developer-remote-contract" class="timeline__role">C++ Backend Developer · Remote contract</span>
                   </span>
                   <span class="timeline__metric">SecurOS CI</span>
                   <svg class="icon icon--sm timeline__chevron" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chevron-right" /></svg>
                 </button>
                 <div class="timeline__body" id="job-2" role="region" aria-labelledby="job-2-trigger">
                   <div class="timeline__body-inner">
-                    <p>
+                    <p data-i18n="dossier.automated-unit-and-integration-test">
                       Automated unit and integration test suites for C++ backend microservices, Jenkins CI pipeline
                       support, WebSocket real-time client communication and Linux debugging.
                     </p>
@@ -569,14 +745,14 @@
                   <span class="timeline__years">2023 – 2025</span>
                   <span class="timeline__heading">
                     <span class="timeline__company">Transneft A&amp;M</span>
-                    <span class="timeline__role">IIoT Engineer &amp; Software Developer · Moscow</span>
+                    <span data-i18n="dossier.iiot-engineer-software-developer-moscow" class="timeline__role">IIoT Engineer &amp; Software Developer · Moscow</span>
                   </span>
-                  <span class="timeline__metric">&minus;25% cycle</span>
+                  <span data-i18n="dossier.25-cycle" class="timeline__metric">&minus;25% cycle</span>
                   <svg class="icon icon--sm timeline__chevron" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chevron-right" /></svg>
                 </button>
                 <div class="timeline__body" id="job-3" role="region" aria-labelledby="job-3-trigger">
                   <div class="timeline__body-inner">
-                    <p>
+                    <p data-i18n="dossier.created-a-reusable-iec-61131">
                       Created a reusable IEC 61131-3 library cutting delivery from 4 to 3 weeks, built a no-code FBD
                       DSL, enhanced SCADA web apps (React/Next.js) and led SAT/FAT at 3 oil pumping stations with
                       Siemens, Schneider, B&amp;R and Prosoft.
@@ -596,14 +772,14 @@
                   <span class="timeline__years">2022 – 2023</span>
                   <span class="timeline__heading">
                     <span class="timeline__company">OKBM Afrikantov</span>
-                    <span class="timeline__role">R&amp;D Engineer · Nuclear fluid dynamics</span>
+                    <span data-i18n="dossier.r-d-engineer-nuclear-fluid" class="timeline__role">R&amp;D Engineer · Nuclear fluid dynamics</span>
                   </span>
                   <span class="timeline__metric">VVER CFD</span>
                   <svg class="icon icon--sm timeline__chevron" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chevron-right" /></svg>
                 </button>
                 <div class="timeline__body" id="job-4" role="region" aria-labelledby="job-4-trigger">
                   <div class="timeline__body-inner">
-                    <p>
+                    <p data-i18n="dossier.cfd-vibration-simulations-ansys-cfx">
                       CFD vibration simulations (ANSYS CFX, Logos) of VVER reactor steam generators validated via
                       PIV/LDV; C++ (OpenCV, VTK) &amp; NI-DAQmx sensor acquisition automated with Python and MATLAB.
                     </p>
@@ -622,14 +798,14 @@
                   <span class="timeline__years">2021 – 2022</span>
                   <span class="timeline__heading">
                     <span class="timeline__company">NIITOP</span>
-                    <span class="timeline__role">Automation &amp; IoT Engineer · Instrumentation</span>
+                    <span data-i18n="dossier.automation-iot-engineer-instrumentation" class="timeline__role">Automation &amp; IoT Engineer · Instrumentation</span>
                   </span>
-                  <span class="timeline__metric">+12% yield</span>
+                  <span data-i18n="dossier.12-yield" class="timeline__metric">+12% yield</span>
                   <svg class="icon icon--sm timeline__chevron" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chevron-right" /></svg>
                 </button>
                 <div class="timeline__body" id="job-5" role="region" aria-labelledby="job-5-trigger">
                   <div class="timeline__body-inner">
-                    <p>
+                    <p data-i18n="dossier.automated-an-electroplating-line-removing">
                       Automated an electroplating line (removing an operator from a toxic zone, +12% yield),
                       engineered an ATmega48 cooling controller for a 5 kW microwave load and improved C++ libraries
                       (CuraEngine, Marlin).
@@ -646,23 +822,23 @@
 
             <div class="skills-card reveal">
               <header class="skills-card__head">
-                <span class="skills-card__eyebrow">Toolbox</span>
-                <h3 class="skills-card__title">What I work with</h3>
+                <span data-i18n="dossier.toolbox" class="skills-card__eyebrow">Toolbox</span>
+                <h3 data-i18n="dossier.what-i-work-with" class="skills-card__title">What I work with</h3>
               </header>
 
-              <div class="segmented" role="tablist" aria-label="Skill groups" data-js="tabs">
+              <div data-i18n-attr="aria-label:dossier.skill-groups" class="segmented" role="tablist" aria-label="Skill groups" data-js="tabs">
                 <span class="segmented__indicator" aria-hidden="true"></span>
                 <button type="button" class="segmented__option is-active" role="tab" aria-selected="true" aria-controls="pane-ot" id="tab-ot" data-tab="ot">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-factory" /></svg>
-                  Industrial
+                  <span data-i18n="dossier.industrial">Industrial</span>
                 </button>
                 <button type="button" class="segmented__option" role="tab" aria-selected="false" aria-controls="pane-it" id="tab-it" data-tab="it" tabindex="-1">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-code-xml" /></svg>
-                  Software
+                  <span data-i18n="dossier.software">Software</span>
                 </button>
                 <button type="button" class="segmented__option" role="tab" aria-selected="false" aria-controls="pane-edu" id="tab-edu" data-tab="edu" tabindex="-1">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-graduation-cap" /></svg>
-                  Education
+                  <span data-i18n="dossier.education">Education</span>
                 </button>
               </div>
 
@@ -671,28 +847,28 @@
                   <li class="stack-row">
                     <span class="stack-row__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-factory" /></svg></span>
                     <div class="stack-row__body">
-                      <h4 class="stack-row__label">Control systems</h4>
+                      <h4 data-i18n="dossier.control-systems" class="stack-row__label">Control systems</h4>
                       <ul class="stack-row__items"><li class="stack-row__item stack-row__item--core">PLC / DCS / SIS</li><li class="stack-row__item stack-row__item--core">SCADA</li><li class="stack-row__item stack-row__item--core">IEC 61131-3</li><li class="stack-row__item">ST / FBD</li><li class="stack-row__item">SAT / FAT commissioning</li></ul>
                     </div>
                   </li>
                   <li class="stack-row">
                     <span class="stack-row__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-cpu" /></svg></span>
                     <div class="stack-row__body">
-                      <h4 class="stack-row__label">Hardware vendors</h4>
+                      <h4 data-i18n="dossier.hardware-vendors" class="stack-row__label">Hardware vendors</h4>
                       <ul class="stack-row__items"><li class="stack-row__item stack-row__item--core">Siemens</li><li class="stack-row__item stack-row__item--core">Schneider Electric</li><li class="stack-row__item">B&amp;R</li><li class="stack-row__item">Prosoft</li><li class="stack-row__item">Elara (SURA)</li></ul>
                     </div>
                   </li>
                   <li class="stack-row">
                     <span class="stack-row__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-radio" /></svg></span>
                     <div class="stack-row__body">
-                      <h4 class="stack-row__label">Industrial protocols</h4>
+                      <h4 data-i18n="dossier.industrial-protocols" class="stack-row__label">Industrial protocols</h4>
                       <ul class="stack-row__items"><li class="stack-row__item stack-row__item--core">MQTT</li><li class="stack-row__item stack-row__item--core">OPC UA</li><li class="stack-row__item stack-row__item--core">Modbus</li><li class="stack-row__item">IEC 61850</li></ul>
                     </div>
                   </li>
                   <li class="stack-row">
                     <span class="stack-row__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-activity" /></svg></span>
                     <div class="stack-row__body">
-                      <h4 class="stack-row__label">Data &amp; digital twins</h4>
+                      <h4 data-i18n="dossier.data-digital-twins" class="stack-row__label">Data &amp; digital twins</h4>
                       <ul class="stack-row__items"><li class="stack-row__item stack-row__item--core">Digital twins</li><li class="stack-row__item stack-row__item--core">InfluxDB</li><li class="stack-row__item">Grafana</li><li class="stack-row__item">ODE models</li></ul>
                     </div>
                   </li>
@@ -704,14 +880,14 @@
                   <li class="stack-row">
                     <span class="stack-row__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-code-xml" /></svg></span>
                     <div class="stack-row__body">
-                      <h4 class="stack-row__label">Languages</h4>
+                      <h4 data-i18n="dossier.languages" class="stack-row__label">Languages</h4>
                       <ul class="stack-row__items"><li class="stack-row__item stack-row__item--core">C++</li><li class="stack-row__item stack-row__item--core">Python</li><li class="stack-row__item">Go</li></ul>
                     </div>
                   </li>
                   <li class="stack-row">
                     <span class="stack-row__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-layers" /></svg></span>
                     <div class="stack-row__body">
-                      <h4 class="stack-row__label">Backend &amp; data</h4>
+                      <h4 data-i18n="dossier.backend-data" class="stack-row__label">Backend &amp; data</h4>
                       <ul class="stack-row__items"><li class="stack-row__item stack-row__item--core">gRPC</li><li class="stack-row__item stack-row__item--core">WebSocket</li><li class="stack-row__item stack-row__item--core">PostgreSQL</li><li class="stack-row__item">MongoDB</li></ul>
                     </div>
                   </li>
@@ -725,14 +901,14 @@
                   <li class="stack-row">
                     <span class="stack-row__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-monitor-cog" /></svg></span>
                     <div class="stack-row__body">
-                      <h4 class="stack-row__label">Frontend</h4>
+                      <h4 data-i18n="dossier.frontend" class="stack-row__label">Frontend</h4>
                       <ul class="stack-row__items"><li class="stack-row__item stack-row__item--core">React / Next.js</li><li class="stack-row__item">SCADA web apps</li></ul>
                     </div>
                   </li>
                   <li class="stack-row">
                     <span class="stack-row__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-sparkles" /></svg></span>
                     <div class="stack-row__body">
-                      <h4 class="stack-row__label">AI-assisted</h4>
+                      <h4 data-i18n="dossier.ai-assisted" class="stack-row__label">AI-assisted</h4>
                       <ul class="stack-row__items"><li class="stack-row__item stack-row__item--core">Claude Code</li><li class="stack-row__item stack-row__item--core">OpenAI Codex</li><li class="stack-row__item">ML data prep</li></ul>
                     </div>
                   </li>
@@ -743,74 +919,74 @@
                 <ol class="edu-timeline">
                   <li class="edu-timeline__item">
                     <span class="edu-timeline__years">2021 – 2023</span>
-                    <span class="edu-timeline__title">MSc Thermal Power Engineering <span class="edu-timeline__badge">Honors</span></span>
-                    <span class="edu-timeline__sub">NNSTU n.a. R. E. Alekseev · Nizhny Novgorod</span>
+                    <span class="edu-timeline__title"><span data-i18n="dossier.msc-thermal-power-engineering">MSc Thermal Power Engineering</span> <span data-i18n="dossier.honors" class="edu-timeline__badge">Honors</span></span>
+                    <span data-i18n="dossier.nnstu-n-a-r-e" class="edu-timeline__sub">NNSTU n.a. R. E. Alekseev · Nizhny Novgorod</span>
                   </li>
                   <li class="edu-timeline__item">
                     <span class="edu-timeline__years">2017 – 2021</span>
-                    <span class="edu-timeline__title">BSc Thermal Power Engineering</span>
-                    <span class="edu-timeline__sub">Nuclear &amp; thermal plant design · heat and mass transfer</span>
+                    <span data-i18n="dossier.bsc-thermal-power-engineering" class="edu-timeline__title">BSc Thermal Power Engineering</span>
+                    <span data-i18n="dossier.nuclear-thermal-plant-design-heat" class="edu-timeline__sub">Nuclear &amp; thermal plant design · heat and mass transfer</span>
                   </li>
                   <li class="edu-timeline__item">
                     <span class="edu-timeline__years">2025</span>
-                    <span class="edu-timeline__title">C++ Developer Retraining Diploma</span>
-                    <span class="edu-timeline__sub">Skillfactory, Moscow · 340 academic hours</span>
+                    <span data-i18n="dossier.c-developer-retraining-diploma" class="edu-timeline__title">C++ Developer Retraining Diploma</span>
+                    <span data-i18n="dossier.skillfactory-moscow-340-academic-hours" class="edu-timeline__sub">Skillfactory, Moscow · 340 academic hours</span>
                   </li>
                 </ol>
 
-                <h4 class="stack-row__label lang-meter__heading">Languages</h4>
+                <h4 data-i18n="dossier.languages" class="stack-row__label lang-meter__heading">Languages</h4>
                 <ul class="lang-meter">
                   <li class="lang-meter__row">
                     <span class="lang-meter__code">RU</span>
-                    <span class="lang-meter__name">Russian</span>
-                    <span class="lang-meter__bar" role="img" aria-label="Native"><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span></span>
-                    <span class="lang-meter__level">Native</span>
+                    <span data-i18n="dossier.russian" class="lang-meter__name">Russian</span>
+                    <span data-i18n-attr="aria-label:dossier.native" class="lang-meter__bar" role="img" aria-label="Native"><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span></span>
+                    <span data-i18n="dossier.native" class="lang-meter__level">Native</span>
                   </li>
                   <li class="lang-meter__row">
                     <span class="lang-meter__code">EN</span>
-                    <span class="lang-meter__name">English</span>
+                    <span data-i18n="dossier.english" class="lang-meter__name">English</span>
                     <span class="lang-meter__bar" role="img" aria-label="B1 / B2"><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg"></span><span class="lang-meter__seg"></span></span>
                     <span class="lang-meter__level">B1 / B2</span>
                   </li>
                   <li class="lang-meter__row">
                     <span class="lang-meter__code">ES</span>
-                    <span class="lang-meter__name">Spanish</span>
-                    <span class="lang-meter__bar" role="img" aria-label="Learning"><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg"></span><span class="lang-meter__seg"></span><span class="lang-meter__seg"></span><span class="lang-meter__seg"></span></span>
-                    <span class="lang-meter__level">Learning</span>
+                    <span data-i18n="dossier.spanish" class="lang-meter__name">Spanish</span>
+                    <span data-i18n-attr="aria-label:dossier.learning" class="lang-meter__bar" role="img" aria-label="Learning"><span class="lang-meter__seg is-on"></span><span class="lang-meter__seg"></span><span class="lang-meter__seg"></span><span class="lang-meter__seg"></span><span class="lang-meter__seg"></span></span>
+                    <span data-i18n="dossier.learning" class="lang-meter__level">Learning</span>
                   </li>
                 </ul>
               </div>
 
               <p class="skills-card__legend">
-                <span><span class="skills-card__legend-dot skills-card__legend-dot--core" aria-hidden="true"></span>daily core</span>
-                <span><span class="skills-card__legend-dot" aria-hidden="true"></span>also used</span>
+                <span><span class="skills-card__legend-dot skills-card__legend-dot--core" aria-hidden="true"></span><span data-i18n="dossier.daily-core">daily core</span></span>
+                <span><span class="skills-card__legend-dot" aria-hidden="true"></span><span data-i18n="dossier.also-used">also used</span></span>
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ============================== 04 CONTACT ============================== -->
-      <section class="section" id="contact" aria-labelledby="contact-title">
+      <!-- ============================== 05 CONTACT ============================== -->
+      <section class="section section--surface" id="contact" aria-labelledby="contact-title">
         <div class="container contact-grid reveal">
           <div class="contact-grid__intro">
-            <span class="section-head__index">04</span>
-            <h2 class="section-head__title" id="contact-title">Direct <span>Line.</span></h2>
-            <p class="section-head__lead">
+            <span class="section-head__index">05</span>
+            <h2 class="section-head__title" id="contact-title"><span data-i18n="contact.direct">Direct</span> <span class="section-head__accent" data-i18n="contact.line">Line.</span></h2>
+            <p data-i18n="contact.on-site-hybrid-or-remote" class="section-head__lead">
               On-site, hybrid or remote. Happy to talk commissioning, IIoT architecture or backend work.
             </p>
 
             <figure class="contact-card">
-              <img class="contact-card__photo" src="assets/images/portrait.webp" alt="Portrait of Dmitrii Prikhodko" width="72" height="72" loading="lazy" decoding="async" />
+              <img data-i18n-attr="alt:contact.portrait-of-dmitrii-prikhodko" class="contact-card__photo" src="assets/images/portrait-400.webp" alt="Portrait of Dmitrii Prikhodko" width="72" height="72" loading="lazy" decoding="async" />
               <figcaption>
                 <span class="contact-card__name">Dmitrii Prikhodko</span>
                 <span class="contact-card__sub">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-map-pin" /></svg>
-                  Montevideo, Uruguay · UTC−3
+                  <span data-i18n="contact.montevideo-uruguay-utc-3">Montevideo, Uruguay · UTC−3</span>
                 </span>
                 <span class="contact-card__status">
                   <span class="live-dot" aria-hidden="true"></span>
-                  Available for new roles
+                  <span data-i18n="contact.available-for-new-roles">Available for new roles</span>
                 </span>
               </figcaption>
             </figure>
@@ -821,21 +997,26 @@
               <a href="mailto:dmitriiprikhodko9@gmail.com" class="channel">
                 <span class="channel__key">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-mail" /></svg>
-                  Email
+                  <span data-i18n="contact.email">Email</span>
                 </span>
                 <span class="channel__value">dmitriiprikhodko9@gmail.com</span>
                 <svg class="icon icon--sm channel__arrow" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-arrow-up-right" /></svg>
               </a>
             </li>
             <li>
-              <a href="tel:+59896671725" class="channel">
+              <!-- The number is not in the markup: it is assembled by JS only after a click (scraper-resistant) -->
+              <div class="channel channel--reveal" data-js="phone-reveal">
                 <span class="channel__key">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-phone" /></svg>
-                  Phone
+                  <span data-i18n="contact.phone">Phone</span>
                 </span>
-                <span class="channel__value channel__value--mono">+598 96 671 725</span>
-                <svg class="icon icon--sm channel__arrow" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-arrow-up-right" /></svg>
-              </a>
+                <span class="channel__value channel__value--mono" data-js="phone-slot">
+                  <button type="button" class="reveal-button" data-js="phone-reveal-button">
+                    <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-eye" /></svg>
+                    <span data-i18n="contact.show-number">Show number</span>
+                  </button>
+                </span>
+              </div>
             </li>
             <li>
               <a href="https://linkedin.com/in/dimbo1324" target="_blank" rel="noopener noreferrer" class="channel">
@@ -857,16 +1038,26 @@
                 <svg class="icon icon--sm channel__arrow" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-arrow-up-right" /></svg>
               </a>
             </li>
+            <li>
+              <a href="assets/cv/Dmitrii-Prikhodko-CV-EN.pdf" class="channel" download data-track="cv_download" data-i18n-attr="href:cv.href">
+                <span class="channel__key">
+                  <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-file-text" /></svg>
+                  <span data-i18n="contact.cv-pdf">CV · PDF</span>
+                </span>
+                <span data-i18n="contact.download-cv" class="channel__value">Download CV</span>
+                <svg class="icon icon--sm channel__arrow" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-download" /></svg>
+              </a>
+            </li>
           </ul>
         </div>
       </section>
-      <!-- ============================== 05 REQUEST ============================== -->
-      <section class="section section--surface" id="request" aria-labelledby="request-title">
+      <!-- ============================== 06 REQUEST ============================== -->
+      <section class="section" id="request" aria-labelledby="request-title">
         <div class="container request-grid">
           <div class="request-intro reveal">
-            <span class="section-head__index">05</span>
-            <h2 class="section-head__title" id="request-title">Leave a <span>Request.</span></h2>
-            <p class="section-head__lead">
+            <span class="section-head__index">06</span>
+            <h2 class="section-head__title" id="request-title"><span data-i18n="request.leave-a">Leave a</span> <span class="section-head__accent" data-i18n="request.request">Request.</span></h2>
+            <p data-i18n="request.hiring-a-commissioning-job-or" class="section-head__lead">
               Hiring, a commissioning job or an IIoT question? Leave your details and I will get back to you
               within one business day.
             </p>
@@ -875,55 +1066,55 @@
               <li class="request-steps__item">
                 <span class="request-steps__index">01</span>
                 <span class="request-steps__copy">
-                  <strong>You leave your contacts</strong>
-                  <span>Name plus a phone or an email — everything else is optional.</span>
+                  <strong data-i18n="request.you-leave-your-contacts">You leave your contacts</strong>
+                  <span data-i18n="request.name-plus-a-phone-or">Name plus a phone or an email — everything else is optional.</span>
                 </span>
               </li>
               <li class="request-steps__item">
                 <span class="request-steps__index">02</span>
                 <span class="request-steps__copy">
-                  <strong>I review the request</strong>
-                  <span>Within 24 hours, Montevideo time (UTC−3).</span>
+                  <strong data-i18n="request.i-review-the-request">I review the request</strong>
+                  <span data-i18n="request.within-24-hours-montevideo-time">Within 24 hours, Montevideo time (UTC−3).</span>
                 </span>
               </li>
               <li class="request-steps__item">
                 <span class="request-steps__index">03</span>
                 <span class="request-steps__copy">
-                  <strong>We talk</strong>
-                  <span>A call, a video meeting or on site — whatever suits the task.</span>
+                  <strong data-i18n="request.we-talk">We talk</strong>
+                  <span data-i18n="request.a-call-a-video-meeting">A call, a video meeting or on site — whatever suits the task.</span>
                 </span>
               </li>
             </ol>
 
             <p class="request-privacy">
               <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-shield-check" /></svg>
-              Your details are used only to reply to this request and are never shared.
+              <span data-i18n="request.your-details-are-used-only">Your details are used only to reply to this request and are never shared.</span>
             </p>
           </div>
 
           <div class="request-card" data-js="request-card">
             <form class="request-form" data-js="request-form" novalidate aria-describedby="request-required-note">
-              <p class="request-form__note" id="request-required-note">Fields marked <span aria-hidden="true">*</span><span class="visually-hidden">with an asterisk</span> are required.</p>
+              <p class="request-form__note" id="request-required-note"><span data-i18n="form.fields-marked">Fields marked</span> <span class="request-form__asterisk" aria-hidden="true">*</span><span data-i18n="form.with-an-asterisk" class="visually-hidden">with an asterisk</span> <span data-i18n="form.are-required">are required.</span></p>
 
               <fieldset class="form-group">
                 <legend class="form-group__legend">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-user" /></svg>
-                  Who you are
+                  <span data-i18n="form.who-you-are">Who you are</span>
                 </legend>
                 <div class="form-grid form-grid--3">
                   <div class="field" data-field="lastName">
-                    <label class="field__label" for="rq-last-name">Last name <span class="field__required" aria-hidden="true">*</span></label>
+                    <label class="field__label" for="rq-last-name"><span data-i18n="form.last-name">Last name</span> <span class="field__required" aria-hidden="true">*</span></label>
                     <input class="field__control" id="rq-last-name" name="lastName" type="text" autocomplete="family-name" maxlength="60" required aria-describedby="rq-last-name-error" />
                     <p class="field__error" id="rq-last-name-error" data-field-error></p>
                   </div>
                   <div class="field" data-field="firstName">
-                    <label class="field__label" for="rq-first-name">First name <span class="field__required" aria-hidden="true">*</span></label>
+                    <label class="field__label" for="rq-first-name"><span data-i18n="form.first-name">First name</span> <span class="field__required" aria-hidden="true">*</span></label>
                     <input class="field__control" id="rq-first-name" name="firstName" type="text" autocomplete="given-name" maxlength="60" required aria-describedby="rq-first-name-error" />
                     <p class="field__error" id="rq-first-name-error" data-field-error></p>
                   </div>
                   <div class="field" data-field="middleName">
-                    <label class="field__label" for="rq-middle-name">Middle name <span class="field__optional">optional</span></label>
-                    <input class="field__control" id="rq-middle-name" name="middleName" type="text" autocomplete="additional-name" maxlength="60" placeholder="Patronymic" aria-describedby="rq-middle-name-error" />
+                    <label class="field__label" for="rq-middle-name"><span data-i18n="form.middle-name">Middle name</span> <span data-i18n="form.optional" class="field__optional">optional</span></label>
+                    <input data-i18n-attr="placeholder:form.patronymic" class="field__control" id="rq-middle-name" name="middleName" type="text" autocomplete="additional-name" maxlength="60" placeholder="Patronymic" aria-describedby="rq-middle-name-error" />
                     <p class="field__error" id="rq-middle-name-error" data-field-error></p>
                   </div>
                 </div>
@@ -932,17 +1123,17 @@
               <fieldset class="form-group" aria-describedby="rq-contact-hint">
                 <legend class="form-group__legend">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-at-sign" /></svg>
-                  How to reach you
+                  <span data-i18n="form.how-to-reach-you">How to reach you</span>
                 </legend>
-                <p class="form-group__hint" id="rq-contact-hint">Phone or email — at least one of them.</p>
+                <p data-i18n="form.phone-or-email-at-least" class="form-group__hint" id="rq-contact-hint">Phone or email — at least one of them.</p>
                 <div class="form-grid form-grid--2">
                   <div class="field" data-field="phone">
-                    <label class="field__label" for="rq-phone">Phone</label>
+                    <label data-i18n="form.phone" class="field__label" for="rq-phone">Phone</label>
                     <input class="field__control" id="rq-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="24" placeholder="+598 9X XXX XXX" aria-describedby="rq-phone-error" />
                     <p class="field__error" id="rq-phone-error" data-field-error></p>
                   </div>
                   <div class="field" data-field="email">
-                    <label class="field__label" for="rq-email">Email</label>
+                    <label data-i18n="form.email" class="field__label" for="rq-email">Email</label>
                     <input class="field__control" id="rq-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="name@company.com" aria-describedby="rq-email-error" />
                     <p class="field__error" id="rq-email-error" data-field-error></p>
                   </div>
@@ -952,11 +1143,11 @@
               <fieldset class="form-group">
                 <legend class="form-group__legend">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-message-square-text" /></svg>
-                  Message <span class="field__optional">optional</span>
+                  <span data-i18n="form.message">Message</span> <span data-i18n="form.optional" class="field__optional">optional</span>
                 </legend>
                 <div class="field" data-field="message">
-                  <label class="visually-hidden" for="rq-message">Message</label>
-                  <textarea class="field__control field__control--area" id="rq-message" name="message" rows="5" maxlength="1000" placeholder="A few words about the role, project or question…" aria-describedby="rq-message-error rq-message-counter"></textarea>
+                  <label data-i18n="form.message" class="visually-hidden" for="rq-message">Message</label>
+                  <textarea data-i18n-attr="placeholder:form.a-few-words-about-the" class="field__control field__control--area" id="rq-message" name="message" rows="5" maxlength="1000" placeholder="A few words about the role, project or question…" aria-describedby="rq-message-error rq-message-counter"></textarea>
                   <div class="field__meta">
                     <p class="field__error" id="rq-message-error" data-field-error></p>
                     <span class="field__counter" id="rq-message-counter" data-js="request-counter" aria-live="off">0 / 1000</span>
@@ -976,7 +1167,7 @@
                   <span class="checkbox__box" aria-hidden="true">
                     <svg class="icon icon--sm" focusable="false"><use href="assets/icons/sprite.svg#i-check" /></svg>
                   </span>
-                  <span class="checkbox__label">I agree that my details are used to reply to this request. <span class="field__required" aria-hidden="true">*</span></span>
+                  <span class="checkbox__label"><span data-i18n="form.i-agree-that-my-details">I agree that my details are used to reply to this request.</span> <span class="field__required" aria-hidden="true">*</span></span>
                 </label>
                 <p class="field__error" id="rq-consent-error" data-field-error></p>
               </div>
@@ -984,9 +1175,9 @@
               <div class="request-form__actions">
                 <button type="submit" class="button button--primary" data-js="request-submit">
                   <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-send" /></svg>
-                  <span>Send request</span>
+                  <span data-i18n="form.send-request">Send request</span>
                 </button>
-                <p class="request-form__hint">Opens your email app with everything already filled in.</p>
+                <p class="request-form__hint" data-js="request-hint">Opens your email app with everything already filled in.</p>
               </div>
 
               <p class="request-form__status" data-js="request-status" role="status" aria-live="polite"></p>
@@ -996,16 +1187,16 @@
               <span class="request-success__icon" aria-hidden="true">
                 <svg class="icon icon--lg" focusable="false"><use href="assets/icons/sprite.svg#i-circle-check" /></svg>
               </span>
-              <h3 class="request-success__title">Request ready to send</h3>
+              <h3 data-i18n="form.request-ready-to-send" class="request-success__title">Request ready to send</h3>
               <p class="request-success__text" data-js="request-success-text"></p>
               <div class="request-success__actions">
                 <button type="button" class="button button--secondary button--small" data-js="request-copy">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-clipboard-list" /></svg>
-                  <span>Copy request</span>
+                  <span data-i18n="form.copy-request">Copy request</span>
                 </button>
                 <button type="button" class="button button--ghost button--small" data-js="request-reset">
                   <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-rotate-ccw" /></svg>
-                  <span>New request</span>
+                  <span data-i18n="form.new-request">New request</span>
                 </button>
               </div>
             </div>
@@ -1026,49 +1217,48 @@
         <video
           class="flag-backdrop__video"
           data-js="flag-video"
-          poster="assets/images/flag-poster.webp"
           muted
           loop
           playsinline
           preload="none"
         >
-          <source src="assets/video/flag-loop.mp4" type="video/mp4" />
-          <source src="assets/video/flag-loop.webm" type="video/webm" />
+          <source vite-ignore src="assets/video/flag-loop.mp4" type="video/mp4" />
+          <source vite-ignore src="assets/video/flag-loop.webm" type="video/webm" />
         </video>
         <span class="flag-backdrop__shade"></span>
       </div>
 
       <div class="container site-footer__content">
-        <section class="arrivals" data-js="arrivals" aria-label="Currently based in Montevideo, Uruguay">
+        <section data-i18n-attr="aria-label:footer.currently-based-in-montevideo-uruguay" class="arrivals" data-js="arrivals" aria-label="Currently based in Montevideo, Uruguay">
           <div class="arrivals__head">
             <span class="arrivals__label">
               <span class="arrivals__plane" aria-hidden="true"></span>
-              Arrivals · MVD
+              <span data-i18n="footer.arrivals-mvd">Arrivals · MVD</span>
             </span>
-            <span class="arrivals__label arrivals__label--muted">Montevideo · Uruguay</span>
+            <span data-i18n="footer.montevideo-uruguay" class="arrivals__label arrivals__label--muted">Montevideo · Uruguay</span>
           </div>
 
           <p class="flap-board" data-js="flap-board" data-text="MONTEVIDEO" aria-hidden="true"></p>
 
           <dl class="arrivals__row">
             <div class="arrivals__cell">
-              <dt>Passenger</dt>
+              <dt data-i18n="footer.passenger">Passenger</dt>
               <dd>D. Prikhodko</dd>
             </div>
             <div class="arrivals__cell">
-              <dt>Route</dt>
+              <dt data-i18n="footer.route">Route</dt>
               <dd class="mono">MOW <span class="arrivals__arrow" aria-hidden="true">→</span> MVD</dd>
             </div>
             <div class="arrivals__cell arrivals__cell--status">
-              <dt>Status</dt>
-              <dd><span class="live-dot" aria-hidden="true"></span>Landed · open to work</dd>
+              <dt data-i18n="footer.status">Status</dt>
+              <dd><span class="live-dot" aria-hidden="true"></span><span data-i18n="footer.landed-open-to-work">Landed · open to work</span></dd>
             </div>
             <div class="arrivals__cell">
-              <dt>Local time</dt>
+              <dt data-i18n="footer.local-time">Local time</dt>
               <dd class="mono"><time data-js="local-clock">--:--:--</time> UYT</dd>
             </div>
             <div class="arrivals__cell">
-              <dt>Coordinates</dt>
+              <dt data-i18n="footer.coordinates">Coordinates</dt>
               <dd class="mono">34.90° S · 56.16° W</dd>
             </div>
           </dl>
@@ -1076,7 +1266,7 @@
 
         <div class="site-footer__bar">
           <span>&copy; <span data-js="current-year">2026</span> Dmitrii Prikhodko</span>
-          <span>Automation · IIoT · Software</span>
+          <span data-i18n="footer.automation-iiot-software">Automation · IIoT · Software</span>
         </div>
       </div>
     </footer>
@@ -1199,7 +1389,7 @@
     <button type="button" class="widget-dock" data-js="widget-dock">
       <span class="live-dot" aria-hidden="true"></span>
       <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-monitor-cog" /></svg>
-      <span>Restore ACS widget</span>
+      <span data-i18n="widget.restore-acs-widget">Restore ACS widget</span>
     </button>
 
     <!-- ============================== THEATER MODE ============================== -->
@@ -1210,27 +1400,31 @@
           <div class="theater__heading">
             <span class="theater__eyebrow">
               <span class="live-dot" aria-hidden="true"></span>
-              Theater mode
+              <span data-i18n="theater.theater-mode">Theater mode</span>
             </span>
             <h2 class="theater__title" id="theater-title" data-js="theater-title">Theater</h2>
+            <span class="concept-badge" data-js="theater-concept" hidden>
+              <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-sparkles" /></svg>
+              <span data-i18n="media.concept">Concept visual</span>
+            </span>
           </div>
           <div class="theater__tools">
             <span class="theater__counter" data-js="theater-counter"></span>
             <button type="button" class="button button--small button--secondary" data-js="theater-close">
               <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-x" /></svg>
-              <span>Close · Esc</span>
+              <span data-i18n="theater.close-esc">Close · Esc</span>
             </button>
           </div>
         </header>
 
         <div class="theater__stage" data-js="theater-stage">
           <video class="theater__video" data-js="theater-video" muted playsinline preload="none"></video>
-          <img class="theater__image" data-js="theater-image" src="assets/images/keynote.webp" alt="" hidden />
+          <img class="theater__image" data-js="theater-image" alt="" hidden />
 
-          <button type="button" class="theater__nav theater__nav--prev" data-js="theater-prev" aria-label="Previous">
+          <button data-i18n-attr="aria-label:theater.previous" type="button" class="theater__nav theater__nav--prev" data-js="theater-prev" aria-label="Previous">
             <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chevron-left" /></svg>
           </button>
-          <button type="button" class="theater__nav theater__nav--next" data-js="theater-next" aria-label="Next">
+          <button data-i18n-attr="aria-label:theater.next" type="button" class="theater__nav theater__nav--next" data-js="theater-next" aria-label="Next">
             <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chevron-right" /></svg>
           </button>
 
@@ -1238,7 +1432,7 @@
             <button type="button" class="theater__play" data-js="theater-play" aria-label="Pause">
               <svg class="icon" aria-hidden="true" focusable="false"><use data-js="theater-play-icon" href="assets/icons/sprite.svg#i-pause" /></svg>
             </button>
-            <div class="theater__progress" data-js="theater-progress" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div data-i18n-attr="aria-label:theater.seek" class="theater__progress" data-js="theater-progress" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
               <span class="theater__progress-fill" data-js="theater-progress-fill"></span>
             </div>
             <span class="theater__time" data-js="theater-time">0:00 / 0:00</span>
@@ -1248,46 +1442,46 @@
         <p class="theater__caption" data-js="theater-caption"></p>
 
         <div class="theater__rail-head">
-          <span>Gallery</span>
-          <span>← → to browse · Esc to close</span>
+          <span data-i18n="theater.gallery">Gallery</span>
+          <span data-i18n="theater.to-browse-esc-to-close">← → to browse · Esc to close</span>
         </div>
-        <ul class="theater__rail" data-js="theater-rail" aria-label="Theater playlist"></ul>
+        <ul data-i18n-attr="aria-label:theater.theater-playlist" class="theater__rail" data-js="theater-rail" aria-label="Theater playlist"></ul>
       </div>
     </div>
 
-    <div class="lightbox" data-js="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+    <div data-i18n-attr="aria-label:lightbox.photo-viewer" class="lightbox" data-js="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
       <div class="lightbox__top">
         <span class="lightbox__counter" data-js="lightbox-counter">01 / 08</span>
         <div class="lightbox__controls">
           <button type="button" class="button button--small button--secondary" data-js="lightbox-mono" aria-pressed="false">
             <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-contrast" /></svg>
-            <span>B&amp;W</span>
+            <span data-i18n="lightbox.b-w">B&amp;W</span>
           </button>
           <button type="button" class="button button--small button--secondary" data-js="lightbox-close">
             <svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-x" /></svg>
-            <span>Close</span>
+            <span data-i18n="lightbox.close">Close</span>
           </button>
         </div>
       </div>
       <div class="lightbox__stage">
-        <button type="button" class="lightbox__nav" data-js="lightbox-prev" aria-label="Previous photo">
+        <button data-i18n-attr="aria-label:lightbox.previous-photo" type="button" class="lightbox__nav" data-js="lightbox-prev" aria-label="Previous photo">
           <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chevron-left" /></svg>
         </button>
         <figure class="lightbox__figure">
-          <img class="lightbox__image" data-js="lightbox-image" src="assets/images/keynote.webp" alt="" />
+          <img class="lightbox__image" data-js="lightbox-image" alt="" width="1280" height="714" />
           <figcaption class="lightbox__caption">
             <span class="lightbox__title" data-js="lightbox-title"></span>
             <span class="lightbox__desc" data-js="lightbox-desc"></span>
           </figcaption>
         </figure>
-        <button type="button" class="lightbox__nav" data-js="lightbox-next" aria-label="Next photo">
+        <button data-i18n-attr="aria-label:lightbox.next-photo" type="button" class="lightbox__nav" data-js="lightbox-next" aria-label="Next photo">
           <svg class="icon" aria-hidden="true" focusable="false"><use href="assets/icons/sprite.svg#i-chevron-right" /></svg>
         </button>
       </div>
       <div class="lightbox__strip" data-js="lightbox-strip"></div>
     </div>
 
-    <button type="button" class="scroll-top" data-js="scroll-top" aria-label="Scroll to top">
+    <button data-i18n-attr="aria-label:ui.scroll-to-top" type="button" class="scroll-top" data-js="scroll-top" aria-label="Scroll to top">
       <svg class="scroll-top__ring" viewBox="0 0 52 52" aria-hidden="true">
         <circle class="scroll-top__track" cx="26" cy="26" r="24" />
         <circle class="scroll-top__progress" data-js="scroll-ring" cx="26" cy="26" r="24" />

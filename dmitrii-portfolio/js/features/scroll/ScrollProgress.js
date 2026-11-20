@@ -9,9 +9,11 @@ export class ScrollProgress extends Component {
   }
 
   mount() {
-    this.own(this.scroll.subscribe(({ progress }) => {
-      this.root.style.transform = `scaleX(${progress.toFixed(4)})`;
-    }));
+    this.own(
+      this.scroll.subscribe(({ progress }) => {
+        this.root.style.transform = `scaleX(${progress.toFixed(4)})`;
+      }),
+    );
     return super.mount();
   }
 }

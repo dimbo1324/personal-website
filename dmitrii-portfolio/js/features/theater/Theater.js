@@ -25,18 +25,21 @@ export class Theater extends Component {
   #returnFocus = null;
   #sourceRect = null;
   #hooks;
+  #i18n;
   #thumbsRequested = false;
 
   /**
    * @param {HTMLElement} root
-   * @param {{ elements: Record<string, HTMLElement>,
+   * @param {{ elements: Record<string, any>,
    *           playlist: import("./TheaterPlaylist.js").TheaterPlaylist,
    *           player: import("./TheaterPlayer.js").TheaterPlayer,
    *           background: HTMLElement[],
+   *           i18n: import("../../i18n/I18nService.js").I18nService,
    *           hooks?: { onOpen?: () => void, onClose?: () => void, sourceRect?: () => DOMRect|null } }} options
    */
-  constructor(root, { elements, playlist, player, background, hooks = {} }) {
+  constructor(root, { elements, playlist, player, background, i18n, hooks = {} }) {
     super(root);
+    this.#i18n = i18n;
     this.#el = elements;
     this.#playlist = playlist;
     this.#player = player;
@@ -61,6 +64,8 @@ export class Theater extends Component {
     this.on(document, "keydown", (event) => this.#onKey(event));
 
     this.root.inert = true;
+    this.own(this.#i18n.subscribe(() => this.#renderTexts(), { immediate: false }));
+    this.#renderTexts();
     return super.mount();
   }
 
@@ -129,16 +134,15 @@ export class Theater extends Component {
   select(index) {
     const item = this.#playlist.select(index);
     const { video } = this.#player;
-    const { image, title, caption, counter } = this.#el;
+    const { image, counter } = this.#el;
 
-    title.textContent = item.title;
-    caption.textContent = item.description;
+    this.#renderCaption();
     counter.textContent = `${String(this.#playlist.index + 1).padStart(2, "0")} / ${String(this.#playlist.length).padStart(2, "0")}`;
 
     if (item.type === "video") {
       image.hidden = true;
       video.hidden = false;
-      this.#player.load(item.src);
+      this.#player.load(item.src, item.poster);
       this.#player.setVisible(true);
       if (this.#open) this.#player.play();
     } else {
@@ -146,7 +150,6 @@ export class Theater extends Component {
       video.hidden = true;
       this.#player.setVisible(false);
       image.hidden = false;
-      image.alt = item.title;
       image.src = item.src;
       // restart the fade-in animation for each photo
       image.style.animation = "none";
@@ -158,7 +161,29 @@ export class Theater extends Component {
       const active = i === this.#playlist.index;
       thumb.classList.toggle("is-active", active);
       thumb.setAttribute("aria-current", String(active));
-      if (active && this.#open) thumb.scrollIntoView({ block: "nearest", inline: "center", behavior: motion.reduced ? "auto" : "smooth" });
+      if (active && this.#open)
+        thumb.scrollIntoView({ block: "nearest", inline: "center", behavior: motion.reduced ? "auto" : "smooth" });
+    });
+  }
+
+  /** Title, caption, alt text and the "concept visual" badge of the current item. */
+  #renderCaption() {
+    const item = this.#playlist.current;
+    if (!item) return;
+    const title = this.#i18n.pick(item.title);
+    this.#el.title.textContent = title;
+    this.#el.caption.textContent = this.#i18n.pick(item.description);
+    if (item.type === "image") this.#el.image.alt = title;
+    if (this.#el.concept) this.#el.concept.hidden = !item.generated;
+  }
+
+  #renderTexts() {
+    this.#renderCaption();
+    this.#thumbs.forEach((thumb, index) => {
+      const title = this.#i18n.pick(this.#playlist.items[index].title);
+      thumb.setAttribute("aria-label", this.#i18n.t("theater.show", { title }));
+      const label = thumb.querySelector(".theater-thumb__label");
+      if (label) label.textContent = title;
     });
   }
 
@@ -179,7 +204,7 @@ export class Theater extends Component {
     if (next >= 0) this.select(next);
   }
 
-  /** Video thumbnails are captured from the clips themselves, once, lazily. */
+  /** Clips without a poster get a thumbnail captured from the clip itself, once, lazily. */
   async #requestThumbs() {
     if (this.#thumbsRequested) return;
     this.#thumbsRequested = true;
@@ -202,14 +227,14 @@ export class Theater extends Component {
       if (item.thumb) imageAttrs.src = item.thumb;
       const children = [
         createElement("img", { attrs: imageAttrs }),
-        createElement("span", { className: "theater-thumb__label", text: item.title }),
+        createElement("span", { className: "theater-thumb__label" }),
       ];
       if (item.type === "video") {
         children.push(createElement("span", { className: "theater-thumb__badge", children: [createIcon("play", "sm")] }));
       }
       const thumb = createElement("button", {
         className: item.thumb ? "theater-thumb" : "theater-thumb is-pending",
-        attrs: { type: "button", "aria-label": `Show ${item.title}` },
+        attrs: { type: "button" },
         children,
       });
       this.on(thumb, "click", () => this.select(index));

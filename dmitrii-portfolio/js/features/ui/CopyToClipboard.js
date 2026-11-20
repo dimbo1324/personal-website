@@ -4,10 +4,15 @@
  */
 export class CopyToClipboard {
   #toast;
+  #i18n;
 
-  /** @param {import("./Toast.js").Toast} toast */
-  constructor(toast) {
+  /**
+   * @param {import("./Toast.js").Toast} toast
+   * @param {import("../../i18n/I18nService.js").I18nService} i18n
+   */
+  constructor(toast, i18n) {
     this.#toast = toast;
+    this.#i18n = i18n;
   }
 
   /** @param {HTMLElement[]} buttons @param {AbortSignal} [signal] */
@@ -20,7 +25,11 @@ export class CopyToClipboard {
   async copy(value) {
     if (!value) return;
     const ok = (await this.#writeAsync(value)) || this.#writeLegacy(value);
-    this.#toast.show(ok ? `Copied: ${value}` : "Copy failed — select the text manually", ok ? "check" : "x");
+    const preview = value.length > 48 ? `${value.slice(0, 45)}…` : value;
+    this.#toast.show(
+      ok ? this.#i18n.t("toast.copied", { value: preview }) : this.#i18n.t("toast.copyFailed"),
+      ok ? "check" : "x",
+    );
   }
 
   async #writeAsync(value) {
@@ -40,7 +49,7 @@ export class CopyToClipboard {
     field.style.opacity = "0";
     document.body.append(field);
     field.select();
-    let ok = false;
+    let ok;
     try {
       ok = document.execCommand("copy");
     } catch {

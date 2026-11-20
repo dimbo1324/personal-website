@@ -51,14 +51,19 @@
 .media-frame__video {
   z-index: 0;
   opacity: 0;
+  /* the buffering (idle) clip is not rendered at all, so its first frame is never
+     reported as a late Largest Contentful Paint; it still preloads */
+  display: none;
 }
 .media-frame__video.is-leaving {
   z-index: 1;
   opacity: 1;
+  display: block;
 }
 .media-frame__video.is-active {
   z-index: 2;
   opacity: 1;
+  display: block;
 }
 
 /* light ring riding the edge of the iris transition */

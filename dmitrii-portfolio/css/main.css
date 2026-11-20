@@ -13,6 +13,7 @@
 @import url("base/palette-light.css") layer(tokens);
 @import url("base/global.css") layer(base);
 @import url("base/typography.css") layer(base);
+@import url("base/i18n-pending.css") layer(base);
 
 /* ---------- layout ---------- */
 @import url("layout/container.css") layer(layout);
@@ -25,12 +26,14 @@
 @import url("components/pill-button.css") layer(components);
 @import url("components/badge.css") layer(components);
 @import url("components/chip.css") layer(components);
+@import url("components/concept-badge.css") layer(components);
 @import url("components/live-dot.css") layer(components);
 @import url("components/tile.css") layer(components);
 @import url("components/panel.css") layer(components);
 @import url("components/kpi.css") layer(components);
 @import url("components/brand-mark.css") layer(components);
 @import url("components/theme-toggle.css") layer(components);
+@import url("components/lang-switch.css") layer(components);
 @import url("components/site-nav.css") layer(components);
 @import url("components/menu-toggle.css") layer(components);
 @import url("components/mobile-drawer.css") layer(components);
@@ -42,8 +45,10 @@
 @import url("components/widget-banner.css") layer(components);
 @import url("components/bento.css") layer(components);
 @import url("components/timeline.css") layer(components);
+@import url("components/case-card.css") layer(components);
 @import url("components/segmented.css") layer(components);
 @import url("components/channel.css") layer(components);
+@import url("components/reveal-button.css") layer(components);
 @import url("components/contact-card.css") layer(components);
 @import url("components/form-field.css") layer(components);
 @import url("components/flag-backdrop.css") layer(components);
@@ -62,6 +67,7 @@
 @import url("sections/header.css") layer(sections);
 @import url("sections/hero.css") layer(sections);
 @import url("sections/telemetry.css") layer(sections);
+@import url("sections/cases.css") layer(sections);
 @import url("sections/gallery.css") layer(sections);
 @import url("sections/dossier.css") layer(sections);
 @import url("sections/contact.css") layer(sections);

@@ -46,7 +46,9 @@ export class PrintHead {
     const length = this.#trail.length;
     this.#trail.forEach((point, index) => {
       const t = index / length;
-      context.fillStyle = isDark ? `rgba(242, 246, 247, ${(t * 0.5 * alpha).toFixed(3)})` : `rgba(11, 107, 90, ${(t * 0.45 * alpha).toFixed(3)})`;
+      context.fillStyle = isDark
+        ? `rgba(242, 246, 247, ${(t * 0.5 * alpha).toFixed(3)})`
+        : `rgba(11, 107, 90, ${(t * 0.45 * alpha).toFixed(3)})`;
       context.beginPath();
       context.arc(point.x, point.y, 0.6 + t * 1.6, 0, Math.PI * 2);
       context.fill();

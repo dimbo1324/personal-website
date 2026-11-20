@@ -2,13 +2,17 @@ import { DirectoryListingSource } from "./DirectoryListingSource.js";
 import { ManifestSource } from "./ManifestSource.js";
 import { VideoClip } from "./VideoClip.js";
 import { humanizeFileName } from "./humanizeFileName.js";
+import { groupClipFiles } from "./clipFiles.js";
 
 /**
  * Discovers the hero clips.
- *   1. directory listing (dev servers) — the folder itself is the truth,
- *      so dropping a new .mp4 in is enough;
- *   2. playlist.json — file list on static hosts + titles everywhere.
- * Clips are sorted by file name (01-, 02-, …). Never throws.
+ *   1. playlist.json — always present (the build and `npm run dev` keep it in
+ *      sync with the folder); works on every host and carries the titles;
+ *   2. directory listing — only if the playlist is missing (a plain dev server
+ *      such as Live Server on a folder without it). Never asked otherwise, so
+ *      static hosts never log a 404 for the folder URL.
+ * Posters (NAME.webp) and phone versions (NAME.mobile.mp4) are matched by name.
+ * Never throws.
  */
 export class VideoCatalog {
   #config;
@@ -24,31 +28,27 @@ export class VideoCatalog {
 
   /** @returns {Promise<VideoClip[]>} */
   async load() {
-    const [listed, manifest] = await Promise.all([this.#listing.list(), this.#manifest.load()]);
+    const manifest = await this.#manifest.load();
     const meta = new Map((manifest ?? []).map((entry) => [entry.file, entry]));
-    const files = listed ?? (manifest ?? []).map((entry) => entry.file);
 
-    return this.#dedupe(files)
-      .sort((a, b) => a.localeCompare(b, "en", { numeric: true }))
-      .map((file) => {
-        const entry = meta.get(file);
-        return new VideoClip({
-          file,
-          src: new URL(encodeURIComponent(file), new URL(this.#config.directory, document.baseURI)).href,
-          title: entry?.title || humanizeFileName(file),
-          description: entry?.description || "",
-        });
+    const files = manifest
+      ? manifest.flatMap((entry) => [entry.file, entry.mobile, entry.poster].filter((file) => typeof file === "string"))
+      : ((await this.#listing.list()) ?? []);
+
+    const directory = new URL(this.#config.directory, document.baseURI);
+    const url = (file) => (file ? new URL(encodeURIComponent(file), directory).href : null);
+
+    return groupClipFiles(files, this.#config).map((group) => {
+      const entry = meta.get(group.main);
+      return new VideoClip({
+        file: group.main,
+        src: url(group.main),
+        mobileSrc: url(group.mobile),
+        poster: url(group.poster),
+        title: entry?.title || humanizeFileName(group.main),
+        description: entry?.description || "",
+        generated: Boolean(entry?.generated),
       });
-  }
-
-  /** "clip.mp4" + "clip.webm" → keep one (mp4 preferred: universally supported). */
-  #dedupe(files) {
-    const byBase = new Map();
-    files.forEach((file) => {
-      const base = file.replace(/\.[^.]+$/, "");
-      const current = byBase.get(base);
-      if (!current || file.toLowerCase().endsWith(".mp4")) byBase.set(base, file);
     });
-    return [...byBase.values()];
   }
 }

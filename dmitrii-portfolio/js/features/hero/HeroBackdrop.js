@@ -4,33 +4,42 @@ import { clamp01 } from "../../core/math.js";
 import { RasterRenderer } from "./backdrop/RasterRenderer.js";
 import { BackdropSlides } from "./backdrop/BackdropSlides.js";
 import { RenderTimeline as T } from "./backdrop/RenderTimeline.js";
+import { whenPageIdle } from "../../core/whenPageIdle.js";
 
 /**
  * Controller for the hero backdrop: scene buttons, status line,
- * auto-cycling and visibility. Rendering itself is delegated to RasterRenderer.
+ * optional auto-cycling and visibility. Rendering itself is delegated to
+ * RasterRenderer. With the default effects budget the raster only runs
+ * when a visitor picks a scene (see data/effects.js).
  */
 export class HeroBackdrop extends Component {
-  static AUTO_CYCLE_MS = 6800;
-  static FIRST_RENDER_MS = 2600;
-
   #renderer;
   #slides;
   #buttons;
   #status;
   #statusText;
   #sceneNames;
+  #i18n;
+  #cycle;
+  /** @type {{ key: string, vars?: Record<string, any>, busy: boolean }} */
+  #message = { key: "scene.rendered", vars: { index: 0 }, busy: false };
   #timer = 0;
   #visible = true;
+  #pageIdle = false;
 
   /**
    * @param {HTMLElement} root  the hero section
    * @param {{ canvas: HTMLCanvasElement, slides: HTMLImageElement[], buttons: HTMLButtonElement[],
-   *           status: HTMLElement, statusText: HTMLElement, sceneNames: readonly string[],
+   *           status: HTMLElement, statusText: HTMLElement, sceneNames: readonly (string | Record<string, string>)[],
+   *           cycle: { autoCycle: boolean, cycleMs: number, ambientFps: number },
+   *           i18n: import("../../i18n/I18nService.js").I18nService,
    *           store: import("../../core/Store.js").Store,
    *           viewport: import("../../core/ViewportObserver.js").ViewportObserver }} options
    */
-  constructor(root, { canvas, slides, buttons, status, statusText, sceneNames, store, viewport }) {
+  constructor(root, { canvas, slides, buttons, status, statusText, sceneNames, cycle, i18n, store, viewport }) {
     super(root);
+    this.#cycle = cycle;
+    this.#i18n = i18n;
     this.#slides = new BackdropSlides(slides);
     this.#buttons = buttons;
     this.#status = status;
@@ -41,6 +50,7 @@ export class HeroBackdrop extends Component {
     this.#renderer = new RasterRenderer(canvas, {
       isDark: () => store.get("theme") === "dark",
       ambient: !motion.reduced,
+      ambientFps: cycle.ambientFps,
     });
   }
 
@@ -56,17 +66,27 @@ export class HeroBackdrop extends Component {
     this.own(
       this.viewport.watch(this.root, (entry) => {
         this.#visible = entry.isIntersecting;
-        this.#renderer.setActive(this.#visible && !motion.reduced);
+        this.#syncActive();
       }),
     );
 
-    if (!motion.reduced) this.#schedule(HeroBackdrop.FIRST_RENDER_MS);
+    this.own(this.#i18n.subscribe(() => this.#renderStatus()));
+    // the ambient field starts after the page has loaded — it must not delay the first paint
+    whenPageIdle().then(() => {
+      this.#pageIdle = true;
+      if (!this.signal.aborted) this.#syncActive();
+    });
+    if (this.#cycle.autoCycle) this.#schedule(this.#cycle.cycleMs);
     return super.mount();
   }
 
   onDestroy() {
     clearTimeout(this.#timer);
     this.#renderer.destroy();
+  }
+
+  #syncActive() {
+    this.#renderer.setActive(this.#visible && this.#pageIdle && !motion.reduced);
   }
 
   /** Render scene `index` (no-op if already shown and idle). */
@@ -78,10 +98,12 @@ export class HeroBackdrop extends Component {
 
     if (motion.reduced) {
       this.#slides.settle(index);
-      this.#setStatus(`Rendered · ${this.#sceneNames[index]}`, false);
+      this.#setStatus("scene.rendered", { index }, false);
       return;
     }
 
+    this.#pageIdle = true; // a click before the page settled starts drawing right away
+    this.#syncActive();
     this.#slides.settle(from);
     this.#status.classList.add("is-busy");
     this.#renderer.render({
@@ -91,26 +113,26 @@ export class HeroBackdrop extends Component {
       onFrame: (rawT, headK) => this.#onFrame(from, index, rawT, headK),
       onComplete: () => this.#onComplete(index),
     });
-    this.#schedule(HeroBackdrop.AUTO_CYCLE_MS);
+    if (this.#cycle.autoCycle) this.#schedule(this.#cycle.cycleMs);
   }
 
   #onFrame(from, to, rawT, headK) {
     this.#slides.update(from, to, rawT);
     if (rawT < T.sampleEnd) {
-      this.#setStatus("Sampling latent…", true);
+      this.#setStatus("scene.sampling", undefined, true);
     } else if (headK < 1) {
       const passes = this.#renderer.passes;
       const pass = Math.min(passes - 1, Math.floor(clamp01(headK) * passes)) + 1;
-      this.#setStatus(`Rendering · pass ${pass}/${passes} · ${Math.round(clamp01(headK) * 100)}%`, true);
+      this.#setStatus("scene.rendering", { pass, passes, percent: Math.round(clamp01(headK) * 100) }, true);
     } else {
       const develop = clamp01((rawT - T.headEnd) / (T.statusDevelopEnd - T.headEnd));
-      this.#setStatus(`Developing · ${Math.round(develop * 100)}%`, true);
+      this.#setStatus("scene.developing", { percent: Math.round(develop * 100) }, true);
     }
   }
 
   #onComplete(index) {
     this.#slides.settle(index);
-    this.#setStatus(`Rendered · ${this.#sceneNames[index]}`, false);
+    this.#setStatus("scene.rendered", { index }, false);
   }
 
   #schedule(delay) {
@@ -120,7 +142,7 @@ export class HeroBackdrop extends Component {
       if (this.#visible && !document.hidden) {
         this.show((this.store.get("heroScene") + 1) % this.#slides.length);
       } else {
-        this.#schedule(HeroBackdrop.AUTO_CYCLE_MS);
+        this.#schedule(this.#cycle.cycleMs);
       }
     }, delay);
   }
@@ -138,7 +160,16 @@ export class HeroBackdrop extends Component {
     });
   }
 
-  #setStatus(text, busy) {
+  /** @param {string} key  @param {Record<string, any> | undefined} vars  @param {boolean} busy */
+  #setStatus(key, vars, busy) {
+    this.#message = { key, vars, busy };
+    this.#renderStatus();
+  }
+
+  #renderStatus() {
+    const { key, vars, busy } = this.#message;
+    const resolved = vars && "index" in vars ? { ...vars, name: this.#i18n.pick(this.#sceneNames[vars.index]) } : vars;
+    const text = this.#i18n.t(key, resolved);
     if (this.#statusText.textContent !== text) this.#statusText.textContent = text;
     this.#status.classList.toggle("is-busy", busy);
   }

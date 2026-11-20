@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Optional repository variables (Settings → Secrets and variables → Actions → Variables).
+# None is required: without them the form uses mailto and analytics stays off.
+env:
+  VITE_SITE_URL: ${{ vars.VITE_SITE_URL }}
+  VITE_FORM_PROVIDER: ${{ vars.VITE_FORM_PROVIDER }}
+  VITE_FORM_ACCESS_KEY: ${{ vars.VITE_FORM_ACCESS_KEY }}
+  VITE_FORM_ENDPOINT: ${{ vars.VITE_FORM_ENDPOINT }}
+  VITE_ANALYTICS_PROVIDER: ${{ vars.VITE_ANALYTICS_PROVIDER }}
+  VITE_ANALYTICS_DOMAIN: ${{ vars.VITE_ANALYTICS_DOMAIN }}
+  VITE_ANALYTICS_WEBSITE_ID: ${{ vars.VITE_ANALYTICS_WEBSITE_ID }}
+  VITE_ANALYTICS_SRC: ${{ vars.VITE_ANALYTICS_SRC }}
+
+jobs:
+  check:
+    name: Lint · types · tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+
+  build:
+    name: Build
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # regenerates assets/video/hero/playlist.json, then vite build
+      - run: npm run build
+      - name: Fail if the playlist was out of date
+        run: git diff --exit-code -- assets/video/hero/playlist.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+  lighthouse:
+    name: Lighthouse
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - run: npx lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [build, lighthouse]
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

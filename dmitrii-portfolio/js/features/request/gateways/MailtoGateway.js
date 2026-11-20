@@ -7,21 +7,31 @@ import { RequestGateway } from "./RequestGateway.js";
 export class MailtoGateway extends RequestGateway {
   #recipient;
   #subjectPrefix;
+  #navigate;
 
-  /** @param {{ recipient: string, subjectPrefix: string }} options */
-  constructor({ recipient, subjectPrefix }) {
+  /**
+   * @param {{ recipient: string, subjectPrefix: string, navigate?: (url: string) => void }} options
+   */
+  constructor({ recipient, subjectPrefix, navigate = (url) => window.location.assign(url) }) {
     super();
     this.#recipient = recipient;
     this.#subjectPrefix = subjectPrefix;
+    this.#navigate = navigate;
+  }
+
+  get kind() {
+    return "mailto";
+  }
+
+  /** @param {import("../RequestPayload.js").RequestPayload} payload */
+  buildUrl(payload) {
+    const subject = encodeURIComponent(payload.subject(this.#subjectPrefix));
+    const body = encodeURIComponent(payload.toPlainText());
+    return `mailto:${this.#recipient}?subject=${subject}&body=${body}`;
   }
 
   async send(payload) {
-    const subject = encodeURIComponent(payload.subject(this.#subjectPrefix));
-    const body = encodeURIComponent(payload.toPlainText());
-    window.location.href = `mailto:${this.#recipient}?subject=${subject}&body=${body}`;
-    return {
-      ok: true,
-      message: `Your email app should open with the request addressed to ${this.#recipient}. Just press “Send”. If nothing opened, copy the request and email it manually.`,
-    };
+    this.#navigate(this.buildUrl(payload));
+    return { ok: true, messageKey: "form.result.mailto", vars: { recipient: this.#recipient } };
   }
 }

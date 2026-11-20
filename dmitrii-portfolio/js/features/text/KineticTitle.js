@@ -43,7 +43,7 @@ export class KineticTitle extends Component {
 
   #split() {
     let index = 0;
-    this.root.querySelectorAll("[data-kinetic-text]").forEach((line) => {
+    this.root.querySelectorAll("[data-kinetic-text]").forEach((/** @type {HTMLElement} */ line) => {
       const text = line.dataset.kineticText ?? line.textContent;
       line.textContent = "";
       line.setAttribute("aria-hidden", "true");

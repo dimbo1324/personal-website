@@ -43,3 +43,6 @@
 .mobile-drawer__link.is-active {
   color: var(--accent);
 }
+.mobile-drawer__link b {
+  font-weight: inherit;
+}

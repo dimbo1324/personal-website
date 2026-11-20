@@ -1,20 +1,43 @@
 /**
  * The theater's ordered media list: every reel clip first, then every
- * gallery photo. Pure data, no DOM. Video thumbnails arrive later
- * (captured from the clips) through setThumb().
+ * gallery photo. Pure data, no DOM. Titles/descriptions stay localizable
+ * values ({ en, es, ru } or strings); the view picks the language.
+ * Clip thumbnails are their posters; missing ones arrive later through setThumb().
+ *
+ * @typedef {{ type: "video" | "image", src: string, poster: string | null, thumb: string | null,
+ *             title: any, description: any,
+ *             generated: boolean }} TheaterItem
  */
 export class TheaterPlaylist {
+  /** @type {TheaterItem[]} */
   #items;
   #index = 0;
 
   /**
    * @param {readonly import("../media/catalog/VideoClip.js").VideoClip[]} clips
-   * @param {readonly { src: string, title: string, description: string }[]} photos
+   * @param {readonly { image: { src: string }, title: unknown, description: unknown }[]} photos
+   * @param {{ compact?: boolean }} [options]  compact: prefer the lighter mobile files
    */
-  constructor(clips, photos) {
+  constructor(clips, photos, { compact = false } = {}) {
     this.#items = [
-      ...clips.map((clip) => ({ type: "video", src: clip.src, thumb: null, title: clip.title, description: clip.description })),
-      ...photos.map((photo) => ({ type: "image", src: photo.src, thumb: photo.src, title: photo.title, description: photo.description })),
+      ...clips.map((clip) => ({
+        type: /** @type {const} */ ("video"),
+        src: clip.sourceFor({ compact }),
+        poster: clip.poster,
+        thumb: clip.poster,
+        title: clip.titles,
+        description: clip.descriptions,
+        generated: clip.generated,
+      })),
+      ...photos.map((photo) => ({
+        type: /** @type {const} */ ("image"),
+        src: photo.image.src,
+        poster: null,
+        thumb: photo.image.src,
+        title: photo.title,
+        description: photo.description,
+        generated: false,
+      })),
     ];
   }
 

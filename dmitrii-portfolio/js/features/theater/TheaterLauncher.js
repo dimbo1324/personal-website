@@ -11,13 +11,16 @@ export class TheaterLauncher extends Component {
   #dwell;
   #label;
   #onLaunch;
+  #i18n;
 
   /**
    * @param {HTMLElement} root  the media frame
-   * @param {{ label: HTMLElement, onLaunch: (from: DOMRect) => void }} options
+   * @param {{ label: HTMLElement, onLaunch: (from: DOMRect) => void,
+   *           i18n: import("../../i18n/I18nService.js").I18nService }} options
    */
-  constructor(root, { label, onLaunch }) {
+  constructor(root, { label, onLaunch, i18n }) {
     super(root);
+    this.#i18n = i18n;
     this.#label = label;
     this.#onLaunch = onLaunch;
     this.#dwell = new DwellTrigger(root, {
@@ -57,7 +60,7 @@ export class TheaterLauncher extends Component {
     this.root.style.setProperty("--dwell-angle", `${(progress * 360).toFixed(1)}deg`);
     if (progress > 0 && this.#label) {
       const seconds = Math.max(1, Math.ceil((1 - progress) * (TheaterLauncher.DWELL_MS / 1000)));
-      const text = `Keep hovering · theater in ${seconds}`;
+      const text = this.#i18n.t("reel.dwell", { seconds });
       if (this.#label.textContent !== text) this.#label.textContent = text;
     }
   }

@@ -13,16 +13,28 @@ export class RadarChart {
   #scenarios;
   #values;
   #scenarioIndex = -1;
+  #i18n;
+  #name;
+
+  /** Re-renders the scenario badge in the current language. */
+  relabel() {
+    this.#svg.scenarioTag.textContent = this.#i18n.pick(this.#name);
+  }
   #nodes = [];
   #cancel = null;
 
   /**
    * @param {{ grid: SVGGElement, baseline: SVGPolygonElement, shape: SVGPolygonElement,
    *           nodes: SVGGElement, labels: SVGGElement, scenarioTag: HTMLElement, peak: HTMLElement }} svg
-   * @param {{ axes: readonly string[], baseline: readonly number[], scenarios: readonly {name:string, weights:number[]}[] }} data
+   * @param {{ axes: readonly string[], baseline: readonly number[],
+   *           scenarios: readonly { name: string | Record<string, string>, weights: number[] }[],
+   *           initialName: string | Record<string, string> }} data
+   * @param {import("../../i18n/I18nService.js").I18nService} i18n
    */
-  constructor(svg, { axes, baseline, scenarios }) {
+  constructor(svg, { axes, baseline, scenarios, initialName }, i18n) {
     this.#svg = svg;
+    this.#i18n = i18n;
+    this.#name = initialName;
     this.#axes = axes;
     this.#scenarios = scenarios;
     this.#values = baseline.slice();
@@ -33,7 +45,8 @@ export class RadarChart {
   next() {
     this.#scenarioIndex = (this.#scenarioIndex + 1) % this.#scenarios.length;
     const scenario = this.#scenarios[this.#scenarioIndex];
-    this.#svg.scenarioTag.textContent = scenario.name;
+    this.#name = scenario.name;
+    this.relabel();
 
     const from = this.#values.slice();
     const to = scenario.weights.map((v) => clamp(v + rand(-5, 5), 58, 99));
@@ -57,7 +70,13 @@ export class RadarChart {
   }
 
   #points(values) {
-    return values.map((v, i) => this.#polar(i, (v / 100) * RadarChart.RADIUS).map((n) => n.toFixed(1)).join(",")).join(" ");
+    return values
+      .map((v, i) =>
+        this.#polar(i, (v / 100) * RadarChart.RADIUS)
+          .map((n) => n.toFixed(1))
+          .join(","),
+      )
+      .join(" ");
   }
 
   #build(baseline) {
@@ -82,7 +101,12 @@ export class RadarChart {
 
       const [lx, ly] = this.#polar(i, RADIUS + 20);
       const anchor = Math.abs(lx - CENTER.x) < 8 ? "middle" : lx > CENTER.x ? "start" : "end";
-      const text = createSvgElement("text", { x: lx.toFixed(1), y: (ly + 3).toFixed(1), "text-anchor": anchor, class: "chart-radar__label" });
+      const text = createSvgElement("text", {
+        x: lx.toFixed(1),
+        y: (ly + 3).toFixed(1),
+        "text-anchor": anchor,
+        class: "chart-radar__label",
+      });
       text.textContent = label;
       labels.append(text);
     });

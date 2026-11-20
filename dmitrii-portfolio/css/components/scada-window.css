@@ -213,7 +213,15 @@
   height: 18px;
   cursor: nwse-resize;
   touch-action: none;
-  background: linear-gradient(135deg, transparent 55%, var(--line-strong) 55%, var(--line-strong) 66%, transparent 66%, transparent 76%, var(--accent) 76%);
+  background: linear-gradient(
+    135deg,
+    transparent 55%,
+    var(--line-strong) 55%,
+    var(--line-strong) 66%,
+    transparent 66%,
+    transparent 76%,
+    var(--accent) 76%
+  );
 }
 
 @media (max-width: 820px) {

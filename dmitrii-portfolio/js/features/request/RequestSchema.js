@@ -1,4 +1,5 @@
 import * as rules from "./validators.js";
+import { issue } from "./validationIssue.js";
 
 /**
  * Declarative description of the request form: per-field rules plus
@@ -8,19 +9,18 @@ import * as rules from "./validators.js";
 export function createRequestSchema({ limits }) {
   return {
     fields: {
-      lastName: [rules.required("last name"), rules.maxLength(limits.name), rules.personName],
-      firstName: [rules.required("first name"), rules.maxLength(limits.name), rules.personName],
+      lastName: [rules.required("form.error.lastName"), rules.maxLength(limits.name), rules.personName],
+      firstName: [rules.required("form.error.firstName"), rules.maxLength(limits.name), rules.personName],
       middleName: [rules.maxLength(limits.name), rules.personName],
       phone: [rules.phone],
       email: [rules.maxLength(limits.email), rules.email],
       message: [rules.maxLength(limits.message)],
-      consent: [rules.checked("Please confirm to continue.")],
+      consent: [rules.checked("form.error.consent")],
     },
     crossRules: [
       {
         fields: ["phone", "email"],
-        validate: (values) =>
-          rules.isBlank(values.phone) && rules.isBlank(values.email) ? "Add a phone or an email." : null,
+        validate: (values) => (rules.isBlank(values.phone) && rules.isBlank(values.email) ? issue("form.error.contact") : null),
       },
     ],
   };

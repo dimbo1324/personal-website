@@ -1,5 +1,6 @@
 /**
  * Runs a schema (see RequestSchema.js) against a plain values object.
+ * @typedef {import("./validationIssue.js").ValidationIssue} ValidationIssue
  */
 export class FormValidator {
   #schema;
@@ -13,27 +14,30 @@ export class FormValidator {
     return Object.keys(this.#schema.fields);
   }
 
-  /** First error for one field, including cross-rules it participates in. */
+  /**
+   * First issue for one field, including cross-rules it participates in.
+   * @returns {ValidationIssue | null}
+   */
   validateField(name, values) {
     for (const rule of this.#schema.fields[name] ?? []) {
-      const message = rule(values[name]);
-      if (message) return message;
+      const problem = rule(values[name]);
+      if (problem) return problem;
     }
     for (const cross of this.#schema.crossRules) {
       if (cross.fields.includes(name)) {
-        const message = cross.validate(values);
-        if (message) return message;
+        const problem = cross.validate(values);
+        if (problem) return problem;
       }
     }
     return null;
   }
 
-  /** @returns {Map<string, string>} field name → message (only invalid fields) */
+  /** @returns {Map<string, ValidationIssue>} field name → issue (only invalid fields) */
   validateAll(values) {
     const errors = new Map();
     this.fieldNames.forEach((name) => {
-      const message = this.validateField(name, values);
-      if (message) errors.set(name, message);
+      const problem = this.validateField(name, values);
+      if (problem) errors.set(name, problem);
     });
     return errors;
   }

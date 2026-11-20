@@ -56,9 +56,13 @@ export function collectDotTargets(card, { maxDots = 3200 } = {}) {
   const dots = [];
 
   outline({ x: 1, y: 1, w: origin.width - 2, h: origin.height - 2 }, OUTLINE_STEP + 2, "frame", dots);
-  card.querySelectorAll(".field__control, .checkbox__box").forEach((el) => outline(localRect(el, origin), OUTLINE_STEP, "field", dots));
   card
-    .querySelectorAll(".field__label, .form-group__legend, .form-group__hint, .request-form__note, .checkbox__label, .request-form__hint")
+    .querySelectorAll(".field__control, .checkbox__box")
+    .forEach((el) => outline(localRect(el, origin), OUTLINE_STEP, "field", dots));
+  card
+    .querySelectorAll(
+      ".field__label, .form-group__legend, .form-group__hint, .request-form__note, .checkbox__label, .request-form__hint",
+    )
     .forEach((el) => {
       const rect = textRect(el, origin);
       if (rect.w > 0) textLines(rect, parseFloat(getComputedStyle(el).lineHeight) || 18, "text", dots);

@@ -12,7 +12,8 @@ import { createGateway } from "./gateways/createGateway.js";
  * - validates on blur (after first touch) and on submit, focusing the first error;
  * - "phone OR email" cross-rule re-validates both fields together;
  * - keeps a session draft, ignores bots via a honeypot;
- * - delivers through a pluggable gateway (mailto now, HTTP later);
+ * - delivers through a pluggable gateway (Web3Forms / Formspree / mailto);
+ * - every message is a translation key, so a language switch re-renders it;
  * - swaps to a success panel with "copy request" / "new request".
  */
 export class RequestForm extends Component {
@@ -22,41 +23,53 @@ export class RequestForm extends Component {
   #validator;
   #gateway;
   #drafts;
+  #i18n;
   #fields = new Map();
   #counter;
   #ui;
   #copy;
+  #onSent;
   #lastPayload = null;
+  /** @type {{ key: string, vars?: Record<string, unknown> } | null} */
+  #status = null;
+  /** @type {{ key: string, vars?: Record<string, unknown> } | null} */
+  #success = null;
   #draftTimer = 0;
   #submitting = false;
 
   /**
    * @param {HTMLFormElement} root
    * @param {{ config: typeof import("../../data/request.js").REQUEST_CONFIG,
-   *           ui: { status: HTMLElement, submit: HTMLButtonElement, success: HTMLElement,
+   *           i18n: import("../../i18n/I18nService.js").I18nService,
+   *           ui: { status: HTMLElement, hint?: HTMLElement | null, submit: HTMLButtonElement, success: HTMLElement,
    *                 successText: HTMLElement, copyButton: HTMLButtonElement, resetButton: HTMLButtonElement,
    *                 counter: HTMLElement },
-   *           clipboard: import("../ui/CopyToClipboard.js").CopyToClipboard }} options
+   *           clipboard: import("../ui/CopyToClipboard.js").CopyToClipboard,
+   *           onSent?: (transport: string) => void }} options
    */
-  constructor(root, { config, ui, clipboard }) {
+  constructor(root, { config, i18n, ui, clipboard, onSent = () => {} }) {
     super(root);
     this.#validator = new FormValidator(createRequestSchema(config));
     this.#gateway = createGateway(config);
     this.#drafts = new DraftStore(config.draftKey);
+    this.#i18n = i18n;
     this.#ui = ui;
     this.#copy = clipboard;
+    this.#onSent = onSent;
 
-    root.querySelectorAll("[data-field]").forEach((wrapper) => {
-      const field = new FieldController(wrapper);
+    const translate = (problem) => i18n.t(problem.key, problem.vars);
+    root.querySelectorAll("[data-field]").forEach((/** @type {HTMLElement} */ wrapper) => {
+      const field = new FieldController(wrapper, translate);
       this.#fields.set(field.name, field);
     });
     const message = this.#fields.get("message");
-    if (message && ui.counter) this.#counter = new CharacterCounter(message.control, ui.counter, config.limits.message);
+    if (message && ui.counter) {
+      this.#counter = new CharacterCounter(message.control, ui.counter, config.limits.message, (n) => i18n.number(n));
+    }
   }
 
   mount() {
     this.#restoreDraft();
-    this.#counter?.update();
 
     this.#fields.forEach((field) => {
       this.on(field.control, "blur", (event) => {
@@ -74,6 +87,7 @@ export class RequestForm extends Component {
     });
     this.on(this.#ui.copyButton, "click", () => this.#lastPayload && this.#copy.copy(this.#lastPayload.toPlainText()));
     this.on(this.#ui.resetButton, "click", () => this.#startOver());
+    this.own(this.#i18n.subscribe(() => this.#renderTexts()));
     return super.mount();
   }
 
@@ -81,8 +95,24 @@ export class RequestForm extends Component {
     clearTimeout(this.#draftTimer);
   }
 
+  /** Everything this form writes itself, in the current language. */
+  #renderTexts() {
+    const t = (message) => (message ? this.#i18n.t(message.key, message.vars) : "");
+    if (this.#ui.hint) this.#ui.hint.textContent = this.#i18n.t(`form.hint.${this.#gateway.kind}`);
+    this.#ui.status.textContent = t(this.#status);
+    this.#ui.successText.textContent = t(this.#success);
+    this.#fields.forEach((field) => field.refresh());
+    this.#counter?.update();
+  }
+
+  #setStatus(message) {
+    this.#status = message;
+    this.#ui.status.textContent = message ? this.#i18n.t(message.key, message.vars) : "";
+  }
+
   /** Current values of all fields (+ honeypot). */
   #values() {
+    /** @type {Record<string, any>} */
     const values = {};
     this.#fields.forEach((field, name) => {
       values[name] = field.value;
@@ -101,14 +131,14 @@ export class RequestForm extends Component {
         .filter((linked) => linked?.touched)
         .forEach((linked) => this.#validate(linked.name));
     }
-    this.#ui.status.textContent = "";
+    this.#setStatus(null);
     this.#scheduleDraft();
   }
 
   #validate(name) {
-    const message = this.#validator.validateField(name, this.#values());
-    this.#fields.get(name)?.render(message);
-    return !message;
+    const problem = this.#validator.validateField(name, this.#values());
+    this.#fields.get(name)?.render(problem);
+    return !problem;
   }
 
   async #submit() {
@@ -117,7 +147,7 @@ export class RequestForm extends Component {
 
     // bots fill every field — pretend success, send nothing
     if (values.website) {
-      this.#showSuccess("Thank you!");
+      this.#showSuccess({ key: "form.result.thanks" });
       return;
     }
 
@@ -128,24 +158,26 @@ export class RequestForm extends Component {
     });
 
     if (errors.size > 0) {
-      const count = errors.size;
-      this.#ui.status.textContent = `Please check ${count} field${count > 1 ? "s" : ""} above.`;
+      this.#setStatus({ key: "form.status.invalid", vars: { count: errors.size } });
       this.#fields.get(errors.keys().next().value)?.focus();
       return;
     }
 
     this.#setSubmitting(true);
-    const payload = new RequestPayload(values);
+    this.#setStatus({ key: "form.status.sending" });
+    const payload = new RequestPayload(values, { lang: this.#i18n.lang });
     const result = await this.#gateway.send(payload);
     this.#setSubmitting(false);
 
     if (!result.ok) {
-      this.#ui.status.textContent = result.message;
+      this.#setStatus({ key: result.messageKey, vars: result.vars });
       return;
     }
+    this.#setStatus(null);
     this.#lastPayload = payload;
     this.#drafts.clear();
-    this.#showSuccess(result.message);
+    this.#onSent(this.#gateway.kind);
+    this.#showSuccess({ key: result.messageKey, vars: result.vars });
   }
 
   #setSubmitting(busy) {
@@ -158,7 +190,8 @@ export class RequestForm extends Component {
     // lock the card height so swapping form → success causes no layout jump
     const card = this.root.parentElement;
     if (card) card.style.minHeight = `${card.offsetHeight}px`;
-    this.#ui.successText.textContent = message;
+    this.#success = message;
+    this.#ui.successText.textContent = this.#i18n.t(message.key, message.vars);
     this.root.hidden = true;
     this.#ui.success.hidden = false;
     this.#ui.copyButton.hidden = !this.#lastPayload;
@@ -169,7 +202,8 @@ export class RequestForm extends Component {
     this.root.reset();
     this.#fields.forEach((field) => field.reset());
     this.#counter?.update();
-    this.#ui.status.textContent = "";
+    this.#setStatus(null);
+    this.#success = null;
     this.#lastPayload = null;
     this.#ui.success.hidden = true;
     this.root.hidden = false;

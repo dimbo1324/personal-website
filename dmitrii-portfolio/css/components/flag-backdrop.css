@@ -47,13 +47,23 @@
   inset: 0;
   background:
     linear-gradient(180deg, var(--bg-surface) 0%, color-mix(in srgb, var(--bg-surface) 40%, transparent) 16%, transparent 34%),
-    linear-gradient(0deg, color-mix(in srgb, var(--bg-void) 94%, transparent) 0%, color-mix(in srgb, var(--bg-void) 70%, transparent) 30%, transparent 62%),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--bg-void) 94%, transparent) 0%,
+      color-mix(in srgb, var(--bg-void) 70%, transparent) 30%,
+      transparent 62%
+    ),
     linear-gradient(90deg, color-mix(in srgb, var(--bg-void) 55%, transparent) 0%, transparent 55%);
 }
 
 [data-theme="light"] .flag-backdrop__shade {
   background:
     linear-gradient(180deg, var(--bg-surface) 0%, color-mix(in srgb, var(--bg-surface) 30%, transparent) 16%, transparent 32%),
-    linear-gradient(0deg, color-mix(in srgb, var(--bg-void) 96%, transparent) 0%, color-mix(in srgb, var(--bg-void) 74%, transparent) 30%, transparent 60%),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--bg-void) 96%, transparent) 0%,
+      color-mix(in srgb, var(--bg-void) 74%, transparent) 30%,
+      transparent 60%
+    ),
     linear-gradient(90deg, color-mix(in srgb, var(--bg-void) 45%, transparent) 0%, transparent 50%);
 }

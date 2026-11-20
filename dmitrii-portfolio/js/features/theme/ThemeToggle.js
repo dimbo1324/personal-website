@@ -2,11 +2,6 @@ import { Component } from "../../core/Component.js";
 import { motion } from "../../core/MotionPreference.js";
 import { ThemeTransition } from "./ThemeTransition.js";
 
-const LABELS = Object.freeze({
-  dark: "Switch to light theme",
-  light: "Switch to dark theme",
-});
-
 /**
  * The orb in the header. Owns its click choreography
  * (sunset → moonrise / moon flip → sunrise) and delegates the actual
@@ -23,16 +18,19 @@ export class ThemeToggle extends Component {
    * @param {HTMLButtonElement} root
    * @param {import("./ThemeService.js").ThemeService} themeService
    * @param {import("../../core/Store.js").Store} store
+   * @param {import("../../i18n/I18nService.js").I18nService} i18n
    */
-  constructor(root, themeService, store) {
+  constructor(root, themeService, store, i18n) {
     super(root);
     this.#themeService = themeService;
     this.store = store;
+    this.i18n = i18n;
   }
 
   mount() {
     this.on(this.root, "click", (event) => this.#toggle(event));
-    this.own(this.store.subscribe("theme", (theme) => this.#syncLabel(theme)));
+    this.own(this.store.subscribe("theme", () => this.#syncLabel()));
+    this.own(this.i18n.subscribe(() => this.#syncLabel(), { immediate: false }));
     return super.mount();
   }
 
@@ -62,8 +60,9 @@ export class ThemeToggle extends Component {
     this.#timer = window.setTimeout(() => this.root.classList.remove(...classes), ThemeToggle.CHOREOGRAPHY_MS);
   }
 
-  #syncLabel(theme) {
-    this.root.setAttribute("aria-label", LABELS[theme]);
-    this.root.setAttribute("title", LABELS[theme]);
+  #syncLabel() {
+    const label = this.i18n.t(this.store.get("theme") === "dark" ? "theme.toLight" : "theme.toDark");
+    this.root.setAttribute("aria-label", label);
+    this.root.setAttribute("title", label);
   }
 }

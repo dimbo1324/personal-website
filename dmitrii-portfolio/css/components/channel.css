@@ -65,3 +65,53 @@
     text-align: left;
   }
 }
+
+/* ---------- phone row: revealed on demand ---------- */
+.channel--reveal {
+  grid-template-columns: 7rem minmax(0, 1fr);
+}
+.channel--reveal .channel__value {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  overflow: visible;
+}
+.channel__link {
+  color: var(--text-primary);
+  transition: color var(--dur-fast) ease;
+}
+.channel__link:hover {
+  color: var(--accent);
+}
+.channel__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background: var(--tint-accent);
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  transition: background-color var(--dur-fast) ease;
+}
+.channel__chip:hover {
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+}
+.channel--reveal.is-revealed .channel__link {
+  animation: channel-reveal 420ms var(--ease-out);
+}
+@keyframes channel-reveal {
+  from {
+    opacity: 0;
+    letter-spacing: 0.3em;
+  }
+}
+
+@media (max-width: 540px) {
+  .channel--reveal .channel__value {
+    justify-content: flex-start;
+  }
+}

@@ -56,7 +56,7 @@
 .section-head__title {
   font-size: var(--fs-h2);
 }
-.section-head__title span {
+.section-head__accent {
   color: var(--accent);
 }
 

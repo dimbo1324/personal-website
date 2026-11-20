@@ -74,7 +74,7 @@
   font-size: var(--fs-xs);
   color: var(--text-muted);
 }
-.request-form__note > span:first-child {
+.request-form__asterisk {
   color: var(--amber);
 }
 

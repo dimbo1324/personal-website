@@ -1,17 +1,28 @@
 /** DOM helpers. All element creation goes through `createElement`
  *  (textContent only — never innerHTML), which keeps the app XSS-safe. */
 
+/*
+ * Query helpers return `any`: which element a selector finds is decided by
+ * the markup, so each feature documents the element type it expects in its
+ * own constructor JSDoc instead of casting at every call site.
+ */
+
+/** @param {string} selector @param {ParentNode} [root] @returns {any} */
 export const qs = (selector, root = document) => root.querySelector(selector);
 
+/** @param {string} selector @param {ParentNode} [root] @returns {any[]} */
 export const qsa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-/** Query a `data-js="name"` hook. */
+/** Query a `data-js="name"` hook. @param {string} name @param {ParentNode} [root] @returns {any} */
 export const hook = (name, root = document) => root.querySelector(`[data-js="${name}"]`);
 
+/** @param {string} name @param {ParentNode} [root] @returns {any[]} */
 export const hooks = (name, root = document) => Array.from(root.querySelectorAll(`[data-js="${name}"]`));
 
 /**
- * @param {string} tag
+ * @template {keyof HTMLElementTagNameMap} K
+ * @param {K} tag
+ * @returns {HTMLElementTagNameMap[K]}
  * @param {{ className?: string, text?: string, attrs?: Record<string,string>, dataset?: Record<string,string>, children?: Node[] }} [options]
  */
 export function createElement(tag, { className, text, attrs, dataset, children } = {}) {

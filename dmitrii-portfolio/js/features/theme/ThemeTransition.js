@@ -28,10 +28,7 @@ export class ThemeTransition {
       .then(() => {
         document.documentElement.animate(
           {
-            clipPath: [
-              `circle(0px at ${origin.x}px ${origin.y}px)`,
-              `circle(${radius}px at ${origin.x}px ${origin.y}px)`,
-            ],
+            clipPath: [`circle(0px at ${origin.x}px ${origin.y}px)`, `circle(${radius}px at ${origin.x}px ${origin.y}px)`],
           },
           {
             duration: ThemeTransition.DURATION,

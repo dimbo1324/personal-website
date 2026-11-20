@@ -11,11 +11,12 @@ export class Component {
   #disposers = [];
   #mounted = false;
 
-  /** @param {HTMLElement} root */
+  /** @param {any} root  the component's element (each subclass documents its exact type) */
   constructor(root) {
     if (!(root instanceof Element)) {
       throw new TypeError(`${new.target.name}: root element is required`);
     }
+    /** @type {any} */
     this.root = root;
   }
 
@@ -32,7 +33,7 @@ export class Component {
    * addEventListener that is cleaned up on destroy().
    * @param {EventTarget} target
    * @param {string} type
-   * @param {EventListener} handler
+   * @param {(event: any) => void} handler
    * @param {AddEventListenerOptions} [options]
    */
   on(target, type, handler, options = {}) {

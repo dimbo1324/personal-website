@@ -18,7 +18,7 @@ export class ScadaController extends Component {
 
   /**
    * @param {HTMLElement} root  the window element
-   * @param {{ view: Record<string, any>, log: HTMLOListElement, inputs: Record<string, HTMLElement>,
+   * @param {{ view: Record<string, any>, log: HTMLOListElement, inputs: Record<string, any>,
    *           store: import("../../core/Store.js").Store }} options
    */
   constructor(root, { view, log, inputs, store }) {

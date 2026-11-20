@@ -1,0 +1,24 @@
+/* "Show number" — the phone is assembled by JS only on request. */
+.reveal-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px dashed var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  transition:
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
+}
+.reveal-button:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.reveal-button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}

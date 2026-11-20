@@ -13,13 +13,17 @@ export class PidChart {
   #outer;
   #inner;
   #cancel = null;
+  #i18n;
+  #isStep = true;
 
   /**
    * @param {{ outer: SVGPathElement, inner: SVGPathElement, area: SVGPathElement,
    *           marker: SVGCircleElement, meta: HTMLElement, mode: HTMLElement }} elements
+   * @param {import("../../i18n/I18nService.js").I18nService} i18n
    */
-  constructor(elements) {
+  constructor(elements, i18n) {
     this.#el = elements;
+    this.#i18n = i18n;
     const first = this.#model.generate();
     this.#outer = first.outer;
     this.#inner = first.inner;
@@ -47,6 +51,11 @@ export class PidChart {
     this.#cancel?.();
   }
 
+  /** Re-renders the mode badge in the current language. */
+  relabel() {
+    this.#el.mode.textContent = this.#i18n.t(this.#isStep ? "telemetry.mode.step" : "telemetry.mode.disturbance");
+  }
+
   #x(i) {
     return PidChart.X0 + (i / PidModel.SAMPLES) * PidChart.WIDTH;
   }
@@ -66,6 +75,7 @@ export class PidChart {
 
   #label({ meta, isStep }) {
     this.#el.meta.textContent = meta;
-    this.#el.mode.textContent = isStep ? "Step" : "Disturbance";
+    this.#isStep = isStep;
+    this.relabel();
   }
 }

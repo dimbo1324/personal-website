@@ -26,14 +26,16 @@ export class BrandMark extends Component {
 
   /**
    * @param {HTMLAnchorElement} root
-   * @param {{ name: HTMLElement, hint: HTMLElement, letters: HTMLElement[] }} parts
+   * @param {{ name: HTMLElement, hint: HTMLElement, letters: HTMLElement[],
+   *           emblem?: { intervalMs: number, holdMs: number } }} parts
    */
-  constructor(root, { name, hint, letters }) {
+  constructor(root, { name, hint, letters, emblem }) {
     super(root);
     this.#nameScramble = new ScrambleText(name, { speed: 20 });
     this.#hintScramble = new ScrambleText(hint, { speed: 24 });
     this.#flaps = letters.map((letter, index) => new SplitFlap(letter, { steps: 7 + index * 4 }));
     this.#flipper = new EmblemFlipper(root, {
+      ...emblem,
       onChange: (flipped) => {
         if (!flipped) this.#flaps.forEach((flap) => flap.spin());
       },

@@ -7,10 +7,9 @@ import { motion } from "../../core/MotionPreference.js";
  * while the tab is hidden, and is disabled for reduced motion.
  */
 export class EmblemFlipper {
-  static INTERVAL_MS = 9000;
-  static HOLD_MS = 3600;
-
   #root;
+  #intervalMs;
+  #holdMs;
   #flipped = false;
   #paused = false;
   #cycleTimer = 0;
@@ -19,11 +18,13 @@ export class EmblemFlipper {
 
   /**
    * @param {HTMLElement} root the .brand element (receives .is-flipped)
-   * @param {{ onChange?: (flipped: boolean) => void }} [options]
+   * @param {{ onChange?: (flipped: boolean) => void, intervalMs?: number, holdMs?: number }} [options]
    */
-  constructor(root, { onChange } = {}) {
+  constructor(root, { onChange, intervalMs = 19000, holdMs = 3600 } = {}) {
     this.#root = root;
     this.#onChange = onChange;
+    this.#intervalMs = intervalMs;
+    this.#holdMs = holdMs;
   }
 
   get flipped() {
@@ -64,7 +65,7 @@ export class EmblemFlipper {
   #restartAuto() {
     this.stop();
     if (motion.reduced) return;
-    this.#cycleTimer = window.setTimeout(() => this.#autoStep(), EmblemFlipper.INTERVAL_MS);
+    this.#cycleTimer = window.setTimeout(() => this.#autoStep(), this.#intervalMs);
   }
 
   #autoStep() {
@@ -78,7 +79,7 @@ export class EmblemFlipper {
       this.#holdTimer = window.setTimeout(() => {
         if (!this.#paused) this.set(false);
         this.#restartAuto();
-      }, EmblemFlipper.HOLD_MS);
+      }, this.#holdMs);
     } else {
       this.#restartAuto();
     }

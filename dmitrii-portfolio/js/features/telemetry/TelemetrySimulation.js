@@ -21,11 +21,13 @@ export class TelemetrySimulation extends Component {
    * @param {{ charts: { radar: import("./RadarChart.js").RadarChart, pid: import("./PidChart.js").PidChart, spectrum: import("./SpectrumChart.js").SpectrumChart },
    *           panels: { radar: HTMLElement, pid: HTMLElement, spectrum: HTMLElement },
    *           controls: { toggle: HTMLButtonElement, toggleText: HTMLElement, resample: HTMLButtonElement, counter: HTMLElement },
+   *           i18n: import("../../i18n/I18nService.js").I18nService,
    *           store: import("../../core/Store.js").Store,
    *           viewport: import("../../core/ViewportObserver.js").ViewportObserver }} options
    */
-  constructor(root, { charts, panels, controls, store, viewport }) {
+  constructor(root, { charts, panels, controls, i18n, store, viewport }) {
     super(root);
+    this.i18n = i18n;
     this.#charts = charts;
     this.#panels = panels;
     this.#controls = controls;
@@ -43,9 +45,15 @@ export class TelemetrySimulation extends Component {
     this.#bindPanel(this.#panels.spectrum, () => this.#charts.spectrum.update({ burst: true }));
 
     this.own(this.store.subscribe("simRunning", (running) => this.#renderToggle(running)));
-    this.own(this.store.subscribe("cycle", (cycle) => {
-      this.#controls.counter.textContent = `Cycle #${String(cycle).padStart(3, "0")}`;
-    }));
+    this.own(this.store.subscribe("cycle", () => this.#renderCounter()));
+    this.own(
+      this.i18n.subscribe(() => {
+        this.#renderCounter();
+        this.#renderToggleText();
+        this.#charts.radar.relabel();
+        this.#charts.pid.relabel();
+      }),
+    );
     this.own(
       this.viewport.watch(this.root, (entry) => {
         this.#visible = entry.isIntersecting;
@@ -57,7 +65,7 @@ export class TelemetrySimulation extends Component {
 
   onDestroy() {
     this.#clearTimers();
-    Object.values(this.#charts).forEach((chart) => chart.destroy?.());
+    Object.values(this.#charts).forEach((/** @type {any} */ chart) => chart.destroy?.());
   }
 
   #bindPanel(panel, action) {
@@ -77,9 +85,18 @@ export class TelemetrySimulation extends Component {
     this.#charts.spectrum.update();
   }
 
+  #renderCounter() {
+    const cycle = String(this.store.get("cycle")).padStart(3, "0");
+    this.#controls.counter.textContent = this.i18n.t("telemetry.cycle", { cycle });
+  }
+
+  #renderToggleText() {
+    this.#controls.toggleText.textContent = this.i18n.t(this.store.get("simRunning") ? "telemetry.live" : "telemetry.paused");
+  }
+
   #renderToggle(running) {
-    const { toggle, toggleText } = this.#controls;
-    toggleText.textContent = running ? "Live" : "Paused";
+    const { toggle } = this.#controls;
+    this.#renderToggleText();
     toggle.classList.toggle("is-on", running);
     toggle.setAttribute("aria-pressed", String(running));
     this.#schedule();

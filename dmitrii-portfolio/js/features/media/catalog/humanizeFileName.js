@@ -1,8 +1,7 @@
 const ACRONYMS = new Map(
-  ["iiot", "iot", "plc", "dcs", "sis", "scada", "opc", "ua", "mqtt", "sat", "fat", "hmi", "ai", "ot", "esd", "cfd"].map((word) => [
-    word,
-    word === "iiot" ? "IIoT" : word === "iot" ? "IoT" : word.toUpperCase(),
-  ]),
+  ["iiot", "iot", "plc", "dcs", "sis", "scada", "opc", "ua", "mqtt", "sat", "fat", "hmi", "ai", "ot", "esd", "cfd"].map(
+    (word) => [word, word === "iiot" ? "IIoT" : word === "iot" ? "IoT" : word.toUpperCase()],
+  ),
 );
 
 /**

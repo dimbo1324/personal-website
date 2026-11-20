@@ -32,7 +32,11 @@ export class ScadaView {
     el.unitGateway.classList.toggle("is-on", !esdTripped);
     el.flows.forEach((flow) => flow.classList.toggle("is-stopped", !running));
 
-    this.#text(el.pumpStat, running ? `RUN · ${Math.round(900 + pv * 7.4).toLocaleString("en-US")} RPM` : "STOPPED · 0 RPM", running ? "ok" : "off");
+    this.#text(
+      el.pumpStat,
+      running ? `RUN · ${Math.round(900 + pv * 7.4).toLocaleString("en-US")} RPM` : "STOPPED · 0 RPM",
+      running ? "ok" : "off",
+    );
     this.#text(el.valveStat, esdTripped ? "CLOSED · 0.0%" : `OPEN · ${pv.toFixed(1)}%`, esdTripped ? "alarm" : "ok");
     el.tempStat.textContent = `${(185 + pv * 2.15).toFixed(1)} °C`;
     this.#text(el.esdStat, esdTripped ? "TRIP · INTERLOCK" : `ARMED · ${randInt(9, 15)} ms`, esdTripped ? "alarm" : "ok");

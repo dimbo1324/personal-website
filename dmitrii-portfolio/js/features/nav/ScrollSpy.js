@@ -1,7 +1,8 @@
 /**
  * Decides which section is "active" from the scroll position and writes it
  * to the store. A short lock after a nav click prevents flicker while the
- * smooth scroll is still travelling.
+ * smooth scroll is still travelling. `aliases` maps sections without their
+ * own nav item to the item that represents them (request → contact).
  */
 export class ScrollSpy {
   static LOCK_MS = 800;
@@ -9,30 +10,37 @@ export class ScrollSpy {
   #sections;
   #store;
   #scroll;
+  #aliases;
   #lockedUntil = 0;
 
   /**
    * @param {HTMLElement[]} sections
    * @param {import("../../core/Store.js").Store} store
    * @param {import("../scroll/ScrollService.js").ScrollService} scroll
+   * @param {{ aliases?: Record<string, string> }} [options]
    */
-  constructor(sections, store, scroll) {
+  constructor(sections, store, scroll, { aliases = {} } = {}) {
     this.#sections = sections;
     this.#store = store;
     this.#scroll = scroll;
+    this.#aliases = aliases;
   }
 
   start() {
     return this.#scroll.subscribe(() => {
       if (performance.now() < this.#lockedUntil) return;
-      this.#store.set("activeSection", this.#compute());
+      this.#store.set("activeSection", this.#resolve(this.#compute()));
     });
   }
 
   /** Called by nav links: jump the highlight immediately. */
   navigateTo(id) {
     this.#lockedUntil = performance.now() + ScrollSpy.LOCK_MS;
-    this.#store.set("activeSection", id);
+    this.#store.set("activeSection", this.#resolve(id));
+  }
+
+  #resolve(id) {
+    return this.#aliases[id] ?? id;
   }
 
   #compute() {

@@ -1,33 +1,49 @@
 import { RequestGateway } from "./RequestGateway.js";
+import { HTTP_PROVIDERS } from "./providers/index.js";
 
 /**
- * POSTs the request as JSON to an endpoint (own API, Formspree, etc.).
- * Ready for when the site gets a backend — switch `transport` in data/request.js.
+ * POSTs the request as JSON to a form back-end (Web3Forms, Formspree or
+ * your own API). Remember to allow the endpoint's origin in the CSP
+ * connect-src — the build does it automatically (see build/csp.js).
  */
 export class HttpGateway extends RequestGateway {
-  static TIMEOUT_MS = 10000;
+  static TIMEOUT_MS = 12000;
 
   #endpoint;
+  #provider;
+  #options;
+  #fetch;
 
-  /** @param {{ endpoint: string }} options */
-  constructor({ endpoint }) {
+  /**
+   * @param {{ provider?: keyof typeof HTTP_PROVIDERS, endpoint?: string | null, accessKey?: string | null,
+   *           subjectPrefix: string,
+   *           fetchImpl?: (url: string, init: RequestInit) => Promise<{ ok: boolean, status: number }> }} options
+   */
+  constructor({ provider = "custom", endpoint = null, accessKey = null, subjectPrefix, fetchImpl }) {
     super();
-    if (!endpoint) throw new Error("HttpGateway requires an endpoint");
-    this.#endpoint = endpoint;
+    this.#provider = HTTP_PROVIDERS[provider] ?? HTTP_PROVIDERS.custom;
+    this.#endpoint = endpoint || this.#provider.endpoint;
+    if (!this.#endpoint) throw new Error("HttpGateway requires an endpoint");
+    this.#options = { accessKey, subjectPrefix };
+    this.#fetch = fetchImpl ?? ((input, init) => window.fetch(input, init));
+  }
+
+  get kind() {
+    return "http";
   }
 
   async send(payload) {
     try {
-      const response = await fetch(this.#endpoint, {
+      const response = await this.#fetch(this.#endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(this.#provider.body(payload, this.#options)),
         signal: AbortSignal.timeout(HttpGateway.TIMEOUT_MS),
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return { ok: true, message: "Thank you! Your request has been delivered — I will reply within one business day." };
+      return { ok: true, messageKey: "form.result.delivered" };
     } catch {
-      return { ok: false, message: "The request could not be sent. Please try again or use the email link above." };
+      return { ok: false, messageKey: "form.result.failed" };
     }
   }
 }

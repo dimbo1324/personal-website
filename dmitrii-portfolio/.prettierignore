@@ -1,0 +1,8 @@
+dist
+node_modules
+.lighthouseci
+assets
+package-lock.json
+js/i18n/locales
+index.html
+tools

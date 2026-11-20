@@ -8,9 +8,7 @@
   padding: var(--space-5) var(--space-6);
   border-radius: var(--radius-md);
   border: 1px solid var(--line-subtle);
-  background:
-    radial-gradient(ellipse 40% 160% at 100% 50%, var(--tint-accent), transparent 70%),
-    var(--bg-elevated);
+  background: radial-gradient(ellipse 40% 160% at 100% 50%, var(--tint-accent), transparent 70%), var(--bg-elevated);
   box-shadow: var(--shadow-card);
   text-align: left;
 }
