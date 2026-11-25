@@ -1,36 +1,32 @@
-# Task: prepare the repository for serious development (bootstrap W0)
+# Task: port the vanilla prototype to the Astro stack
 
-Owner instruction 2026-11-24: model the repository on `my-face-pay-pos` (strict AI-agent
-rules for Claude, Gemini, Codex and future models, docs, gitignore, hooks, CI) for the new
-stack, connect the whole stack locally, verify it and publish to `main`. Work directly on
-`main` for this task (owner exception); the original mockup moved to `docs/__arch__/`.
-`+` done, `-` not done.
+Owner instruction 2026-11-25: reproduce the archived prototype
+(`docs/__arch__/reference/dmitrii-portfolio-prototype/`) end to end on the current
+stack, one-to-one visually and behaviorally. All assets from the prototype. Messaging
+integrations stay as placeholders. No new tests, no documentation updates. `+` done,
+`-` not done.
 
 ## Preparation
 
-[+] Study the reference repository (rules, agents, skills, hooks, CI, docs, xtask)
-[+] Archive the prototype into `docs/__arch__/reference/dmitrii-portfolio-prototype/`
-[-] Commit this checklist before the main work (bootstrap exception: committed together with the work)
+- [+] Study the prototype: markup, 100 CSS files, 100 JS modules, locales, assets
+- [+] Branch `feat/port-prototype-to-astro` from up-to-date `main`
+- [+] Record this checklist before the main work
 
 ## Implementation
 
-[+] Root configs: `.gitignore`, `.gitattributes`, `.editorconfig`, `.nvmrc`, Prettier, ESLint
-[+] Stack: Astro 7, Tailwind v4, TypeScript strict, Lucide, Wrangler, Vitest; placeholder page
-[+] Pages Function `POST /api/lead` with Turnstile and Telegram, WhatsApp link builder
-[+] Task runner `tools/xtask` and git hooks (format on commit, message check, quick gate on push)
-[+] Rule modules `.ai/universal` and `.ai/project`, `CLAUDE.md`, `GEMINI.md`, generated `AGENTS.md`
-[+] `.claude/` and `.codex/` (agents, skills, settings), `.github/` (CI, templates, Dependabot)
-[+] Documentation: README, SECURITY, overview, invariants, ROADMAP, open questions, stack register
+- [ ] Copy every asset (fonts, icons, images, videos, CVs, social) into `public/assets`
+- [ ] Bring the design system CSS over intact; Tailwind v4 stays the base layer
+- [ ] Rebuild the page as Astro layout, components and page composition
+- [ ] Port the client application to strict TypeScript classes and controllers
+- [ ] Wire i18n (EN/ES/RU), theme, navigation, scroll and reveal behavior
+- [ ] Wire hero backdrop, video reel, theater mode and gallery lightbox
+- [ ] Wire telemetry charts, SCADA window, dossier tabs/accordion and request form
+- [ ] Keep Telegram/WhatsApp/request delivery as a placeholder, fail-safe path
 
 ## Verification
 
-[ ] `npm run sync-agents` generates AGENTS.md within the budget
-[ ] `npm run gate` green (rules sync, format, entry points, git clean, ESLint, types, tests, build)
-[ ] Local runtime check: `wrangler pages dev` serves the page and `/api/lead` fails closed
-[+] Hooks installed; the commit-msg hook rejected update; the pre-push quick gate caught an entry-point rule bug (fixed)
-
-## Completion
-
-[+] Fill this checklist honestly and commit
-[ ] Push to `origin/main`; check the CI run
-[+] Final report to the owner in Russian
+- [ ] Visual comparison against the prototype at desktop and mobile widths
+- [ ] `npm run fmt`, `npm run lint`, `npm run typecheck`, `npm run build`
+- [ ] Full `npm run gate` green (existing tests included)
+- [ ] `task-checklist.md` filled and committed with the work
+- [ ] Final report to the owner in Russian
