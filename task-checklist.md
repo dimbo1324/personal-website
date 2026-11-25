@@ -45,5 +45,5 @@ English architecture docs in sync. Production must stay fail-closed. `+` done, `
 - [+] Full `npm run gate` green
 - [+] Dev server / static preview checked manually (status 200, form and reveal present)
 - [+] `task-checklist.md` filled and committed
-- [-] Fast-forward merge into `main`, push to `origin/main`, branch deleted
-- [-] Final report to the owner in Russian
+- [+] Fast-forward merge into `main`, push to `origin/main`, branch deleted
+- [+] Final report to the owner in Russian
