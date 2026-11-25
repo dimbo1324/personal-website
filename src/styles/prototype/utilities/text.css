@@ -1,0 +1,9 @@
+.text-accent {
+  color: var(--accent);
+}
+.text-amber {
+  color: var(--amber);
+}
+.text-rose {
+  color: var(--rose);
+}

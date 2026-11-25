@@ -1,0 +1,22 @@
+---
+interface Props {
+  name: string;
+  class?: string;
+  size?: "sm" | "lg";
+}
+
+const { name, class: className = "icon", size } = Astro.props;
+const extra = className.replace(/^icon\s+/, "");
+const classes = [
+  "icon",
+  size === "sm" ? "icon--sm" : "",
+  size === "lg" ? "icon--lg" : "",
+  extra === "icon" ? "" : extra,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<svg class={classes} aria-hidden="true" focusable="false">
+  <use href={`/assets/icons/sprite.svg#i-${name}`} />
+</svg>

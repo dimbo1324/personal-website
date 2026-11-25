@@ -1,0 +1,84 @@
+---
+---
+
+<footer class="site-footer" data-js="site-footer">
+  <div class="flag-backdrop" data-js="flag-backdrop" aria-hidden="true">
+    <picture>
+      <source media="(prefers-reduced-motion: reduce)" srcset="/assets/images/flag-still.webp" />
+      <img
+        class="flag-backdrop__still"
+        src="/assets/images/flag-poster.webp"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+    <video class="flag-backdrop__video" data-js="flag-video" muted loop playsinline preload="none">
+      <source src="/assets/video/flag-loop.mp4" type="video/mp4" />
+      <source src="/assets/video/flag-loop.webm" type="video/webm" />
+    </video>
+    <span class="flag-backdrop__shade"></span>
+  </div>
+
+  <div class="container site-footer__content">
+    <section
+      class="arrivals"
+      data-js="arrivals"
+      aria-label="Currently based in Montevideo, Uruguay"
+      data-i18n-attr="aria-label:footer.currently-based-in-montevideo-uruguay"
+    >
+      <div class="arrivals__head">
+        <span class="arrivals__label">
+          <span class="arrivals__plane" aria-hidden="true"></span>
+          <span data-i18n="footer.arrivals-mvd">Arrivals · MVD</span>
+        </span>
+        <span data-i18n="footer.montevideo-uruguay" class="arrivals__label arrivals__label--muted">
+          Montevideo · Uruguay
+        </span>
+      </div>
+
+      <p class="flap-board" data-js="flap-board" data-text="MONTEVIDEO" aria-hidden="true"></p>
+
+      <dl class="arrivals__row">
+        <div class="arrivals__cell">
+          <dt data-i18n="footer.passenger">Passenger</dt>
+          <dd>D. Prikhodko</dd>
+        </div>
+        <div class="arrivals__cell">
+          <dt data-i18n="footer.route">Route</dt>
+          <dd class="mono">
+            MOW{" "}
+            <span class="arrivals__arrow" aria-hidden="true">
+              →
+            </span>{" "}
+            MVD
+          </dd>
+        </div>
+        <div class="arrivals__cell arrivals__cell--status">
+          <dt data-i18n="footer.status">Status</dt>
+          <dd>
+            <span class="live-dot" aria-hidden="true"></span>
+            <span data-i18n="footer.landed-open-to-work">Landed · open to work</span>
+          </dd>
+        </div>
+        <div class="arrivals__cell">
+          <dt data-i18n="footer.local-time">Local time</dt>
+          <dd class="mono">
+            <time data-js="local-clock">--:--:--</time> UYT
+          </dd>
+        </div>
+        <div class="arrivals__cell">
+          <dt data-i18n="footer.coordinates">Coordinates</dt>
+          <dd class="mono">34.90° S · 56.16° W</dd>
+        </div>
+      </dl>
+    </section>
+
+    <div class="site-footer__bar">
+      <span>
+        &copy; <span data-js="current-year">2026</span> Dmitrii Prikhodko
+      </span>
+      <span data-i18n="footer.automation-iiot-software">Automation · IIoT · Software</span>
+    </div>
+  </div>
+</footer>

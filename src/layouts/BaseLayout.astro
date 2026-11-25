@@ -2,23 +2,199 @@
 import "../styles/global.css";
 
 interface Props {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
-const { title, description } = Astro.props;
+const {
+  title = "Dmitrii Prikhodko — Automation, IIoT & Software",
+  description = "Dmitrii Prikhodko — Industrial Automation, IIoT & Software Engineer based in Montevideo. Bridging OT and IT across oil & gas, nuclear and thermal power.",
+} = Astro.props;
+
+const siteUrl = (import.meta.env.PUBLIC_SITE_URL ?? "https://dmitriiprikhodko.com").replace(
+  /\/+$/,
+  "",
+);
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Dmitrii Prikhodko",
+  alternateName: ["Дмитрий Приходько", "Dmitri Prijodko"],
+  jobTitle: "Industrial Automation, IIoT & Software Engineer",
+  url: `${siteUrl}/`,
+  image: `${siteUrl}/assets/images/portrait.webp`,
+  email: "mailto:dmitriiprikhodko9@gmail.com",
+  address: { "@type": "PostalAddress", addressLocality: "Montevideo", addressCountry: "UY" },
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Nizhny Novgorod State Technical University n.a. R. E. Alekseev",
+  },
+  knowsAbout: [
+    "Industrial automation",
+    "IIoT",
+    "PLC",
+    "DCS",
+    "SIS",
+    "SCADA",
+    "IEC 61131-3",
+    "OPC UA",
+    "MQTT",
+    "Digital twins",
+    "C++",
+    "Python",
+  ],
+  knowsLanguage: ["ru", "en", "es"],
+  sameAs: ["https://linkedin.com/in/dimbo1324", "https://github.com/dimbo1324"],
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="description" content={description} data-js="meta-description" />
+    <meta name="author" content="Dmitrii Prikhodko" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0a1114" />
+    <meta name="color-scheme" content="dark light" />
     <title>{title}</title>
+
+    <link rel="canonical" href={`${siteUrl}/`} />
+    <link rel="alternate" hreflang="en" href={`${siteUrl}/?lang=en`} />
+    <link rel="alternate" hreflang="es" href={`${siteUrl}/?lang=es`} />
+    <link rel="alternate" hreflang="ru" href={`${siteUrl}/?lang=ru`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}/`} />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="Dmitrii Prikhodko" />
+    <meta property="og:title" content={title} data-js="og-title" />
+    <meta
+      property="og:description"
+      content="Industrial Automation, IIoT & Software Engineer based in Montevideo. PLC/DCS/SIS commissioning, digital twins, C++/Python backends."
+      data-js="og-description"
+    />
+    <meta property="og:url" content={`${siteUrl}/`} />
+    <meta property="og:image" content={`${siteUrl}/assets/social/og-image.png`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Dmitrii Prikhodko — Industrial Automation, IIoT & Software Engineer"
+    />
+    <meta property="og:locale" content="en_US" data-js="og-locale" />
+    <meta property="og:locale:alternate" content="es_UY" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+    <meta property="profile:first_name" content="Dmitrii" />
+    <meta property="profile:last_name" content="Prikhodko" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={`${siteUrl}/assets/social/og-image.png`} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <link rel="icon" href="/assets/icons/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/assets/icons/favicon-64.png" type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
+    <link
+      rel="preload"
+      href="/assets/fonts/manrope-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/jetbrains-mono-latin-500-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/video/hero/01-oil-terminal-digital-twin.webp"
+      as="image"
+      fetchpriority="high"
+      data-first-poster
+    />
+
+    <script is:inline>
+      (function applyPersistedTheme() {
+        "use strict";
+        const storageKey = "dp.theme";
+        let theme = "dark";
+        try {
+          const saved = window.localStorage.getItem(storageKey);
+          if (saved === "light" || saved === "dark") {
+            theme = saved;
+          } else if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches
+          ) {
+            theme = "light";
+          }
+        } catch {
+          /* storage unavailable (private mode, sandbox) — keep default */
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <script is:inline>
+      (function markPendingLanguage() {
+        "use strict";
+        const supported = ["en", "es", "ru"];
+        let lang = null;
+        try {
+          const fromUrl = new URLSearchParams(window.location.search).get("lang");
+          if (supported.indexOf(fromUrl) !== -1) lang = fromUrl;
+          if (!lang) {
+            const saved = window.localStorage.getItem("dp.lang");
+            if (supported.indexOf(saved) !== -1) lang = saved;
+          }
+        } catch {
+          /* storage unavailable — fall through to the browser preference */
+        }
+        if (!lang) {
+          const preferred = navigator.languages || [navigator.language || "en"];
+          for (let index = 0; index < preferred.length && !lang; index += 1) {
+            const primary = String(preferred[index]).toLowerCase().split("-")[0];
+            if (supported.indexOf(primary) !== -1) lang = primary;
+          }
+        }
+        if (lang && lang !== "en") {
+          document.documentElement.setAttribute("lang", lang);
+          document.documentElement.setAttribute("data-i18n-pending", "");
+        }
+      })();
+    </script>
+    <script is:inline defer>
+      (function fileProtocolGuard() {
+        "use strict";
+        if (window.location.protocol !== "file:") return;
+
+        const banner = document.createElement("div");
+        banner.className = "file-guard";
+        banner.setAttribute("role", "alert");
+
+        const title = document.createElement("strong");
+        title.textContent = "Run this project through a local web server.";
+
+        const text = document.createElement("span");
+        text.textContent =
+          " Browsers block JavaScript modules on file://. Use VS Code “Live Server”, or run “npx serve .” / “python -m http.server” in the project folder.";
+
+        banner.appendChild(title);
+        banner.appendChild(text);
+        document.body.appendChild(banner);
+      })();
+    </script>
   </head>
-  <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+
+  <body>
     <slot />
+
+    <script>
+      import "../scripts/site/main";
+    </script>
   </body>
 </html>

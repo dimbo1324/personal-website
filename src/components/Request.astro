@@ -1,0 +1,298 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<section class="section" id="request" aria-labelledby="request-title">
+  <div class="container request-grid">
+    <div class="request-intro reveal">
+      <span class="section-head__index">06</span>
+      <h2 class="section-head__title" id="request-title">
+        <span data-i18n="request.leave-a">Leave a</span>
+        <span class="section-head__accent" data-i18n="request.request">
+          Request.
+        </span>
+      </h2>
+      <p data-i18n="request.hiring-a-commissioning-job-or" class="section-head__lead">
+        Hiring, a commissioning job or an IIoT question? Leave your details and I will get back to
+        you within one business day.
+      </p>
+
+      <ol class="request-steps">
+        <li class="request-steps__item">
+          <span class="request-steps__index">01</span>
+          <span class="request-steps__copy">
+            <strong data-i18n="request.you-leave-your-contacts">You leave your contacts</strong>
+            <span data-i18n="request.name-plus-a-phone-or">
+              Name plus a phone or an email — everything else is optional.
+            </span>
+          </span>
+        </li>
+        <li class="request-steps__item">
+          <span class="request-steps__index">02</span>
+          <span class="request-steps__copy">
+            <strong data-i18n="request.i-review-the-request">I review the request</strong>
+            <span data-i18n="request.within-24-hours-montevideo-time">
+              Within 24 hours, Montevideo time (UTC−3).
+            </span>
+          </span>
+        </li>
+        <li class="request-steps__item">
+          <span class="request-steps__index">03</span>
+          <span class="request-steps__copy">
+            <strong data-i18n="request.we-talk">We talk</strong>
+            <span data-i18n="request.a-call-a-video-meeting">
+              A call, a video meeting or on site — whatever suits the task.
+            </span>
+          </span>
+        </li>
+      </ol>
+
+      <p class="request-privacy">
+        <Icon name="shield-check" size="sm" />
+        <span data-i18n="request.your-details-are-used-only">
+          Your details are used only to reply to this request and are never shared.
+        </span>
+      </p>
+    </div>
+
+    <div class="request-card" data-js="request-card">
+      <form
+        class="request-form"
+        data-js="request-form"
+        novalidate
+        aria-describedby="request-required-note"
+      >
+        <p class="request-form__note" id="request-required-note">
+          <span data-i18n="form.fields-marked">Fields marked</span>
+          <span class="request-form__asterisk" aria-hidden="true">
+            *
+          </span>
+          <span data-i18n="form.with-an-asterisk" class="visually-hidden">
+            with an asterisk
+          </span>
+          <span data-i18n="form.are-required">are required.</span>
+        </p>
+
+        <fieldset class="form-group">
+          <legend class="form-group__legend">
+            <Icon name="user" size="sm" />
+            <span data-i18n="form.who-you-are">Who you are</span>
+          </legend>
+          <div class="form-grid form-grid--3">
+            <div class="field" data-field="lastName">
+              <label class="field__label" for="rq-last-name">
+                <span data-i18n="form.last-name">Last name</span>
+                <span class="field__required" aria-hidden="true">
+                  *
+                </span>
+              </label>
+              <input
+                class="field__control"
+                id="rq-last-name"
+                name="lastName"
+                type="text"
+                autocomplete="family-name"
+                maxlength="60"
+                required
+                aria-describedby="rq-last-name-error"
+              />
+              <p class="field__error" id="rq-last-name-error" data-field-error></p>
+            </div>
+            <div class="field" data-field="firstName">
+              <label class="field__label" for="rq-first-name">
+                <span data-i18n="form.first-name">First name</span>
+                <span class="field__required" aria-hidden="true">
+                  *
+                </span>
+              </label>
+              <input
+                class="field__control"
+                id="rq-first-name"
+                name="firstName"
+                type="text"
+                autocomplete="given-name"
+                maxlength="60"
+                required
+                aria-describedby="rq-first-name-error"
+              />
+              <p class="field__error" id="rq-first-name-error" data-field-error></p>
+            </div>
+            <div class="field" data-field="middleName">
+              <label class="field__label" for="rq-middle-name">
+                <span data-i18n="form.middle-name">Middle name</span>
+                <span data-i18n="form.optional" class="field__optional">
+                  optional
+                </span>
+              </label>
+              <input
+                data-i18n-attr="placeholder:form.patronymic"
+                class="field__control"
+                id="rq-middle-name"
+                name="middleName"
+                type="text"
+                autocomplete="additional-name"
+                maxlength="60"
+                placeholder="Patronymic"
+                aria-describedby="rq-middle-name-error"
+              />
+              <p class="field__error" id="rq-middle-name-error" data-field-error></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-group" aria-describedby="rq-contact-hint">
+          <legend class="form-group__legend">
+            <Icon name="at-sign" size="sm" />
+            <span data-i18n="form.how-to-reach-you">How to reach you</span>
+          </legend>
+          <p data-i18n="form.phone-or-email-at-least" class="form-group__hint" id="rq-contact-hint">
+            Phone or email — at least one of them.
+          </p>
+          <div class="form-grid form-grid--2">
+            <div class="field" data-field="phone">
+              <label data-i18n="form.phone" class="field__label" for="rq-phone">
+                Phone
+              </label>
+              <input
+                class="field__control"
+                id="rq-phone"
+                name="phone"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                maxlength="24"
+                placeholder="+598 9X XXX XXX"
+                aria-describedby="rq-phone-error"
+              />
+              <p class="field__error" id="rq-phone-error" data-field-error></p>
+            </div>
+            <div class="field" data-field="email">
+              <label data-i18n="form.email" class="field__label" for="rq-email">
+                Email
+              </label>
+              <input
+                class="field__control"
+                id="rq-email"
+                name="email"
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                maxlength="120"
+                placeholder="name@company.com"
+                aria-describedby="rq-email-error"
+              />
+              <p class="field__error" id="rq-email-error" data-field-error></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+          <legend class="form-group__legend">
+            <Icon name="message-square-text" size="sm" />
+            <span data-i18n="form.message">Message</span>
+            <span data-i18n="form.optional" class="field__optional">
+              optional
+            </span>
+          </legend>
+          <div class="field" data-field="message">
+            <label data-i18n="form.message" class="visually-hidden" for="rq-message">
+              Message
+            </label>
+            <textarea
+              data-i18n-attr="placeholder:form.a-few-words-about-the"
+              class="field__control field__control--area"
+              id="rq-message"
+              name="message"
+              rows="5"
+              maxlength="1000"
+              placeholder="A few words about the role, project or question…"
+              aria-describedby="rq-message-error rq-message-counter"
+            ></textarea>
+            <div class="field__meta">
+              <p class="field__error" id="rq-message-error" data-field-error></p>
+              <span
+                class="field__counter"
+                id="rq-message-counter"
+                data-js="request-counter"
+                aria-live="off"
+              >
+                0 / 1000
+              </span>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="form-honeypot" aria-hidden="true">
+          <label for="rq-website">Website</label>
+          <input id="rq-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="field field--check" data-field="consent">
+          <label class="checkbox" for="rq-consent">
+            <input
+              class="checkbox__input"
+              id="rq-consent"
+              name="consent"
+              type="checkbox"
+              required
+              aria-describedby="rq-consent-error"
+            />
+            <span class="checkbox__box" aria-hidden="true">
+              <Icon name="check" size="sm" />
+            </span>
+            <span class="checkbox__label">
+              <span data-i18n="form.i-agree-that-my-details">
+                I agree that my details are used to reply to this request.
+              </span>
+              <span class="field__required" aria-hidden="true">
+                *
+              </span>
+            </span>
+          </label>
+          <p class="field__error" id="rq-consent-error" data-field-error></p>
+        </div>
+
+        <div class="request-form__actions">
+          <button type="submit" class="button button--primary" data-js="request-submit">
+            <Icon name="send" />
+            <span data-i18n="form.send-request">Send request</span>
+          </button>
+          <p class="request-form__hint" data-js="request-hint">
+            Opens your email app with everything already filled in.
+          </p>
+        </div>
+
+        <p
+          class="request-form__status"
+          data-js="request-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </form>
+
+      <div class="request-success" data-js="request-success" tabindex="-1" hidden>
+        <span class="request-success__icon" aria-hidden="true">
+          <Icon name="circle-check" size="lg" />
+        </span>
+        <h3 data-i18n="form.request-ready-to-send" class="request-success__title">
+          Request ready to send
+        </h3>
+        <p class="request-success__text" data-js="request-success-text"></p>
+        <div class="request-success__actions">
+          <button
+            type="button"
+            class="button button--secondary button--small"
+            data-js="request-copy"
+          >
+            <Icon name="clipboard-list" size="sm" />
+            <span data-i18n="form.copy-request">Copy request</span>
+          </button>
+          <button type="button" class="button button--ghost button--small" data-js="request-reset">
+            <Icon name="rotate-ccw" size="sm" />
+            <span data-i18n="form.new-request">New request</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

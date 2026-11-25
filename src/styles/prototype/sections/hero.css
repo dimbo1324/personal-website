@@ -1,0 +1,246 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100svh;
+  padding-top: calc(var(--header-h) + clamp(1.5rem, 4vh, 3rem));
+  padding-bottom: var(--space-5);
+  overflow: hidden;
+  background: var(--bg-void);
+}
+
+/* ---------- backdrop ---------- */
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Slides are driven by BackdropSlides.js through three custom properties;
+   the theme-dependent base opacity stays here in CSS. */
+.hero__slide {
+  --slide-mix: 0;
+  --slide-blur: 0;
+  --slide-scale: 1;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: calc(var(--hero-photo-opacity) * var(--slide-mix));
+  filter: saturate(1.04) contrast(1.08) blur(calc(var(--slide-blur) * 1px));
+  transform: scale(var(--slide-scale));
+  will-change: opacity, filter, transform;
+}
+.hero__slide.is-visible {
+  --slide-mix: 1;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-scrim);
+}
+
+.hero__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+  background-image: radial-gradient(var(--dot-grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 20%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 20%, #000 70%, transparent);
+}
+
+/* the raster render is weaker under the text column so copy stays readable */
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* weaker under the text column, fully clear under the header */
+  -webkit-mask-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 40%, #000 62%),
+    linear-gradient(
+      180deg,
+      transparent 0,
+      transparent calc(var(--header-h) * 0.6),
+      #000 calc(var(--header-h) * 2)
+    );
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 40%, #000 62%),
+    linear-gradient(
+      180deg,
+      transparent 0,
+      transparent calc(var(--header-h) * 0.6),
+      #000 calc(var(--header-h) * 2)
+    );
+  mask-composite: intersect;
+}
+
+/* ---------- content ---------- */
+.hero__grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  padding-block: var(--space-6);
+}
+
+.hero__meta {
+  margin-bottom: var(--space-6);
+}
+
+.hero__title {
+  margin-bottom: var(--space-6);
+}
+
+/* availability statement (replaces the long lead, which moved to Dossier) */
+.availability {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-8);
+}
+.availability__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background: var(--bg-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+.availability__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.availability__meta .icon {
+  color: var(--accent);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-10);
+}
+
+.hero__visual {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 520px;
+  justify-self: end;
+}
+
+/* ---------- footer strip ---------- */
+.hero__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line-subtle);
+}
+
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+}
+.quick-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-secondary);
+  transition: color var(--dur-fast) ease;
+}
+.quick-links a:hover {
+  color: var(--accent);
+}
+
+.scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) ease;
+}
+.scroll-cue:hover {
+  color: var(--accent);
+}
+.scroll-cue__track {
+  position: relative;
+  width: 2.75rem;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--line-strong);
+}
+.scroll-cue__thumb {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 40%;
+  background: var(--accent);
+  animation: scroll-cue 2.2s var(--ease-in-out) infinite;
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(260%);
+  }
+}
+
+@media (max-width: 1120px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+  }
+  .hero__visual {
+    justify-self: start;
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 540px) {
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

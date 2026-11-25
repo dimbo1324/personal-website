@@ -1,0 +1,184 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<div
+  class="theater"
+  data-js="theater"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="theater-title"
+  aria-hidden="true"
+>
+  <div class="theater__backdrop" data-js="theater-backdrop"></div>
+  <div class="theater__panel">
+    <header class="theater__bar">
+      <div class="theater__heading">
+        <span class="theater__eyebrow">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span data-i18n="theater.theater-mode">Theater mode</span>
+        </span>
+        <h2 class="theater__title" id="theater-title" data-js="theater-title">
+          Theater
+        </h2>
+        <span class="concept-badge" data-js="theater-concept" hidden>
+          <Icon name="sparkles" size="sm" />
+          <span data-i18n="media.concept">Concept visual</span>
+        </span>
+      </div>
+      <div class="theater__tools">
+        <span class="theater__counter" data-js="theater-counter"></span>
+        <button
+          type="button"
+          class="button button--small button--secondary"
+          data-js="theater-close"
+        >
+          <Icon name="x" size="sm" />
+          <span data-i18n="theater.close-esc">Close · Esc</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="theater__stage" data-js="theater-stage">
+      <video
+        class="theater__video"
+        data-js="theater-video"
+        muted
+        playsinline
+        preload="none"
+      ></video>
+      <img class="theater__image" data-js="theater-image" alt="" hidden />
+
+      <button
+        data-i18n-attr="aria-label:theater.previous"
+        type="button"
+        class="theater__nav theater__nav--prev"
+        data-js="theater-prev"
+        aria-label="Previous"
+      >
+        <Icon name="chevron-left" />
+      </button>
+      <button
+        data-i18n-attr="aria-label:theater.next"
+        type="button"
+        class="theater__nav theater__nav--next"
+        data-js="theater-next"
+        aria-label="Next"
+      >
+        <Icon name="chevron-right" />
+      </button>
+
+      <div class="theater__controls" data-js="theater-controls">
+        <button type="button" class="theater__play" data-js="theater-play" aria-label="Pause">
+          <svg class="icon" aria-hidden="true" focusable="false">
+            <use data-js="theater-play-icon" href="/assets/icons/sprite.svg#i-pause"></use>
+          </svg>
+        </button>
+        <div
+          data-i18n-attr="aria-label:theater.seek"
+          class="theater__progress"
+          data-js="theater-progress"
+          role="slider"
+          tabindex="0"
+          aria-label="Seek"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <span class="theater__progress-fill" data-js="theater-progress-fill"></span>
+        </div>
+        <span class="theater__time" data-js="theater-time">
+          0:00 / 0:00
+        </span>
+      </div>
+    </div>
+
+    <p class="theater__caption" data-js="theater-caption"></p>
+
+    <div class="theater__rail-head">
+      <span data-i18n="theater.gallery">Gallery</span>
+      <span data-i18n="theater.to-browse-esc-to-close">← → to browse · Esc to close</span>
+    </div>
+    <ul
+      class="theater__rail"
+      data-js="theater-rail"
+      aria-label="Theater playlist"
+      data-i18n-attr="aria-label:theater.theater-playlist"
+    ></ul>
+  </div>
+</div>
+
+<div
+  class="lightbox"
+  data-js="lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Photo viewer"
+  aria-hidden="true"
+  data-i18n-attr="aria-label:lightbox.photo-viewer"
+>
+  <div class="lightbox__top">
+    <span class="lightbox__counter" data-js="lightbox-counter">
+      01 / 08
+    </span>
+    <div class="lightbox__controls">
+      <button
+        type="button"
+        class="button button--small button--secondary"
+        data-js="lightbox-mono"
+        aria-pressed="false"
+      >
+        <Icon name="contrast" size="sm" />
+        <span data-i18n="lightbox.b-w">B&amp;W</span>
+      </button>
+      <button type="button" class="button button--small button--secondary" data-js="lightbox-close">
+        <Icon name="x" size="sm" />
+        <span data-i18n="lightbox.close">Close</span>
+      </button>
+    </div>
+  </div>
+  <div class="lightbox__stage">
+    <button
+      data-i18n-attr="aria-label:lightbox.previous-photo"
+      type="button"
+      class="lightbox__nav"
+      data-js="lightbox-prev"
+      aria-label="Previous photo"
+    >
+      <Icon name="chevron-left" />
+    </button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__image" data-js="lightbox-image" alt="" width="1280" height="714" />
+      <figcaption class="lightbox__caption">
+        <span class="lightbox__title" data-js="lightbox-title"></span>
+        <span class="lightbox__desc" data-js="lightbox-desc"></span>
+      </figcaption>
+    </figure>
+    <button
+      data-i18n-attr="aria-label:lightbox.next-photo"
+      type="button"
+      class="lightbox__nav"
+      data-js="lightbox-next"
+      aria-label="Next photo"
+    >
+      <Icon name="chevron-right" />
+    </button>
+  </div>
+  <div class="lightbox__strip" data-js="lightbox-strip"></div>
+</div>
+
+<button
+  data-i18n-attr="aria-label:ui.scroll-to-top"
+  type="button"
+  class="scroll-top"
+  data-js="scroll-top"
+  aria-label="Scroll to top"
+>
+  <svg class="scroll-top__ring" viewBox="0 0 52 52" aria-hidden="true">
+    <circle class="scroll-top__track" cx="26" cy="26" r="24"></circle>
+    <circle class="scroll-top__progress" data-js="scroll-ring" cx="26" cy="26" r="24"></circle>
+  </svg>
+  <Icon name="arrow-up" class="icon scroll-top__arrow" />
+</button>
+
+<div class="toast" data-js="toast" role="status" aria-live="polite"></div>

@@ -1,0 +1,109 @@
+.chart {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.chart--radar {
+  max-width: 300px;
+  margin-inline: auto;
+}
+
+/* radar */
+.chart-radar__ring {
+  fill: none;
+  stroke: var(--chart-grid);
+}
+.chart-radar__ring--outer {
+  stroke: var(--line-strong);
+}
+.chart-radar__axis {
+  stroke: var(--chart-grid);
+}
+.chart-radar__baseline {
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 1.3;
+  stroke-dasharray: 3 4;
+  opacity: 0.85;
+}
+.chart-radar__shape {
+  fill: var(--chart-fill-strong);
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.chart-radar__node {
+  fill: var(--bg-elevated);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.chart-radar__label {
+  font-family: var(--font-mono);
+  font-size: 8.6px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  fill: var(--text-muted);
+}
+
+/* pid */
+.chart-pid__grid line {
+  stroke: var(--chart-grid);
+}
+.chart-pid__axis {
+  stroke: var(--line-strong);
+}
+.chart-pid__setpoint {
+  stroke: var(--steel);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 4;
+}
+.chart-pid__stop-top {
+  stop-color: var(--accent);
+  stop-opacity: 0.34;
+}
+.chart-pid__stop-bottom {
+  stop-color: var(--accent);
+  stop-opacity: 0.02;
+}
+.chart-pid__area {
+  fill: url(#pid-gradient);
+}
+.chart-pid__outer {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.chart-pid__inner {
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 1.4;
+  stroke-dasharray: 3 3;
+  opacity: 0.9;
+}
+.chart-pid__marker {
+  fill: var(--amber);
+}
+
+/* spectrum */
+.chart-spectrum__grid {
+  stroke: var(--chart-grid);
+}
+.chart-spectrum__axis {
+  stroke: var(--line-strong);
+}
+.chart-spectrum__bar {
+  rx: 2.5px;
+  fill: var(--steel);
+  transition:
+    height 480ms var(--ease-out),
+    y 480ms var(--ease-out),
+    fill var(--dur-base) ease;
+}
+.chart-spectrum__bar.is-mid {
+  fill: var(--accent);
+}
+.chart-spectrum__bar.is-high {
+  fill: var(--amber);
+}

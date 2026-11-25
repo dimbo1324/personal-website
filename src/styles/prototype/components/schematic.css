@@ -1,0 +1,95 @@
+.schematic {
+  width: 100%;
+  height: 100%;
+  max-height: 310px;
+}
+
+.schematic__pipe {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 3.5;
+}
+.schematic__pipe--thin {
+  stroke-width: 1.6;
+}
+
+.schematic__flow {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-dasharray: 6 8;
+  animation: schematic-flow 1.05s linear infinite;
+}
+.schematic__flow--bus {
+  stroke: var(--amber);
+}
+.schematic__flow.is-stopped {
+  animation: none;
+  opacity: 0.14;
+}
+
+.schematic__unit[role="button"] {
+  cursor: pointer;
+}
+.schematic__box {
+  fill: var(--bg-elevated);
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+  rx: 6px;
+  transition: stroke var(--dur-fast) ease;
+}
+.schematic__unit[role="button"]:hover .schematic__box,
+.schematic__unit.is-on .schematic__box {
+  stroke: var(--accent);
+}
+.schematic__unit.is-thermal .schematic__box {
+  stroke: var(--amber);
+}
+.schematic__unit.is-tripped .schematic__box {
+  stroke: var(--rose);
+  stroke-dasharray: 5 3;
+}
+
+.schematic__rule {
+  stroke: var(--line-subtle);
+}
+.schematic__text {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  fill: var(--text-primary);
+}
+.schematic__text--ok {
+  fill: var(--accent);
+}
+.schematic__text--warm {
+  fill: var(--amber);
+}
+.schematic__text--off {
+  fill: var(--text-muted);
+}
+.schematic__text--alarm {
+  fill: var(--rose);
+}
+.schematic__sub {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  fill: var(--text-muted);
+}
+.schematic__sub--warm {
+  fill: var(--amber);
+}
+.schematic__tag {
+  fill: var(--bg-elevated);
+  stroke: var(--amber);
+}
+
+@keyframes schematic-flow {
+  from {
+    stroke-dashoffset: 28;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

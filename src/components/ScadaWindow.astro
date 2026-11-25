@@ -1,0 +1,237 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<aside
+  class="scada-window"
+  data-js="scada-window"
+  role="dialog"
+  aria-label="Interactive ACS TP SCADA widget"
+  aria-hidden="true"
+>
+  <div class="scada-window__bar" data-js="scada-drag">
+    <div class="scada-window__title">
+      <span class="live-dot" data-js="scada-dot" aria-hidden="true"></span>
+      <span>ACS TP // Digital twin workspace</span>
+      <span class="scada-window__mode" data-js="scada-mode">
+        · Running
+      </span>
+    </div>
+    <div class="scada-window__actions">
+      <button
+        type="button"
+        class="window-control"
+        data-js="scada-minimize"
+        aria-label="Minimize to dock"
+      >
+        <Icon name="minus" size="sm" />
+      </button>
+      <button
+        type="button"
+        class="window-control"
+        data-js="scada-maximize"
+        aria-label="Maximize or restore"
+      >
+        <Icon name="maximize-2" size="sm" />
+      </button>
+      <button type="button" class="window-control" data-js="scada-close" aria-label="Close">
+        <Icon name="x" size="sm" />
+      </button>
+    </div>
+  </div>
+
+  <div class="scada-window__body">
+    <div class="scada-window__toolbar">
+      <label class="setpoint">
+        <Icon name="gauge" size="sm" />
+        <span>
+          Setpoint <strong data-js="scada-sp-text">76%</strong>
+        </span>
+        <input
+          type="range"
+          class="setpoint__slider"
+          data-js="scada-sp"
+          min="30"
+          max="100"
+          value="76"
+        />
+      </label>
+      <div class="scada-window__buttons">
+        <button
+          type="button"
+          class="button button--small button--toggle is-on"
+          data-js="scada-pump"
+        >
+          <Icon name="power" size="sm" />
+          <span data-js="scada-pump-text">Pump P-101: On</span>
+        </button>
+        <button
+          type="button"
+          class="button button--small button--secondary"
+          data-js="scada-disturb"
+        >
+          <Icon name="flame" size="sm" />
+          <span>Load spike</span>
+        </button>
+        <button type="button" class="button button--small button--danger" data-js="scada-esd">
+          <Icon name="shield-alert" size="sm" />
+          <span data-js="scada-esd-text">SIS / ESD: Armed</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="scada-window__stage">
+      <svg class="schematic" viewBox="0 0 760 225" role="img" aria-label="Process schematic">
+        <path class="schematic__pipe" d="M126 105 H214"></path>
+        <path class="schematic__flow" data-js="scada-flow" d="M126 105 H214"></path>
+        <path class="schematic__pipe" d="M326 105 H414"></path>
+        <path class="schematic__flow" data-js="scada-flow" d="M326 105 H414"></path>
+        <path class="schematic__pipe" d="M510 105 H594"></path>
+        <path class="schematic__flow" data-js="scada-flow" d="M510 105 H594"></path>
+        <path class="schematic__pipe schematic__pipe--thin" d="M658 148 V192 H270 V148"></path>
+        <path class="schematic__flow schematic__flow--bus" d="M658 148 V192 H270 V148"></path>
+
+        <g
+          class="schematic__unit is-on"
+          data-js="scada-unit-pump"
+          tabindex="0"
+          role="button"
+          aria-label="Toggle feed pump P-101"
+        >
+          <rect class="schematic__box" x="18" y="60" width="108" height="90"></rect>
+          <text class="schematic__sub" x="30" y="79">
+            P-101 · CLICK
+          </text>
+          <text class="schematic__text" x="30" y="100">
+            FEED PUMP
+          </text>
+          <line class="schematic__rule" x1="30" y1="112" x2="114" y2="112"></line>
+          <text
+            class="schematic__text schematic__text--ok"
+            data-js="scada-pump-stat"
+            x="30"
+            y="132"
+          >
+            RUN · 1,450 RPM
+          </text>
+        </g>
+        <g
+          class="schematic__unit is-on"
+          data-js="scada-unit-valve"
+          tabindex="0"
+          role="button"
+          aria-label="Step control valve CV-301 setpoint"
+        >
+          <rect class="schematic__box" x="214" y="60" width="112" height="90"></rect>
+          <text class="schematic__sub" x="226" y="79">
+            CV-301 · PID
+          </text>
+          <text class="schematic__text" x="226" y="100">
+            CONTROL VALVE
+          </text>
+          <line class="schematic__rule" x1="226" y1="112" x2="314" y2="112"></line>
+          <text
+            class="schematic__text schematic__text--ok"
+            data-js="scada-valve-stat"
+            x="226"
+            y="132"
+          >
+            OPEN · 76.0%
+          </text>
+        </g>
+        <g class="schematic__unit is-thermal">
+          <rect class="schematic__box" x="414" y="50" width="96" height="110"></rect>
+          <text class="schematic__sub" x="426" y="72">
+            AVT-5 / ODE
+          </text>
+          <text class="schematic__text" x="426" y="94">
+            THERMAL
+          </text>
+          <text class="schematic__text" x="426" y="108">
+            VESSEL
+          </text>
+          <line class="schematic__rule" x1="426" y1="120" x2="498" y2="120"></line>
+          <text
+            class="schematic__text schematic__text--warm"
+            data-js="scada-temp-stat"
+            x="426"
+            y="142"
+          >
+            342.4 °C
+          </text>
+        </g>
+        <g
+          class="schematic__unit is-on"
+          data-js="scada-unit-gateway"
+          tabindex="0"
+          role="button"
+          aria-label="Toggle SIS ESD interlock"
+        >
+          <rect class="schematic__box" x="594" y="60" width="144" height="90"></rect>
+          <text class="schematic__sub" x="606" y="79">
+            SIS / OPC UA
+          </text>
+          <text class="schematic__text" x="606" y="100">
+            ESD &amp; GATEWAY
+          </text>
+          <line class="schematic__rule" x1="606" y1="112" x2="726" y2="112"></line>
+          <text
+            class="schematic__text schematic__text--ok"
+            data-js="scada-esd-stat"
+            x="606"
+            y="132"
+          >
+            ARMED · 12 ms
+          </text>
+        </g>
+        <rect class="schematic__tag" x="404" y="182" width="122" height="18" rx="4"></rect>
+        <text class="schematic__sub schematic__sub--warm" x="465" y="194" text-anchor="middle">
+          MQTT / gRPC LOOP
+        </text>
+      </svg>
+    </div>
+
+    <div class="scada-window__bottom">
+      <div class="scada-card">
+        <div class="scada-card__head">
+          <span>Live process variable</span>
+          <span class="text-accent" data-js="scada-pv">
+            PV 76.0%
+          </span>
+        </div>
+        <svg
+          class="scada-card__trend"
+          viewBox="0 0 320 62"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <line
+            class="trend__setpoint"
+            data-js="scada-sp-line"
+            x1="0"
+            y1="20"
+            x2="320"
+            y2="20"
+          ></line>
+          <path class="trend__area" data-js="scada-trend-area" d=""></path>
+          <path class="trend__line" data-js="scada-trend-line" d=""></path>
+        </svg>
+      </div>
+      <div class="scada-card">
+        <div class="scada-card__head">
+          <span>SCADA event bus</span>
+          <span>Drag bar · resize corner</span>
+        </div>
+        <ol class="scada-card__log" data-js="scada-log" aria-live="polite"></ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="scada-window__resize" data-js="scada-resize" aria-hidden="true"></div>
+</aside>
+
+<button type="button" class="widget-dock" data-js="widget-dock">
+  <span class="live-dot" aria-hidden="true"></span>
+  <Icon name="monitor-cog" size="sm" />
+  <span data-i18n="widget.restore-acs-widget">Restore ACS widget</span>
+</button>

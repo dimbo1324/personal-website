@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Kinetic title — the hero name.
+   load  : letters rise from a mask, staggered
+   hover : a "weight lens" follows the pointer (variable font axis)
+   click : a ripple jump travels outwards from the clicked letter
+   ========================================================================== */
+.kinetic-title {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--fs-display);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  cursor: default;
+  user-select: none;
+}
+
+.kinetic-title__line {
+  display: block;
+  white-space: nowrap;
+}
+.kinetic-title__line--accent {
+  color: var(--accent);
+}
+
+/* The mask clips the rising letters during the entrance. It is padded on
+   every side (and pulled back with negative margins) so ascenders,
+   descenders and wide glyphs never get cut off. */
+.kinetic-title__mask {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.12em 0.04em 0.18em;
+  margin: -0.12em -0.04em -0.18em;
+  vertical-align: bottom;
+}
+
+.kinetic-title__char {
+  --wght: 800;
+  --lift: 0;
+  display: inline-block;
+  font-variation-settings: "wght" var(--wght);
+  transform: translateY(110%);
+  opacity: 0;
+  transition:
+    transform 0.9s var(--ease-out),
+    opacity 0.6s ease,
+    color var(--dur-base) ease;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform;
+}
+
+.kinetic-title.is-revealed .kinetic-title__char {
+  transform: translateY(calc(var(--lift) * -1px));
+  opacity: 1;
+}
+
+/* after the entrance the transition is shortened so the lens feels instant */
+.kinetic-title.is-live .kinetic-title__char {
+  transition:
+    transform 0.25s var(--ease-out),
+    color var(--dur-base) ease;
+  transition-delay: 0ms;
+}
+
+.kinetic-title__char.is-jumping {
+  animation: kinetic-jump 640ms var(--ease-out) both;
+  animation-delay: var(--jump-delay, 0ms);
+}
+
+.kinetic-title__line .kinetic-title__char.is-jumping {
+  color: var(--amber);
+}
+
+@keyframes kinetic-jump {
+  0% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-0.22em);
+  }
+  70% {
+    transform: translateY(0.03em);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

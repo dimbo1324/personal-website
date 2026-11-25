@@ -1,2 +1,7 @@
-@import "tailwindcss" source(none);
+@layer theme, base, proto-reset, proto-tokens, proto-base, proto-layout, proto-components, proto-sections, proto-utilities, proto-motion, components, utilities;
+
+@import "./prototype/main.css";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
 @source "../";

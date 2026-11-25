@@ -1,126 +1,43 @@
 ---
-import { MessageCircle, Send, ShieldCheck } from "@lucide/astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { WhatsAppLinkBuilder } from "../lib/whatsapp";
-
-const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "";
-const whatsappPhone = import.meta.env.PUBLIC_WHATSAPP_PHONE ?? "";
-const whatsappUrl = new WhatsAppLinkBuilder().build({
-  phone: whatsappPhone,
-  message: "Hello! I would like to discuss a project.",
-});
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Telemetry from "../components/Telemetry.astro";
+import Cases from "../components/Cases.astro";
+import Gallery from "../components/Gallery.astro";
+import Dossier from "../components/Dossier.astro";
+import Contact from "../components/Contact.astro";
+import Request from "../components/Request.astro";
+import Footer from "../components/Footer.astro";
+import ScadaWindow from "../components/ScadaWindow.astro";
+import FloatingUi from "../components/FloatingUi.astro";
 ---
 
-<BaseLayout
-  title="Dmitrii Prikhodko — Engineering Workspace"
-  description="Personal website foundation built with Astro 7, TypeScript, Tailwind CSS v4, Lucide Icons, and Cloudflare Pages Functions."
->
-  <main class="mx-auto flex max-w-2xl flex-col gap-8 px-6 py-16">
-    <header class="space-y-3">
-      <p class="inline-flex items-center gap-2 text-xs font-medium tracking-wider text-sky-400 uppercase">
-        <ShieldCheck class="size-4" aria-hidden="true" />
-        Astro 7 · TypeScript · Tailwind CSS v4 · Cloudflare Pages
-      </p>
-      <h1 class="text-3xl font-semibold tracking-tight text-white">Dmitrii Prikhodko</h1>
-      <p class="text-sm text-slate-300">
-        Repository foundation verified and ready for feature development.
-      </p>
-    </header>
+<BaseLayout>
+  <a data-i18n="ui.skip-to-content" class="skip-link" href="#main">
+    Skip to content
+  </a>
 
-    <section class="rounded-xl border border-slate-800 bg-slate-900/60 p-6">
-      <h2 class="mb-4 text-base font-medium text-white">Contact endpoint smoke form</h2>
-      <form class="space-y-4" data-lead-form novalidate>
-        <div>
-          <label class="mb-1 block text-xs text-slate-300" for="lead-name">
-            Name
-          </label>
-          <input
-            id="lead-name"
-            name="name"
-            type="text"
-            required
-            maxlength="120"
-            class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
-          />
-        </div>
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__bar" data-js="scroll-progress"></div>
+  </div>
 
-        <div>
-          <label class="mb-1 block text-xs text-slate-300" for="lead-contact">
-            Email or Telegram handle
-          </label>
-          <input
-            id="lead-contact"
-            name="contact"
-            type="text"
-            required
-            maxlength="160"
-            class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
-          />
-        </div>
+  <Header />
 
-        <div>
-          <label class="mb-1 block text-xs text-slate-300" for="lead-message">
-            Message
-          </label>
-          <textarea
-            id="lead-message"
-            name="message"
-            rows="3"
-            required
-            maxlength="2000"
-            class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
-          ></textarea>
-        </div>
+  <div class="page-flow" data-js="page-flow">
+    <main id="main">
+      <Hero />
+      <Telemetry />
+      <Cases />
+      <Gallery />
+      <Dossier />
+      <Contact />
+      <Request />
+    </main>
 
-        <input
-          type="text"
-          name="website"
-          tabindex="-1"
-          autocomplete="off"
-          class="hidden"
-          aria-hidden="true"
-        />
+    <Footer />
+  </div>
 
-        {turnstileSiteKey && <div class="cf-turnstile" data-sitekey={turnstileSiteKey} />}
-
-        <div class="flex flex-wrap items-center gap-3">
-          <button
-            type="submit"
-            class="inline-flex items-center gap-2 rounded-lg bg-sky-500 px-4 py-2 text-sm font-medium text-slate-950 transition hover:bg-sky-400"
-          >
-            <Send class="size-4" aria-hidden="true" />
-            Send request
-          </button>
-
-          {whatsappUrl && (
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-slate-500"
-            >
-              <MessageCircle class="size-4" aria-hidden="true" />
-              WhatsApp
-            </a>
-          )}
-        </div>
-
-        <p class="min-h-5 text-xs text-slate-300" data-lead-status role="status"></p>
-      </form>
-    </section>
-  </main>
-
-  {turnstileSiteKey && (
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
-  )}
-
-  <script>
-    import { LeadFormController } from "../scripts/lead-form";
-
-    const form = document.querySelector<HTMLFormElement>("[data-lead-form]");
-
-    if (form) {
-      new LeadFormController(form).mount();
-    }
-  </script>
+  <ScadaWindow />
+  <FloatingUi />
 </BaseLayout>

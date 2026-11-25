@@ -1,0 +1,74 @@
+.scene-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  padding: 0.4rem 0.4rem 0.4rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-subtle);
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-variant-numeric: tabular-nums slashed-zero;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scene-switcher__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.scene-switcher__status .icon {
+  color: var(--accent);
+}
+.scene-switcher__status.is-busy {
+  color: var(--amber);
+}
+.scene-switcher__status.is-busy .icon {
+  color: var(--amber);
+  animation: scene-spin 1.4s linear infinite;
+}
+
+.scene-switcher__options {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.scene-switcher__option {
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    color var(--dur-fast) ease,
+    background-color var(--dur-fast) ease;
+}
+.scene-switcher__option:hover {
+  color: var(--text-primary);
+  background: var(--tint-steel);
+}
+.scene-switcher__option.is-active {
+  background: var(--tint-accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@keyframes scene-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 540px) {
+  .scene-switcher {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

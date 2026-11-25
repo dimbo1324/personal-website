@@ -1,0 +1,49 @@
+/* Segmented control (tabs) with a sliding thumb. */
+.segmented {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 10px;
+  border: 1px solid var(--line-subtle);
+  background: var(--bg-surface);
+}
+
+.segmented__indicator {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 0;
+  width: 0;
+  border-radius: 7px;
+  background: var(--accent);
+  transition:
+    transform 380ms var(--ease-out),
+    width 380ms var(--ease-out);
+}
+
+.segmented__option {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.5rem;
+  border-radius: 7px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) ease;
+}
+.segmented__option:hover {
+  color: var(--text-primary);
+}
+.segmented__option.is-active {
+  color: var(--on-accent);
+  font-weight: 600;
+}

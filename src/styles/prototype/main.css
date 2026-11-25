@@ -1,0 +1,83 @@
+/* ==========================================================================
+   Entry stylesheet.
+   Every file is imported into an explicit cascade layer, so specificity
+   is governed by layer order — not by selector weight or import order.
+   ========================================================================== */
+@layer proto-reset, proto-tokens, proto-base, proto-layout, proto-components, proto-sections, proto-utilities, proto-motion;
+
+/* ---------- base ---------- */
+@import url("./prototype/base/reset.css") layer(proto-reset);
+@import url("./prototype/base/fonts.css") layer(proto-tokens);
+@import url("./prototype/base/tokens.css") layer(proto-tokens);
+@import url("./prototype/base/palette-dark.css") layer(proto-tokens);
+@import url("./prototype/base/palette-light.css") layer(proto-tokens);
+@import url("./prototype/base/global.css") layer(proto-base);
+@import url("./prototype/base/typography.css") layer(proto-base);
+@import url("./prototype/base/i18n-pending.css") layer(proto-base);
+
+/* ---------- layout ---------- */
+@import url("./prototype/layout/container.css") layer(proto-layout);
+@import url("./prototype/layout/section.css") layer(proto-layout);
+@import url("./prototype/layout/section-head.css") layer(proto-layout);
+
+/* ---------- components ---------- */
+@import url("./prototype/components/icon.css") layer(proto-components);
+@import url("./prototype/components/button.css") layer(proto-components);
+@import url("./prototype/components/pill-button.css") layer(proto-components);
+@import url("./prototype/components/badge.css") layer(proto-components);
+@import url("./prototype/components/chip.css") layer(proto-components);
+@import url("./prototype/components/concept-badge.css") layer(proto-components);
+@import url("./prototype/components/live-dot.css") layer(proto-components);
+@import url("./prototype/components/tile.css") layer(proto-components);
+@import url("./prototype/components/panel.css") layer(proto-components);
+@import url("./prototype/components/kpi.css") layer(proto-components);
+@import url("./prototype/components/brand-mark.css") layer(proto-components);
+@import url("./prototype/components/theme-toggle.css") layer(proto-components);
+@import url("./prototype/components/lang-switch.css") layer(proto-components);
+@import url("./prototype/components/site-nav.css") layer(proto-components);
+@import url("./prototype/components/menu-toggle.css") layer(proto-components);
+@import url("./prototype/components/mobile-drawer.css") layer(proto-components);
+@import url("./prototype/components/role-ticker.css") layer(proto-components);
+@import url("./prototype/components/kinetic-title.css") layer(proto-components);
+@import url("./prototype/components/media-frame.css") layer(proto-components);
+@import url("./prototype/components/scene-switcher.css") layer(proto-components);
+@import url("./prototype/components/chart.css") layer(proto-components);
+@import url("./prototype/components/widget-banner.css") layer(proto-components);
+@import url("./prototype/components/bento.css") layer(proto-components);
+@import url("./prototype/components/timeline.css") layer(proto-components);
+@import url("./prototype/components/case-card.css") layer(proto-components);
+@import url("./prototype/components/segmented.css") layer(proto-components);
+@import url("./prototype/components/channel.css") layer(proto-components);
+@import url("./prototype/components/reveal-button.css") layer(proto-components);
+@import url("./prototype/components/contact-card.css") layer(proto-components);
+@import url("./prototype/components/form-field.css") layer(proto-components);
+@import url("./prototype/components/flag-backdrop.css") layer(proto-components);
+@import url("./prototype/components/arrivals-board.css") layer(proto-components);
+@import url("./prototype/components/scada-window.css") layer(proto-components);
+@import url("./prototype/components/schematic.css") layer(proto-components);
+@import url("./prototype/components/widget-dock.css") layer(proto-components);
+@import url("./prototype/components/lightbox.css") layer(proto-components);
+@import url("./prototype/components/theater.css") layer(proto-components);
+@import url("./prototype/components/scroll-progress.css") layer(proto-components);
+@import url("./prototype/components/scroll-top.css") layer(proto-components);
+@import url("./prototype/components/toast.css") layer(proto-components);
+@import url("./prototype/components/file-guard.css") layer(proto-components);
+
+/* ---------- sections ---------- */
+@import url("./prototype/sections/header.css") layer(proto-sections);
+@import url("./prototype/sections/hero.css") layer(proto-sections);
+@import url("./prototype/sections/telemetry.css") layer(proto-sections);
+@import url("./prototype/sections/cases.css") layer(proto-sections);
+@import url("./prototype/sections/gallery.css") layer(proto-sections);
+@import url("./prototype/sections/dossier.css") layer(proto-sections);
+@import url("./prototype/sections/contact.css") layer(proto-sections);
+@import url("./prototype/sections/request.css") layer(proto-sections);
+@import url("./prototype/sections/footer.css") layer(proto-sections);
+
+/* ---------- utilities ---------- */
+@import url("./prototype/utilities/visually-hidden.css") layer(proto-utilities);
+@import url("./prototype/utilities/text.css") layer(proto-utilities);
+@import url("./prototype/utilities/reveal.css") layer(proto-utilities);
+
+/* ---------- accessibility: reduced motion (always last) ---------- */
+@import url("./prototype/base/reduced-motion.css") layer(proto-motion);

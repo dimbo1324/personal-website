@@ -1,0 +1,33 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<section class="section section--surface" id="gallery" aria-labelledby="gallery-title">
+  <div class="container">
+    <header class="section-head reveal">
+      <div>
+        <span class="section-head__index">03</span>
+        <h2 class="section-head__title" id="gallery-title">
+          <span data-i18n="gallery.field">Field &amp;</span>
+          <span class="section-head__accent" data-i18n="gallery.gallery">
+            Gallery.
+          </span>
+        </h2>
+        <p data-i18n="gallery.on-site-on-stage-and" class="section-head__lead">
+          On site, on stage and on the bench.
+        </p>
+      </div>
+      <span class="section-head__counter">
+        <Icon name="maximize-2" size="sm" />
+        <span data-js="gallery-count">08 frames · click to inspect</span>
+      </span>
+    </header>
+
+    <ul
+      class="bento reveal"
+      data-js="gallery-grid"
+      aria-label="Photo gallery"
+      data-i18n-attr="aria-label:gallery.photo-gallery"
+    ></ul>
+  </div>
+</section>

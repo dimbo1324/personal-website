@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Full-bleed Uruguay flag behind the footer.
+   Layers (bottom → top): hi-res still · seamless video loop · theme shade.
+   The video is a pre-rendered ping-pong loop with eased turnarounds, so
+   <video loop> restarts on an identical frame — no visible seam.
+   ========================================================================== */
+.flag-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.flag-backdrop__still,
+.flag-backdrop__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 22% 30%;
+  clip-path: inset(100% 0 0 0);
+  transform: scale(1.08);
+  transition:
+    clip-path 1.4s var(--ease-in-out),
+    transform 2.4s var(--ease-out),
+    opacity 1.2s ease;
+}
+
+.flag-backdrop__video {
+  opacity: 0;
+}
+
+/* unveil once the footer scrolls into view */
+.flag-backdrop.is-revealed .flag-backdrop__still,
+.flag-backdrop.is-revealed .flag-backdrop__video {
+  clip-path: inset(0 0 0 0);
+  transform: scale(1);
+}
+.flag-backdrop.is-playing .flag-backdrop__video {
+  opacity: 1;
+}
+
+.flag-backdrop__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      var(--bg-surface) 0%,
+      color-mix(in srgb, var(--bg-surface) 40%, transparent) 16%,
+      transparent 34%
+    ),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--bg-void) 94%, transparent) 0%,
+      color-mix(in srgb, var(--bg-void) 70%, transparent) 30%,
+      transparent 62%
+    ),
+    linear-gradient(90deg, color-mix(in srgb, var(--bg-void) 55%, transparent) 0%, transparent 55%);
+}
+
+[data-theme="light"] .flag-backdrop__shade {
+  background:
+    linear-gradient(
+      180deg,
+      var(--bg-surface) 0%,
+      color-mix(in srgb, var(--bg-surface) 30%, transparent) 16%,
+      transparent 32%
+    ),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--bg-void) 96%, transparent) 0%,
+      color-mix(in srgb, var(--bg-void) 74%, transparent) 30%,
+      transparent 60%
+    ),
+    linear-gradient(90deg, color-mix(in srgb, var(--bg-void) 45%, transparent) 0%, transparent 50%);
+}

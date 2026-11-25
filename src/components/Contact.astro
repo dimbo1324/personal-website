@@ -1,0 +1,119 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<section class="section section--surface" id="contact" aria-labelledby="contact-title">
+  <div class="container contact-grid reveal">
+    <div class="contact-grid__intro">
+      <span class="section-head__index">05</span>
+      <h2 class="section-head__title" id="contact-title">
+        <span data-i18n="contact.direct">Direct</span>
+        <span class="section-head__accent" data-i18n="contact.line">
+          Line.
+        </span>
+      </h2>
+      <p data-i18n="contact.on-site-hybrid-or-remote" class="section-head__lead">
+        On-site, hybrid or remote. Happy to talk commissioning, IIoT architecture or backend work.
+      </p>
+
+      <figure class="contact-card">
+        <img
+          data-i18n-attr="alt:contact.portrait-of-dmitrii-prikhodko"
+          class="contact-card__photo"
+          src="/assets/images/portrait-400.webp"
+          alt="Portrait of Dmitrii Prikhodko"
+          width="72"
+          height="72"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>
+          <span class="contact-card__name">Dmitrii Prikhodko</span>
+          <span class="contact-card__sub">
+            <Icon name="map-pin" size="sm" />
+            <span data-i18n="contact.montevideo-uruguay-utc-3">Montevideo, Uruguay · UTC−3</span>
+          </span>
+          <span class="contact-card__status">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span data-i18n="contact.available-for-new-roles">Available for new roles</span>
+          </span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <ul class="channel-list">
+      <li>
+        <a href="mailto:dmitriiprikhodko9@gmail.com" class="channel">
+          <span class="channel__key">
+            <Icon name="mail" size="sm" />
+            <span data-i18n="contact.email">Email</span>
+          </span>
+          <span class="channel__value">dmitriiprikhodko9@gmail.com</span>
+          <Icon name="arrow-up-right" size="sm" class="icon channel__arrow" />
+        </a>
+      </li>
+      <li>
+        <div class="channel channel--reveal" data-js="phone-reveal">
+          <span class="channel__key">
+            <Icon name="phone" size="sm" />
+            <span data-i18n="contact.phone">Phone</span>
+          </span>
+          <span class="channel__value channel__value--mono" data-js="phone-slot">
+            <button type="button" class="reveal-button" data-js="phone-reveal-button">
+              <Icon name="eye" size="sm" />
+              <span data-i18n="contact.show-number">Show number</span>
+            </button>
+          </span>
+        </div>
+      </li>
+      <li>
+        <a
+          href="https://linkedin.com/in/dimbo1324"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="channel"
+        >
+          <span class="channel__key">
+            <Icon name="linkedin" size="sm" />
+            LinkedIn
+          </span>
+          <span class="channel__value">linkedin.com/in/dimbo1324</span>
+          <Icon name="arrow-up-right" size="sm" class="icon channel__arrow" />
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://github.com/dimbo1324"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="channel"
+        >
+          <span class="channel__key">
+            <Icon name="github" size="sm" />
+            GitHub
+          </span>
+          <span class="channel__value">github.com/dimbo1324</span>
+          <Icon name="arrow-up-right" size="sm" class="icon channel__arrow" />
+        </a>
+      </li>
+      <li>
+        <a
+          href="/assets/cv/Dmitrii-Prikhodko-CV-EN.pdf"
+          class="channel"
+          download
+          data-track="cv_download"
+          data-i18n-attr="href:cv.href"
+        >
+          <span class="channel__key">
+            <Icon name="file-text" size="sm" />
+            <span data-i18n="contact.cv-pdf">CV · PDF</span>
+          </span>
+          <span data-i18n="contact.download-cv" class="channel__value">
+            Download CV
+          </span>
+          <Icon name="download" size="sm" class="icon channel__arrow" />
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>

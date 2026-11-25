@@ -1,0 +1,200 @@
+---
+import Icon from "./Icon.astro";
+
+const navItems = [
+  { id: "overview", label: "Overview", key: "nav.overview", icon: "compass" },
+  { id: "telemetry", label: "Telemetry", key: "nav.telemetry", icon: "activity" },
+  { id: "cases", label: "Cases", key: "nav.cases", icon: "layers" },
+  { id: "gallery", label: "Gallery", key: "nav.gallery", icon: "images" },
+  { id: "dossier", label: "Dossier", key: "nav.dossier", icon: "briefcase" },
+  { id: "contact", label: "Contact", key: "nav.contact", icon: "mail" },
+] as const;
+---
+
+<header class="site-header" data-js="site-header">
+  <div class="container site-header__inner">
+    <a href="#overview" class="brand" data-js="brand" aria-label="Dmitrii Prikhodko — back to top">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="brand-mark__card">
+          <span class="brand-mark__face brand-mark__face--front">
+            <span class="brand-mark__letter brand-mark__letter--d" data-js="brand-letter">
+              D
+            </span>
+            <span class="brand-mark__letter brand-mark__letter--p" data-js="brand-letter">
+              P
+            </span>
+          </span>
+          <span class="brand-mark__face brand-mark__face--back">
+            <img
+              class="brand-mark__avatar"
+              src="/assets/images/avatar-helmet.webp"
+              alt=""
+              width="36"
+              height="36"
+              decoding="async"
+            />
+          </span>
+        </span>
+        <span class="brand-mark__ripple"></span>
+      </span>
+      <span class="brand__text">
+        <span class="brand__name" data-js="brand-name">
+          Dmitrii Prikhodko
+        </span>
+        <span class="brand__hint" data-js="brand-hint">
+          OT · IIoT · Software
+        </span>
+      </span>
+    </a>
+
+    <nav data-i18n-attr="aria-label:nav.primary" class="site-nav" aria-label="Primary">
+      <span class="site-nav__indicator" data-js="nav-indicator" aria-hidden="true"></span>
+      <ul class="site-nav__list">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={`#${item.id}`}
+              class:list={["site-nav__link", item.id === "overview" && "is-active"]}
+              data-nav={item.id}
+            >
+              <Icon name={item.icon} size="sm" />
+              <span data-i18n={item.key}>{item.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-header__controls">
+      <div
+        class="lang-switch"
+        data-js="lang-switch"
+        role="group"
+        aria-label="Language"
+        data-i18n-attr="aria-label:header.language"
+      >
+        <span class="lang-switch__indicator" aria-hidden="true"></span>
+        <button
+          type="button"
+          class="lang-switch__option is-active"
+          data-lang="en"
+          aria-pressed="true"
+          lang="en"
+          title="English"
+        >
+          EN
+        </button>
+        <button
+          type="button"
+          class="lang-switch__option"
+          data-lang="es"
+          aria-pressed="false"
+          lang="es"
+          title="Español"
+        >
+          ES
+        </button>
+        <button
+          type="button"
+          class="lang-switch__option"
+          data-lang="ru"
+          aria-pressed="false"
+          lang="ru"
+          title="Русский"
+        >
+          RU
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="pill-button"
+        data-js="open-widget"
+        title="Open the interactive ACS widget"
+        data-i18n-attr="title:header.open-the-interactive-acs-widget"
+      >
+        <span class="live-dot" aria-hidden="true"></span>
+        <Icon name="cpu" size="sm" />
+        <span data-i18n="header.acs-widget" class="pill-button__label">
+          ACS Widget
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="theme-toggle"
+        data-js="theme-toggle"
+        aria-label="Switch to light theme"
+        title="Switch to light theme"
+      >
+        <svg
+          class="theme-toggle__icon theme-toggle__sun"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <circle class="theme-toggle__sun-core" cx="12" cy="12" r="4"></circle>
+          <g class="theme-toggle__sun-rays">
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </g>
+        </svg>
+        <svg
+          class="theme-toggle__icon theme-toggle__moon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path class="theme-toggle__moon-body" d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          <path
+            class="theme-toggle__star theme-toggle__star--a"
+            d="M18.6 2.6v3.2M17 4.2h3.2"
+          ></path>
+          <path
+            class="theme-toggle__star theme-toggle__star--b"
+            d="M21.4 8.2v1.9M20.45 9.15h1.9"
+          ></path>
+        </svg>
+        <span class="theme-toggle__burst" aria-hidden="true"></span>
+        <span class="theme-toggle__sparks" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="menu-toggle"
+        data-js="menu-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-drawer"
+        aria-label="Open menu"
+      >
+        <span class="menu-toggle__line"></span>
+        <span class="menu-toggle__line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-drawer" id="mobile-drawer" data-js="mobile-drawer" aria-hidden="true">
+  <ul class="mobile-drawer__list">
+    {navItems.map((item, index) => (
+      <li>
+        <a
+          href={`#${item.id}`}
+          class:list={["mobile-drawer__link", item.id === "overview" && "is-active"]}
+          data-nav={item.id}
+        >
+          <span>{String(index).padStart(2, "0")}</span>
+          <b data-i18n={item.key}>{item.label}</b>
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>

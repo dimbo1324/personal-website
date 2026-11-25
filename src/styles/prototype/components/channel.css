@@ -1,0 +1,117 @@
+.channel-list {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-subtle);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.channel-list > li + li {
+  border-top: 1px solid var(--line-subtle);
+}
+
+.channel {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 1.1rem var(--space-5);
+  transition: background-color var(--dur-fast) ease;
+}
+.channel:hover {
+  background: var(--bg-hover);
+}
+
+.channel__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.channel__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  text-align: right;
+  transition: color var(--dur-fast) ease;
+}
+.channel__value--mono {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.channel__arrow {
+  color: var(--text-muted);
+  transition: color var(--dur-fast) ease;
+}
+.channel:hover .channel__value,
+.channel:hover .channel__arrow {
+  color: var(--accent);
+}
+
+@media (max-width: 540px) {
+  .channel {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .channel__value {
+    grid-row: 2;
+    text-align: left;
+  }
+}
+
+/* ---------- phone row: revealed on demand ---------- */
+.channel--reveal {
+  grid-template-columns: 7rem minmax(0, 1fr);
+}
+.channel--reveal .channel__value {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  overflow: visible;
+}
+.channel__link {
+  color: var(--text-primary);
+  transition: color var(--dur-fast) ease;
+}
+.channel__link:hover {
+  color: var(--accent);
+}
+.channel__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-pill);
+  background: var(--tint-accent);
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  transition: background-color var(--dur-fast) ease;
+}
+.channel__chip:hover {
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+}
+.channel--reveal.is-revealed .channel__link {
+  animation: channel-reveal 420ms var(--ease-out);
+}
+@keyframes channel-reveal {
+  from {
+    opacity: 0;
+    letter-spacing: 0.3em;
+  }
+}
+
+@media (max-width: 540px) {
+  .channel--reveal .channel__value {
+    justify-content: flex-start;
+  }
+}

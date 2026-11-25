@@ -1,0 +1,224 @@
+/* ==========================================================================
+   Hero media frame
+   hover : the frame grows slightly and a progress ring fills along its
+           border (laser colours) while a countdown runs — after 5 s of
+           hovering, theater mode opens (DwellTrigger.js → Theater.js)
+   click : opens theater mode immediately
+   ========================================================================== */
+@property --dwell-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.media-frame {
+  --dwell-angle: 0deg;
+  position: relative;
+  display: block;
+  cursor: zoom-in;
+  transition: transform 600ms var(--ease-out);
+  width: 100%;
+  aspect-ratio: 16 / 10.5;
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line-strong);
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card);
+}
+
+.media-frame__screen {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) - 7px);
+  background: #0d161a radial-gradient(ellipse at 50% 40%, rgba(36, 184, 155, 0.18), transparent 70%);
+}
+
+/* two stacked players: .is-active on top, .is-leaving underneath during
+   the iris transition, the idle one invisible (VideoCarousel.js) */
+.media-frame__video,
+.media-frame__fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.media-frame__video {
+  z-index: 0;
+  opacity: 0;
+  /* the buffering (idle) clip is not rendered at all, so its first frame is never
+     reported as a late Largest Contentful Paint; it still preloads */
+  display: none;
+}
+.media-frame__video.is-leaving {
+  z-index: 1;
+  opacity: 1;
+  display: block;
+}
+.media-frame__video.is-active {
+  z-index: 2;
+  opacity: 1;
+  display: block;
+}
+
+/* light ring riding the edge of the iris transition */
+.media-frame__iris {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  z-index: 3;
+  width: 120%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid rgba(52, 214, 182, 0.75);
+  box-shadow:
+    0 0 24px rgba(52, 214, 182, 0.5),
+    inset 0 0 24px rgba(242, 153, 74, 0.35);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* story-style progress segments, one per clip */
+.media-frame__segments {
+  position: absolute;
+  top: 0.85rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 4;
+  display: flex;
+  gap: 4px;
+}
+.media-frame__segment {
+  flex: 1;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.media-frame__segment-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #34d6b6, #f2994a);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.media-frame__counter {
+  margin-left: 0.6rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.media-frame__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 12, 14, 0.25) 0%,
+    transparent 30%,
+    transparent 55%,
+    rgba(6, 12, 14, 0.88) 100%
+  );
+}
+
+.media-frame__caption {
+  position: absolute;
+  left: 1.25rem;
+  right: 1.25rem;
+  bottom: 1.1rem;
+  z-index: 6;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.media-frame__title {
+  color: #ffffff;
+}
+.media-frame__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #34d6b6;
+}
+
+@media (hover: hover) {
+  .media-frame:hover {
+    transform: scale(1.035);
+  }
+}
+
+/* dwell progress ring along the frame border */
+.media-frame::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 4;
+  padding: calc(var(--laser-width) + 0.5px);
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from -90deg,
+    var(--laser-tail),
+    var(--laser-mid) calc(var(--dwell-angle) * 0.7),
+    var(--laser-head) var(--dwell-angle),
+    transparent var(--dwell-angle)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity var(--dur-base) ease;
+}
+.media-frame.is-dwelling::after {
+  opacity: 1;
+}
+
+.media-frame__dwell {
+  position: absolute;
+  top: 1.7rem;
+  left: 50%;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: rgba(8, 14, 17, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #f2f6f7;
+  opacity: 0;
+  transform: translate(-50%, -6px);
+  transition:
+    opacity var(--dur-base) ease,
+    transform var(--dur-base) var(--ease-out);
+}
+.media-frame__dwell .icon {
+  color: #34d6b6;
+}
+.media-frame.is-dwelling .media-frame__dwell {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}

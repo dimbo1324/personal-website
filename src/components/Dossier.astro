@@ -1,0 +1,546 @@
+---
+import Icon from "./Icon.astro";
+
+interface Chip {
+  tone: "accent" | "amber" | "plain";
+  label: string;
+}
+
+interface Job {
+  id: number;
+  years: string;
+  company: string;
+  roleKey: string;
+  role: string;
+  metric: string;
+  metricKey?: string;
+  bodyKey: string;
+  body: string;
+  chips: Chip[];
+  open?: boolean;
+}
+
+interface StackRow {
+  icon: string;
+  labelKey?: string;
+  label: string;
+  items: { label: string; core: boolean }[];
+}
+
+interface EduItem {
+  years: string;
+  titleKey?: string;
+  title: string;
+  badgeKey?: string;
+  badge?: string;
+  subKey: string;
+  sub: string;
+}
+
+const jobs: Job[] = [
+  {
+    id: 1,
+    years: "2025 – 2026",
+    company: "Infrastruktura TK",
+    roleKey: "dossier.iiot-industrial-systems-engineer-moscow",
+    role: "IIoT & Industrial Systems Engineer · Moscow",
+    metric: "2,500+ I/O",
+    bodyKey: "dossier.full-cycle-sat-fat-at",
+    body: "Full-cycle SAT/FAT at LUKOIL Kstovo refinery (units L-24/7 & AVT-5) with live SIS/ESD validation. Built an ODE thermal power plant digital twin with 4 cascaded virtual PID loops, Python/gRPC services and InfluxDB/PostgreSQL storage.",
+    chips: [
+      { tone: "accent", label: "Prosoft / Elara" },
+      { tone: "accent", label: "MQTT / OPC UA" },
+      { tone: "amber", label: "Python / gRPC" },
+      { tone: "plain", label: "Docker" },
+    ],
+    open: true,
+  },
+  {
+    id: 2,
+    years: "2025",
+    company: "Intelligent Security Systems",
+    roleKey: "dossier.c-backend-developer-remote-contract",
+    role: "C++ Backend Developer · Remote contract",
+    metric: "SecurOS CI",
+    bodyKey: "dossier.automated-unit-and-integration-test",
+    body: "Automated unit and integration test suites for C++ backend microservices, Jenkins CI pipeline support, WebSocket real-time client communication and Linux debugging.",
+    chips: [
+      { tone: "accent", label: "C++" },
+      { tone: "amber", label: "Jenkins CI" },
+      { tone: "plain", label: "WebSocket" },
+      { tone: "plain", label: "Linux" },
+    ],
+  },
+  {
+    id: 3,
+    years: "2023 – 2025",
+    company: "Transneft A&M",
+    roleKey: "dossier.iiot-engineer-software-developer-moscow",
+    role: "IIoT Engineer & Software Developer · Moscow",
+    metric: "−25% cycle",
+    metricKey: "dossier.25-cycle",
+    bodyKey: "dossier.created-a-reusable-iec-61131",
+    body: "Created a reusable IEC 61131-3 library cutting delivery from 4 to 3 weeks, built a no-code FBD DSL, enhanced SCADA web apps (React/Next.js) and led SAT/FAT at 3 oil pumping stations with Siemens, Schneider, B&R and Prosoft.",
+    chips: [
+      { tone: "accent", label: "IEC 61131-3" },
+      { tone: "amber", label: "FBD DSL" },
+      { tone: "accent", label: "Siemens / Schneider" },
+      { tone: "plain", label: "React / Next.js" },
+    ],
+  },
+  {
+    id: 4,
+    years: "2022 – 2023",
+    company: "OKBM Afrikantov",
+    roleKey: "dossier.r-d-engineer-nuclear-fluid",
+    role: "R&D Engineer · Nuclear fluid dynamics",
+    metric: "VVER CFD",
+    bodyKey: "dossier.cfd-vibration-simulations-ansys-cfx",
+    body: "CFD vibration simulations (ANSYS CFX, Logos) of VVER reactor steam generators validated via PIV/LDV; C++ (OpenCV, VTK) & NI-DAQmx sensor acquisition automated with Python and MATLAB.",
+    chips: [
+      { tone: "amber", label: "ANSYS CFX" },
+      { tone: "accent", label: "C++ / OpenCV" },
+      { tone: "plain", label: "NI-DAQmx" },
+      { tone: "plain", label: "MATLAB" },
+    ],
+  },
+  {
+    id: 5,
+    years: "2021 – 2022",
+    company: "NIITOP",
+    roleKey: "dossier.automation-iot-engineer-instrumentation",
+    role: "Automation & IoT Engineer · Instrumentation",
+    metric: "+12% yield",
+    metricKey: "dossier.12-yield",
+    bodyKey: "dossier.automated-an-electroplating-line-removing",
+    body: "Automated an electroplating line (removing an operator from a toxic zone, +12% yield), engineered an ATmega48 cooling controller for a 5 kW microwave load and improved C++ libraries (CuraEngine, Marlin).",
+    chips: [
+      { tone: "amber", label: "ATmega48" },
+      { tone: "accent", label: "Automation" },
+      { tone: "plain", label: "C++" },
+    ],
+  },
+];
+
+const otRows: StackRow[] = [
+  {
+    icon: "factory",
+    labelKey: "dossier.control-systems",
+    label: "Control systems",
+    items: [
+      { label: "PLC / DCS / SIS", core: true },
+      { label: "SCADA", core: true },
+      { label: "IEC 61131-3", core: true },
+      { label: "ST / FBD", core: false },
+      { label: "SAT / FAT commissioning", core: false },
+    ],
+  },
+  {
+    icon: "cpu",
+    labelKey: "dossier.hardware-vendors",
+    label: "Hardware vendors",
+    items: [
+      { label: "Siemens", core: true },
+      { label: "Schneider Electric", core: true },
+      { label: "B&R", core: false },
+      { label: "Prosoft", core: false },
+      { label: "Elara (SURA)", core: false },
+    ],
+  },
+  {
+    icon: "radio",
+    labelKey: "dossier.industrial-protocols",
+    label: "Industrial protocols",
+    items: [
+      { label: "MQTT", core: true },
+      { label: "OPC UA", core: true },
+      { label: "Modbus", core: true },
+      { label: "IEC 61850", core: false },
+    ],
+  },
+  {
+    icon: "activity",
+    labelKey: "dossier.data-digital-twins",
+    label: "Data & digital twins",
+    items: [
+      { label: "Digital twins", core: true },
+      { label: "InfluxDB", core: true },
+      { label: "Grafana", core: false },
+      { label: "ODE models", core: false },
+    ],
+  },
+];
+
+const itRows: StackRow[] = [
+  {
+    icon: "code-xml",
+    labelKey: "dossier.languages",
+    label: "Languages",
+    items: [
+      { label: "C++", core: true },
+      { label: "Python", core: true },
+      { label: "Go", core: false },
+    ],
+  },
+  {
+    icon: "layers",
+    labelKey: "dossier.backend-data",
+    label: "Backend & data",
+    items: [
+      { label: "gRPC", core: true },
+      { label: "WebSocket", core: true },
+      { label: "PostgreSQL", core: true },
+      { label: "MongoDB", core: false },
+    ],
+  },
+  {
+    icon: "terminal",
+    label: "DevOps",
+    items: [
+      { label: "Docker", core: true },
+      { label: "Linux", core: true },
+      { label: "Jenkins CI", core: true },
+    ],
+  },
+  {
+    icon: "monitor-cog",
+    labelKey: "dossier.frontend",
+    label: "Frontend",
+    items: [
+      { label: "React / Next.js", core: true },
+      { label: "SCADA web apps", core: false },
+    ],
+  },
+  {
+    icon: "sparkles",
+    labelKey: "dossier.ai-assisted",
+    label: "AI-assisted",
+    items: [
+      { label: "Claude Code", core: true },
+      { label: "OpenAI Codex", core: true },
+      { label: "ML data prep", core: false },
+    ],
+  },
+];
+
+const education: EduItem[] = [
+  {
+    years: "2021 – 2023",
+    titleKey: "dossier.msc-thermal-power-engineering",
+    title: "MSc Thermal Power Engineering",
+    badgeKey: "dossier.honors",
+    badge: "Honors",
+    subKey: "dossier.nnstu-n-a-r-e",
+    sub: "NNSTU n.a. R. E. Alekseev · Nizhny Novgorod",
+  },
+  {
+    years: "2017 – 2021",
+    titleKey: "dossier.bsc-thermal-power-engineering",
+    title: "BSc Thermal Power Engineering",
+    subKey: "dossier.nuclear-thermal-plant-design-heat",
+    sub: "Nuclear & thermal plant design · heat and mass transfer",
+  },
+  {
+    years: "2025",
+    titleKey: "dossier.c-developer-retraining-diploma",
+    title: "C++ Developer Retraining Diploma",
+    subKey: "dossier.skillfactory-moscow-340-academic-hours",
+    sub: "Skillfactory, Moscow · 340 academic hours",
+  },
+];
+
+const languages = [
+  {
+    code: "RU",
+    nameKey: "dossier.russian",
+    name: "Russian",
+    on: 5,
+    level: 5,
+    levelKey: "dossier.native",
+    levelText: "Native",
+  },
+  {
+    code: "EN",
+    nameKey: "dossier.english",
+    name: "English",
+    on: 3,
+    level: 5,
+    levelKey: undefined,
+    levelText: "B1 / B2",
+  },
+  {
+    code: "ES",
+    nameKey: "dossier.spanish",
+    name: "Spanish",
+    on: 1,
+    level: 5,
+    levelKey: "dossier.learning",
+    levelText: "Learning",
+  },
+];
+
+const chipClass = (tone: Chip["tone"]): string =>
+  tone === "accent" ? "chip chip--accent" : tone === "amber" ? "chip chip--amber" : "chip";
+---
+
+<section class="section" id="dossier" aria-labelledby="dossier-title">
+  <div class="container">
+    <header class="section-head reveal">
+      <div>
+        <span class="section-head__index">04</span>
+        <h2 class="section-head__title" id="dossier-title">
+          <span data-i18n="dossier.track-record">Track Record</span>
+          <span class="section-head__accent" data-i18n="dossier.stack">
+            &amp; Stack.
+          </span>
+        </h2>
+        <p data-i18n="dossier.bridging-ot-and-it-across" class="section-head__lead">
+          Bridging OT and IT across oil &amp; gas, nuclear and thermal power — from live refinery
+          PLC/DCS/SIS commissioning to C++/Python digital twins.
+        </p>
+      </div>
+    </header>
+
+    <div class="dossier-grid">
+      <ol class="timeline reveal" data-js="accordion">
+        {jobs.map((job) => (
+          <li class:list={["timeline__item", job.open && "is-open"]}>
+            <button
+              type="button"
+              class="timeline__trigger"
+              aria-expanded={job.open ? "true" : "false"}
+              aria-controls={`job-${job.id}`}
+              id={`job-${job.id}-trigger`}
+            >
+              <span class="timeline__years">{job.years}</span>
+              <span class="timeline__heading">
+                <span class="timeline__company">{job.company}</span>
+                <span data-i18n={job.roleKey} class="timeline__role">
+                  {job.role}
+                </span>
+              </span>
+              <span data-i18n={job.metricKey} class="timeline__metric">
+                {job.metric}
+              </span>
+              <Icon name="chevron-right" size="sm" class="icon timeline__chevron" />
+            </button>
+            <div
+              class="timeline__body"
+              id={`job-${job.id}`}
+              role="region"
+              aria-labelledby={`job-${job.id}-trigger`}
+            >
+              <div class="timeline__body-inner">
+                <p data-i18n={job.bodyKey}>{job.body}</p>
+                <ul class="chip-list">
+                  {job.chips.map((chip) => (
+                    <li class={chipClass(chip.tone)}>{chip.label}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="skills-card reveal">
+        <header class="skills-card__head">
+          <span data-i18n="dossier.toolbox" class="skills-card__eyebrow">
+            Toolbox
+          </span>
+          <h3 data-i18n="dossier.what-i-work-with" class="skills-card__title">
+            What I work with
+          </h3>
+        </header>
+
+        <div
+          class="segmented"
+          role="tablist"
+          aria-label="Skill groups"
+          data-js="tabs"
+          data-i18n-attr="aria-label:dossier.skill-groups"
+        >
+          <span class="segmented__indicator" aria-hidden="true"></span>
+          <button
+            type="button"
+            class="segmented__option is-active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="pane-ot"
+            id="tab-ot"
+            data-tab="ot"
+          >
+            <Icon name="factory" size="sm" />
+            <span data-i18n="dossier.industrial">Industrial</span>
+          </button>
+          <button
+            type="button"
+            class="segmented__option"
+            role="tab"
+            aria-selected="false"
+            aria-controls="pane-it"
+            id="tab-it"
+            data-tab="it"
+            tabindex="-1"
+          >
+            <Icon name="code-xml" size="sm" />
+            <span data-i18n="dossier.software">Software</span>
+          </button>
+          <button
+            type="button"
+            class="segmented__option"
+            role="tab"
+            aria-selected="false"
+            aria-controls="pane-edu"
+            id="tab-edu"
+            data-tab="edu"
+            tabindex="-1"
+          >
+            <Icon name="graduation-cap" size="sm" />
+            <span data-i18n="dossier.education">Education</span>
+          </button>
+        </div>
+
+        <div
+          class="skills-card__pane is-active"
+          role="tabpanel"
+          id="pane-ot"
+          aria-labelledby="tab-ot"
+          data-pane="ot"
+        >
+          <ul class="stack-list">
+            {otRows.map((row) => (
+              <li class="stack-row">
+                <span class="stack-row__icon">
+                  <Icon name={row.icon} class="icon" />
+                </span>
+                <div class="stack-row__body">
+                  <h4 data-i18n={row.labelKey} class="stack-row__label">
+                    {row.label}
+                  </h4>
+                  <ul class="stack-row__items">
+                    {row.items.map((item) => (
+                      <li class:list={["stack-row__item", item.core && "stack-row__item--core"]}>
+                        {item.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div
+          class="skills-card__pane"
+          role="tabpanel"
+          id="pane-it"
+          aria-labelledby="tab-it"
+          data-pane="it"
+          hidden
+        >
+          <ul class="stack-list">
+            {itRows.map((row) => (
+              <li class="stack-row">
+                <span class="stack-row__icon">
+                  <Icon name={row.icon} class="icon" />
+                </span>
+                <div class="stack-row__body">
+                  <h4 data-i18n={row.labelKey} class="stack-row__label">
+                    {row.label}
+                  </h4>
+                  <ul class="stack-row__items">
+                    {row.items.map((item) => (
+                      <li class:list={["stack-row__item", item.core && "stack-row__item--core"]}>
+                        {item.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div
+          class="skills-card__pane"
+          role="tabpanel"
+          id="pane-edu"
+          aria-labelledby="tab-edu"
+          data-pane="edu"
+          hidden
+        >
+          <ol class="edu-timeline">
+            {education.map((item) => (
+              <li class="edu-timeline__item">
+                <span class="edu-timeline__years">{item.years}</span>
+                {item.badge ? (
+                  <span class="edu-timeline__title">
+                    <span data-i18n={item.titleKey}>{item.title}</span>{" "}
+                    <span data-i18n={item.badgeKey} class="edu-timeline__badge">
+                      {item.badge}
+                    </span>
+                  </span>
+                ) : (
+                  <span data-i18n={item.titleKey} class="edu-timeline__title">
+                    {item.title}
+                  </span>
+                )}
+                <span data-i18n={item.subKey} class="edu-timeline__sub">
+                  {item.sub}
+                </span>
+              </li>
+            ))}
+          </ol>
+
+          <h4 data-i18n="dossier.languages" class="stack-row__label lang-meter__heading">
+            Languages
+          </h4>
+          <ul class="lang-meter">
+            {languages.map((language) => (
+              <li class="lang-meter__row">
+                <span class="lang-meter__code">{language.code}</span>
+                <span data-i18n={language.nameKey} class="lang-meter__name">
+                  {language.name}
+                </span>
+                <span
+                  class="lang-meter__bar"
+                  role="img"
+                  aria-label={language.levelText}
+                  data-i18n-attr={
+                    language.code === "RU"
+                      ? "aria-label:dossier.native"
+                      : language.code === "ES"
+                        ? "aria-label:dossier.learning"
+                        : undefined
+                  }
+                >
+                  {Array.from({ length: language.level }, (_, index) => (
+                    <span class:list={["lang-meter__seg", index < language.on && "is-on"]} />
+                  ))}
+                </span>
+                <span data-i18n={language.levelKey} class="lang-meter__level">
+                  {language.levelText}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p class="skills-card__legend">
+          <span>
+            <span
+              class="skills-card__legend-dot skills-card__legend-dot--core"
+              aria-hidden="true"
+            ></span>
+            <span data-i18n="dossier.daily-core">daily core</span>
+          </span>
+          <span>
+            <span class="skills-card__legend-dot" aria-hidden="true"></span>
+            <span data-i18n="dossier.also-used">also used</span>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

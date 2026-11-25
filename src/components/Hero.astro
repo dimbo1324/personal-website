@@ -1,0 +1,285 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<section class="hero" id="overview" aria-labelledby="hero-title" data-js="hero">
+  <div class="hero__backdrop" aria-hidden="true">
+    <img
+      class="hero__slide is-visible"
+      data-js="hero-slide"
+      src="/assets/images/remote/hero-plant-1600.webp"
+      srcset="
+        /assets/images/remote/hero-plant-480.webp   480w,
+        /assets/images/remote/hero-plant-960.webp   960w,
+        /assets/images/remote/hero-plant-1600.webp 1600w
+      "
+      sizes="100vw"
+      alt=""
+      fetchpriority="high"
+      decoding="async"
+    />
+    <img
+      class="hero__slide"
+      data-js="hero-slide"
+      src="/assets/images/stage-wide.webp"
+      srcset="/assets/images/stage-wide-640.webp 640w, /assets/images/stage-wide.webp 1280w"
+      sizes="100vw"
+      alt=""
+      decoding="async"
+    />
+    <img
+      class="hero__slide"
+      data-js="hero-slide"
+      src="/assets/images/remote/hero-pcb-1600.webp"
+      srcset="
+        /assets/images/remote/hero-pcb-480.webp   480w,
+        /assets/images/remote/hero-pcb-960.webp   960w,
+        /assets/images/remote/hero-pcb-1600.webp 1600w
+      "
+      sizes="100vw"
+      alt=""
+      decoding="async"
+      loading="lazy"
+    />
+    <div class="hero__scrim"></div>
+    <div class="hero__grain"></div>
+    <canvas class="hero__canvas" data-js="raster-canvas"></canvas>
+  </div>
+
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <div class="hero__meta">
+        <button
+          type="button"
+          class="role-ticker"
+          data-js="role-ticker"
+          title="Cycle discipline"
+          data-i18n-attr="title:overview.cycle-discipline"
+        >
+          <Icon name="terminal" size="sm" />
+          <span class="role-ticker__text" data-js="role-ticker-text">
+            Industrial Automation · IIoT
+          </span>
+          <span class="role-ticker__caret" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <h1
+        class="hero__title kinetic-title"
+        id="hero-title"
+        data-js="kinetic-title"
+        aria-label="Dmitrii Prikhodko"
+      >
+        <span class="kinetic-title__line" data-kinetic-text="Dmitrii">
+          Dmitrii
+        </span>
+        <span class="kinetic-title__line kinetic-title__line--accent" data-kinetic-text="Prikhodko">
+          Prikhodko
+        </span>
+      </h1>
+
+      <div class="availability">
+        <span class="availability__status">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span data-i18n="overview.open-to-work-collaboration">
+            Open to work &amp; collaboration
+          </span>
+        </span>
+        <span class="availability__meta">
+          <Icon name="map-pin" size="sm" />
+          <span data-i18n="overview.montevideo-on-site-hybrid-remote">
+            Montevideo · on-site · hybrid · remote
+          </span>
+        </span>
+      </div>
+
+      <div class="hero__actions">
+        <button type="button" class="button button--primary" data-js="open-widget">
+          <Icon name="monitor-cog" />
+          <span data-i18n="overview.launch-acs-widget">Launch ACS Widget</span>
+        </button>
+        <a
+          href="/assets/cv/Dmitrii-Prikhodko-CV-EN.pdf"
+          class="button button--secondary"
+          download
+          data-track="cv_download"
+          data-i18n-attr="href:cv.href"
+        >
+          <Icon name="download" />
+          <span>
+            <span data-i18n="overview.download-cv">Download CV</span>{" "}
+            <small class="button__note">PDF</small>
+          </span>
+        </a>
+        <button type="button" class="button button--ghost" data-copy="dmitriiprikhodko9@gmail.com">
+          <Icon name="copy" />
+          <span data-i18n="overview.copy-email">Copy Email</span>
+        </button>
+      </div>
+
+      <dl class="kpi-row">
+        <div class="kpi">
+          <dt data-i18n="overview.ot-it-track" class="kpi__label">
+            OT / IT Track
+          </dt>
+          <dd class="kpi__value">
+            5+ <small data-i18n="overview.yrs">yrs</small>
+          </dd>
+        </div>
+        <div class="kpi kpi--accent">
+          <dt data-i18n="overview.refinery-i-o" class="kpi__label">
+            Refinery I/O
+          </dt>
+          <dd class="kpi__value">2,500+</dd>
+        </div>
+        <div class="kpi kpi--amber">
+          <dt data-i18n="overview.plc-delivery" class="kpi__label">
+            PLC Delivery
+          </dt>
+          <dd class="kpi__value">&minus;25%</dd>
+        </div>
+        <div class="kpi kpi--steel">
+          <dt data-i18n="overview.plant-yield" class="kpi__label">
+            Plant Yield
+          </dt>
+          <dd class="kpi__value">+12%</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="hero__visual">
+      <div
+        class="media-frame"
+        data-js="hero-media"
+        role="button"
+        tabindex="0"
+        aria-label="Video reel — open theater mode with all clips and the gallery"
+        aria-haspopup="dialog"
+        data-i18n-attr="aria-label:overview.video-reel-open-theater-mode"
+      >
+        <span class="media-frame__screen">
+          <video
+            class="media-frame__video is-active"
+            data-js="reel-video"
+            muted
+            playsinline
+            preload="none"
+            poster="/assets/video/hero/01-oil-terminal-digital-twin.webp"
+            data-first-poster
+          ></video>
+          <video
+            class="media-frame__video"
+            data-js="reel-video"
+            muted
+            playsinline
+            preload="none"
+          ></video>
+          <img
+            class="media-frame__fallback"
+            data-js="reel-fallback"
+            src="/assets/images/keynote.webp"
+            alt=""
+            loading="lazy"
+            hidden
+          />
+          <span class="media-frame__iris" data-js="reel-iris" aria-hidden="true"></span>
+          <span class="media-frame__shade" aria-hidden="true"></span>
+          <span
+            class="media-frame__segments"
+            data-js="reel-segments"
+            aria-hidden="true"
+            hidden
+          ></span>
+          <span class="concept-badge media-frame__concept" data-js="reel-concept" hidden>
+            <Icon name="sparkles" size="sm" />
+            <span data-i18n="media.concept">Concept visual</span>
+          </span>
+          <span class="media-frame__dwell" aria-hidden="true">
+            <Icon name="maximize-2" size="sm" class="icon" />
+            <span data-js="dwell-text">Keep hovering · theater in 5</span>
+          </span>
+        </span>
+        <span class="media-frame__caption">
+          <span class="media-frame__title">
+            <span data-js="reel-title">Loading reel…</span>
+            <span class="media-frame__counter" data-js="reel-counter"></span>
+          </span>
+          <span class="media-frame__cta">
+            <span data-i18n="overview.theater">Theater</span>
+            <Icon name="play" size="sm" />
+          </span>
+        </span>
+      </div>
+
+      <div
+        class="scene-switcher"
+        role="group"
+        aria-label="Render backdrop scene"
+        data-i18n-attr="aria-label:overview.render-backdrop-scene"
+      >
+        <span class="scene-switcher__status" data-js="scene-status">
+          <Icon name="sparkles" size="sm" />
+          <span data-js="scene-status-text">Rendered · 01 Plant</span>
+        </span>
+        <span class="scene-switcher__options">
+          <button
+            data-i18n="scene.plant"
+            type="button"
+            class="scene-switcher__option is-active"
+            data-scene="0"
+            aria-pressed="true"
+          >
+            01 Plant
+          </button>
+          <button
+            data-i18n="scene.stage"
+            type="button"
+            class="scene-switcher__option"
+            data-scene="1"
+            aria-pressed="false"
+          >
+            02 Stage
+          </button>
+          <button
+            data-i18n="scene.plc"
+            type="button"
+            class="scene-switcher__option"
+            data-scene="2"
+            aria-pressed="false"
+          >
+            03 PLC
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container hero__footer">
+    <ul class="quick-links">
+      <li>
+        <a href="mailto:dmitriiprikhodko9@gmail.com">
+          <Icon name="mail" size="sm" />
+          dmitriiprikhodko9@gmail.com
+        </a>
+      </li>
+      <li>
+        <a href="https://linkedin.com/in/dimbo1324" target="_blank" rel="noopener noreferrer">
+          <Icon name="linkedin" size="sm" />
+          LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/dimbo1324" target="_blank" rel="noopener noreferrer">
+          <Icon name="github" size="sm" />
+          GitHub
+        </a>
+      </li>
+    </ul>
+    <a href="#telemetry" class="scroll-cue">
+      <span data-i18n="overview.scroll">Scroll</span>
+      <span class="scroll-cue__track" aria-hidden="true">
+        <span class="scroll-cue__thumb"></span>
+      </span>
+    </a>
+  </div>
+</section>

@@ -1,0 +1,46 @@
+.role-ticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  background: var(--bg-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  user-select: none;
+  transition: border-color var(--dur-fast) ease;
+}
+.role-ticker:hover {
+  border-color: var(--accent);
+}
+
+.role-ticker__text {
+  min-width: 27ch;
+  text-align: left;
+}
+
+.role-ticker__caret {
+  width: 6px;
+  height: 0.95em;
+  background: var(--amber);
+  animation: role-caret 1.05s steps(1) infinite;
+}
+
+@keyframes role-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 540px) {
+  .role-ticker__text {
+    min-width: 0;
+  }
+}

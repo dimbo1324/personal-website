@@ -1,0 +1,208 @@
+---
+import Icon from "./Icon.astro";
+
+interface Chip {
+  tone: "accent" | "amber" | "plain";
+  label: string;
+}
+
+interface CaseStep {
+  icon: string;
+  key: string;
+  label: string;
+  textKey: string;
+  text: string;
+}
+
+interface CaseStudy {
+  index: string;
+  metaKey: string;
+  meta: string;
+  titleKey: string;
+  title: string;
+  metric: string;
+  metricKey: string;
+  steps: CaseStep[];
+  chips: Chip[];
+}
+
+const cases: CaseStudy[] = [
+  {
+    index: "02.A",
+    metaKey: "cases.transneft-a-m-2023-2025",
+    meta: "Transneft A&M · 2023 – 2025",
+    titleKey: "cases.reusable-plc-library",
+    title: "Reusable PLC library",
+    metric: "−25%",
+    metricKey: "cases.delivery-time",
+    steps: [
+      {
+        icon: "target",
+        key: "cases.problem",
+        label: "Problem",
+        textKey: "cases.every-new-plc-project-rebuilt",
+        text: "Every new PLC project rebuilt standard logic from scratch, and one delivery took four weeks.",
+      },
+      {
+        icon: "wrench",
+        key: "cases.approach",
+        label: "Approach",
+        textKey: "cases.created-a-reusable-iec-61131",
+        text: "Created a reusable IEC 61131-3 function-block library and a no-code FBD DSL on top of it, then used it in SAT/FAT at three oil pumping stations.",
+      },
+      {
+        icon: "trending-up",
+        key: "cases.result",
+        label: "Result",
+        textKey: "cases.delivery-went-from-4-to",
+        text: "Delivery went from 4 to 3 weeks. SAT/FAT at the three stations covered Siemens, Schneider, B&R and Prosoft equipment.",
+      },
+    ],
+    chips: [
+      { tone: "accent", label: "IEC 61131-3" },
+      { tone: "amber", label: "FBD DSL" },
+      { tone: "plain", label: "Siemens / Schneider" },
+      { tone: "plain", label: "B&R" },
+    ],
+  },
+  {
+    index: "02.B",
+    metaKey: "cases.lukoil-kstovo-refinery-2025-2026",
+    meta: "LUKOIL · Kstovo refinery · 2025 – 2026",
+    titleKey: "cases.live-refinery-commissioning",
+    title: "Live refinery commissioning",
+    metric: "2,500+",
+    metricKey: "cases.field-i-o-signals",
+    steps: [
+      {
+        icon: "target",
+        key: "cases.problem",
+        label: "Problem",
+        textKey: "cases.units-l-24-7-and",
+        text: "Units L-24/7 and AVT-5 had to be commissioned while connected to a live safety system.",
+      },
+      {
+        icon: "wrench",
+        key: "cases.approach",
+        label: "Approach",
+        textKey: "cases.ran-full-cycle-sat-fat",
+        text: "Ran full-cycle SAT/FAT with live SIS/ESD validation on Prosoft / Elara controllers.",
+      },
+      {
+        icon: "trending-up",
+        key: "cases.result",
+        label: "Result",
+        textKey: "cases.more-than-2-500-field",
+        text: "More than 2,500 field I/O signals verified and the SIS/ESD logic validated on the running units.",
+      },
+    ],
+    chips: [
+      { tone: "accent", label: "SAT / FAT" },
+      { tone: "amber", label: "SIS / ESD" },
+      { tone: "plain", label: "Prosoft / Elara" },
+      { tone: "plain", label: "MQTT / OPC UA" },
+    ],
+  },
+  {
+    index: "02.C",
+    metaKey: "cases.niitop-2021-2022",
+    meta: "NIITOP · 2021 – 2022",
+    titleKey: "cases.electroplating-line-automation",
+    title: "Electroplating line automation",
+    metric: "+12%",
+    metricKey: "cases.line-yield",
+    steps: [
+      {
+        icon: "target",
+        key: "cases.problem",
+        label: "Problem",
+        textKey: "cases.an-operator-had-to-work",
+        text: "An operator had to work by hand in a toxic zone of an electroplating line.",
+      },
+      {
+        icon: "wrench",
+        key: "cases.approach",
+        label: "Approach",
+        textKey: "cases.automated-the-line-and-also",
+        text: "Automated the line, and also built an ATmega48 cooling controller for a 5 kW microwave load.",
+      },
+      {
+        icon: "trending-up",
+        key: "cases.result",
+        label: "Result",
+        textKey: "cases.the-operator-no-longer-works",
+        text: "The operator no longer works in the toxic zone, and line yield went up 12%.",
+      },
+    ],
+    chips: [
+      { tone: "accent", label: "Automation" },
+      { tone: "amber", label: "ATmega48" },
+      { tone: "plain", label: "C++" },
+    ],
+  },
+];
+
+const chipClass = (tone: Chip["tone"]): string =>
+  tone === "accent" ? "chip chip--accent" : tone === "amber" ? "chip chip--amber" : "chip";
+---
+
+<section class="section" id="cases" aria-labelledby="cases-title">
+  <div class="container">
+    <header class="section-head reveal">
+      <div>
+        <span class="section-head__index">02</span>
+        <h2 class="section-head__title" id="cases-title">
+          <span data-i18n="cases.case">Case</span>
+          <span class="section-head__accent" data-i18n="cases.studies">
+            Studies.
+          </span>
+        </h2>
+        <p data-i18n="cases.three-projects-each-as-problem" class="section-head__lead">
+          Three projects, each as problem → approach → result.
+        </p>
+      </div>
+    </header>
+
+    <div class="case-grid">
+      {cases.map((study) => (
+        <article class="case-card reveal">
+          <header class="case-card__head">
+            <span class="case-card__index">{study.index}</span>
+            <span data-i18n={study.metaKey} class="case-card__meta">
+              {study.meta}
+            </span>
+          </header>
+          <h3 data-i18n={study.titleKey} class="case-card__title">
+            {study.title}
+          </h3>
+          <p class="case-card__metric">
+            <strong>{study.metric}</strong>{" "}
+            <span data-i18n={study.metricKey}>
+              {study.metricKey === "cases.delivery-time"
+                ? "delivery time"
+                : study.metricKey === "cases.field-i-o-signals"
+                  ? "field I/O signals"
+                  : "line yield"}
+            </span>
+          </p>
+          <dl class="case-card__steps">
+            {study.steps.map((step) => (
+              <div class="case-card__step">
+                <dt class="case-card__step-label">
+                  <Icon name={step.icon} size="sm" />
+                  <span data-i18n={step.key}>{step.label}</span>
+                </dt>
+                <dd data-i18n={step.textKey}>{step.text}</dd>
+              </div>
+            ))}
+          </dl>
+          <ul class="chip-list case-card__stack">
+            {study.chips.map((chip) => (
+              <li class={chipClass(chip.tone)}>{chip.label}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

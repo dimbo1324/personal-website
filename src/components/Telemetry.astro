@@ -1,0 +1,195 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<section class="section section--surface" id="telemetry" aria-labelledby="telemetry-title">
+  <div class="container">
+    <header class="section-head reveal">
+      <div>
+        <span class="section-head__index">01</span>
+        <h2 class="section-head__title" id="telemetry-title">
+          <span data-i18n="telemetry.dynamic">Dynamic</span>
+          <span class="section-head__accent" data-i18n="telemetry.telemetry">
+            Telemetry.
+          </span>
+        </h2>
+        <p data-i18n="telemetry.live-models-of-what-i" class="section-head__lead">
+          Live models of what I build — click any panel to drive it.
+        </p>
+      </div>
+      <div class="section-head__tools">
+        <span class="section-head__counter" data-js="sim-cycle">
+          Cycle #001
+        </span>
+        <button type="button" class="button button--small button--secondary" data-js="sim-resample">
+          <Icon name="refresh-cw" size="sm" />
+          <span data-i18n="telemetry.resample">Resample</span>
+        </button>
+        <button
+          type="button"
+          class="button button--small button--toggle is-on"
+          data-js="sim-toggle"
+          aria-pressed="true"
+        >
+          <Icon name="radio" size="sm" />
+          <span data-js="sim-toggle-text">Live</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="telemetry-grid reveal">
+      <article
+        class="panel tile"
+        data-js="radar-panel"
+        tabindex="0"
+        role="button"
+        aria-label="OT/IT load radar — cycle scenario"
+        data-i18n-attr="aria-label:telemetry.ot-it-load-radar-cycle"
+      >
+        <header class="panel__head">
+          <div>
+            <span class="panel__eyebrow">
+              <Icon name="hexagon" size="sm" />
+              <span data-i18n="telemetry.01-a-dynamic-polygon">01.A · Dynamic polygon</span>
+            </span>
+            <h3 data-i18n="telemetry.ot-it-load" class="panel__title">
+              OT / IT Load
+            </h3>
+          </div>
+          <span class="badge" data-js="radar-scenario">
+            Balanced
+          </span>
+        </header>
+        <svg
+          class="chart chart--radar"
+          viewBox="0 0 360 280"
+          role="img"
+          aria-label="Competency radar"
+        >
+          <g data-js="radar-grid"></g>
+          <polygon class="chart-radar__baseline" data-js="radar-baseline"></polygon>
+          <polygon class="chart-radar__shape" data-js="radar-shape"></polygon>
+          <g data-js="radar-nodes"></g>
+          <g data-js="radar-labels"></g>
+        </svg>
+        <footer class="panel__foot">
+          <span data-i18n="telemetry.core-peak">Core peak</span>
+          <strong class="text-accent" data-js="radar-peak">
+            PLC/SIS · 96%
+          </strong>
+        </footer>
+      </article>
+
+      <article
+        class="panel tile"
+        data-js="pid-panel"
+        tabindex="0"
+        role="button"
+        aria-label="Cascaded PID response — generate new response"
+        data-i18n-attr="aria-label:telemetry.cascaded-pid-response-generate-new"
+      >
+        <header class="panel__head">
+          <div>
+            <span class="panel__eyebrow">
+              <Icon name="activity" size="sm" />
+              <span data-i18n="telemetry.01-b-ode-virtual-plc">01.B · ODE virtual PLC</span>
+            </span>
+            <h3 data-i18n="telemetry.cascaded-pid" class="panel__title">
+              Cascaded PID
+            </h3>
+          </div>
+          <span class="badge badge--amber" data-js="pid-mode">
+            Step
+          </span>
+        </header>
+        <svg
+          class="chart chart--pid"
+          viewBox="0 0 380 185"
+          role="img"
+          aria-label="Cascaded PID response curve"
+        >
+          <defs>
+            <linearGradient id="pid-gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop class="chart-pid__stop-top" offset="0%"></stop>
+              <stop class="chart-pid__stop-bottom" offset="100%"></stop>
+            </linearGradient>
+          </defs>
+          <g class="chart-pid__grid">
+            <line x1="26" y1="24" x2="368" y2="24"></line>
+            <line x1="26" y1="62" x2="368" y2="62"></line>
+            <line x1="26" y1="100" x2="368" y2="100"></line>
+            <line x1="26" y1="138" x2="368" y2="138"></line>
+          </g>
+          <line class="chart-pid__axis" x1="26" y1="16" x2="26" y2="164"></line>
+          <line class="chart-pid__axis" x1="26" y1="164" x2="368" y2="164"></line>
+          <line class="chart-pid__setpoint" x1="26" y1="62" x2="368" y2="62"></line>
+          <path class="chart-pid__area" data-js="pid-area" d=""></path>
+          <path class="chart-pid__inner" data-js="pid-inner" d=""></path>
+          <path class="chart-pid__outer" data-js="pid-outer" d=""></path>
+          <circle class="chart-pid__marker" data-js="pid-marker" cx="140" cy="62" r="4"></circle>
+        </svg>
+        <footer class="panel__foot">
+          <span data-i18n="telemetry.ode-solver">ODE solver</span>
+          <strong data-js="pid-meta">Ts 26s · OS 3.1%</strong>
+        </footer>
+      </article>
+
+      <article
+        class="panel tile"
+        data-js="spectrum-panel"
+        tabindex="0"
+        role="button"
+        aria-label="MQTT / OPC UA throughput — inject burst"
+        data-i18n-attr="aria-label:telemetry.mqtt-opc-ua-throughput-inject"
+      >
+        <header class="panel__head">
+          <div>
+            <span class="panel__eyebrow">
+              <Icon name="chart-column" size="sm" />
+              <span data-i18n="telemetry.01-c-live-bus">01.C · Live bus</span>
+            </span>
+            <h3 class="panel__title">MQTT / OPC UA</h3>
+          </div>
+          <span class="badge badge--steel" data-js="spectrum-latency">
+            11.4 ms
+          </span>
+        </header>
+        <svg
+          class="chart chart--spectrum"
+          viewBox="0 0 360 185"
+          role="img"
+          aria-label="Broker throughput histogram"
+        >
+          <line class="chart-spectrum__grid" x1="0" y1="40" x2="360" y2="40"></line>
+          <line class="chart-spectrum__grid" x1="0" y1="95" x2="360" y2="95"></line>
+          <line class="chart-spectrum__axis" x1="0" y1="164" x2="360" y2="164"></line>
+          <g data-js="spectrum-bars"></g>
+        </svg>
+        <footer class="panel__foot">
+          <span data-i18n="telemetry.broker-throughput">Broker throughput</span>
+          <strong class="text-amber" data-js="spectrum-peak">
+            1,440 msg/s
+          </strong>
+        </footer>
+      </article>
+    </div>
+
+    <button type="button" class="widget-banner tile reveal" data-js="open-widget">
+      <span class="widget-banner__icon" aria-hidden="true">
+        <Icon name="sliders-horizontal" size="lg" />
+      </span>
+      <span class="widget-banner__copy">
+        <span data-i18n="telemetry.interactive-acs-tp-scada-workspace" class="widget-banner__title">
+          Interactive ACS TP / SCADA workspace
+        </span>
+        <span data-i18n="telemetry.draggable-resizable-pump-p-101" class="widget-banner__meta">
+          Draggable · Resizable · Pump P-101 · Valve CV-301 · PID setpoint · SIS/ESD interlock
+        </span>
+      </span>
+      <span class="widget-banner__action">
+        <span data-i18n="telemetry.open-window">Open window</span>
+        <Icon name="external-link" size="sm" />
+      </span>
+    </button>
+  </div>
+</section>

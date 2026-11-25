@@ -1,0 +1,13 @@
+/* While a non-English page is being translated (js/boot/lang-preload.js),
+   keep translatable text invisible instead of flashing English.
+   Layout is unchanged; if scripts fail, the text shows up on its own. */
+html[data-i18n-pending] [data-i18n] {
+  animation: i18n-release 0s linear 1.2s forwards;
+  opacity: 0;
+}
+
+@keyframes i18n-release {
+  to {
+    opacity: 1;
+  }
+}
