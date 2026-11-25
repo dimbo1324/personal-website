@@ -93,7 +93,7 @@
   outline: none;
   border-color: var(--accent);
   background: var(--bg-elevated);
-  box-shadow: 0 0 0 3px var(--tint-accent);
+  box-shadow: 0 0 0 2px var(--tint-accent);
 }
 .field__control[aria-invalid="true"] {
   border-color: var(--rose);

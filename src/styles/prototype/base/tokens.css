@@ -29,7 +29,7 @@
   --space-section: clamp(4.5rem, 3rem + 6vw, 8rem);
 
   /* layout */
-  --container-max: 1280px;
+  --container-max: 1160px;
   --gutter: clamp(1.25rem, 0.6rem + 3vw, 3rem);
   --header-h: 72px;
 

@@ -2,10 +2,10 @@
 [data-theme="light"] {
   color-scheme: light;
 
-  --bg-void: #f3f7f7;
-  --bg-surface: #e9f0f0;
+  --bg-void: #f7f9f9;
+  --bg-surface: #ecf2f2;
   --bg-elevated: #ffffff;
-  --bg-hover: #f2f7f7;
+  --bg-hover: #f3f7f7;
   --bg-glass: rgba(243, 247, 247, 0.82);
 
   --line-subtle: rgba(11, 23, 27, 0.09);
@@ -33,8 +33,8 @@
   --chart-fill-strong: rgba(11, 122, 102, 0.16);
 
   --shadow-sm: 0 1px 2px rgba(11, 23, 27, 0.06);
-  --shadow-card: 0 18px 40px -22px rgba(11, 23, 27, 0.22);
-  --shadow-window: 0 40px 100px rgba(11, 23, 27, 0.22);
+  --shadow-card: 0 12px 28px -16px rgba(11, 23, 27, 0.14);
+  --shadow-window: 0 24px 60px rgba(11, 23, 27, 0.12);
 
   --hero-photo-opacity: 0.42;
   --hero-scrim:

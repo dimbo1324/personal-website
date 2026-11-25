@@ -3,10 +3,10 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --bg-void: #0a1114;
-  --bg-surface: #0e171b;
-  --bg-elevated: #121f24;
-  --bg-hover: #17272d;
+  --bg-void: #0c141a;
+  --bg-surface: #101921;
+  --bg-elevated: #152027;
+  --bg-hover: #1a2a31;
   --bg-glass: rgba(10, 17, 20, 0.78);
 
   --line-subtle: rgba(154, 194, 200, 0.12);
@@ -34,8 +34,8 @@
   --chart-fill-strong: rgba(36, 184, 155, 0.22);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-card: 0 18px 40px -18px rgba(0, 0, 0, 0.65);
-  --shadow-window: 0 40px 100px rgba(0, 0, 0, 0.7);
+  --shadow-card: 0 14px 32px -14px rgba(0, 0, 0, 0.55);
+  --shadow-window: 0 28px 70px rgba(0, 0, 0, 0.55);
 
   --hero-photo-opacity: 0.55;
   --hero-scrim:
