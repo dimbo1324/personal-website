@@ -38,6 +38,7 @@ export function remoteImage(
   { local = LOCAL_IMAGES, widths = REMOTE_WIDTHS }: RemoteImageOptions = {},
 ): ImageDescriptor {
   const photoId = REMOTE_IMAGES[id];
+  if (!photoId) throw new Error(`Unknown remote image "${id}"`);
   const largest = widths.at(-1);
   if (largest === undefined) throw new Error(`No widths configured for remote image "${id}"`);
 

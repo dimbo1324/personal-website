@@ -55,9 +55,6 @@ export class DomTranslator {
     this.#meta.description?.setAttribute("content", this.#i18n.t("meta.description"));
     this.#meta.ogTitle?.setAttribute("content", this.#i18n.t("meta.title"));
     this.#meta.ogDescription?.setAttribute("content", this.#i18n.t("meta.description"));
-    this.#meta.ogLocale?.setAttribute(
-      "content",
-      this.#i18n.lang === "en" ? "en_US" : (this.#meta.ogLocale?.content ?? ""),
-    );
+    this.#meta.ogLocale?.setAttribute("content", this.#i18n.locale.replace("-", "_"));
   }
 }

@@ -43,6 +43,7 @@
 | Название                    | Версия  | Сайт                                                             | Исходники                                                   |
 | --------------------------- | ------- | ---------------------------------------------------------------- | ----------------------------------------------------------- |
 | Vitest                      | 5.1.1   | https://vitest.dev                                               | https://github.com/vitest-dev/vitest                        |
+| jsdom                       | 31.0.1  | https://github.com/jsdom/jsdom                                   | https://github.com/jsdom/jsdom                              |
 | ESLint                      | 10.15.0 | https://eslint.org                                               | https://github.com/eslint/eslint                            |
 | @eslint/js                  | 10.0.1  | https://eslint.org                                               | https://github.com/eslint/eslint                            |
 | typescript-eslint           | 8.74.0  | https://typescript-eslint.io                                     | https://github.com/typescript-eslint/typescript-eslint      |
