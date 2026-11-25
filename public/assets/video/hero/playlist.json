@@ -1,0 +1,84 @@
+{
+  "videos": [
+    {
+      "file": "01-oil-terminal-digital-twin.mp4",
+      "mobile": "01-oil-terminal-digital-twin.mobile.mp4",
+      "poster": "01-oil-terminal-digital-twin.webp",
+      "generated": true,
+      "title": {
+        "en": "Oil Terminal · Digital Twin",
+        "es": "Terminal petrolera · Gemelo digital",
+        "ru": "Нефтебаза · цифровой двойник"
+      },
+      "description": {
+        "en": "Aerial pass over a tank farm — process lines light up as live telemetry streams into the twin.",
+        "es": "Vuelo sobre un parque de tanques: las líneas de proceso se iluminan mientras la telemetría llega al gemelo digital.",
+        "ru": "Пролёт над резервуарным парком: технологические линии подсвечиваются, пока телеметрия поступает в цифровой двойник."
+      }
+    },
+    {
+      "file": "02-iiot-architecture-keynote.mp4",
+      "mobile": "02-iiot-architecture-keynote.mobile.mp4",
+      "poster": "02-iiot-architecture-keynote.webp",
+      "generated": true,
+      "title": {
+        "en": "IIoT Architecture · Keynote",
+        "es": "Arquitectura IIoT · Ponencia",
+        "ru": "Архитектура IIoT · доклад"
+      },
+      "description": {
+        "en": "Multi-vendor IIoT architecture — from PLC/SCADA layers to MQTT/OPC UA pipelines and digital twins.",
+        "es": "Arquitectura IIoT multimarca: de las capas PLC/SCADA a los flujos MQTT/OPC UA y los gemelos digitales.",
+        "ru": "Мультивендорная архитектура IIoT: от уровней ПЛК/SCADA до конвейеров MQTT/OPC UA и цифровых двойников."
+      }
+    },
+    {
+      "file": "03-live-dashboards-talk.mp4",
+      "mobile": "03-live-dashboards-talk.mobile.mp4",
+      "poster": "03-live-dashboards-talk.webp",
+      "generated": true,
+      "title": {
+        "en": "Live Dashboards · Talk",
+        "es": "Paneles en vivo · Charla",
+        "ru": "Живые дашборды · выступление"
+      },
+      "description": {
+        "en": "Real-time plant dashboards: KPIs, trends and the data paths behind them.",
+        "es": "Paneles de planta en tiempo real: KPI, tendencias y los flujos de datos detrás de ellos.",
+        "ru": "Дашборды производства в реальном времени: KPI, тренды и путь данных за ними."
+      }
+    },
+    {
+      "file": "04-smart-factory-line.mp4",
+      "mobile": "04-smart-factory-line.mobile.mp4",
+      "poster": "04-smart-factory-line.webp",
+      "generated": true,
+      "title": {
+        "en": "Smart Factory Line",
+        "es": "Línea de fábrica inteligente",
+        "ru": "Умная производственная линия"
+      },
+      "description": {
+        "en": "Robotic assembly cells, PLC logic on screen and data flowing along the line.",
+        "es": "Células robotizadas, lógica PLC en pantalla y datos fluyendo por la línea.",
+        "ru": "Роботизированные ячейки, логика ПЛК на экране и данные, бегущие вдоль линии."
+      }
+    },
+    {
+      "file": "05-pump-station-signal-flow.mp4",
+      "mobile": "05-pump-station-signal-flow.mobile.mp4",
+      "poster": "05-pump-station-signal-flow.webp",
+      "generated": true,
+      "title": {
+        "en": "Pump Station · Signal Flow",
+        "es": "Estación de bombeo · Flujo de señales",
+        "ru": "Насосная станция · поток сигналов"
+      },
+      "description": {
+        "en": "Pumps, valves and field instruments — signals travel from the process to the control layer.",
+        "es": "Bombas, válvulas e instrumentos de campo: las señales viajan del proceso al nivel de control.",
+        "ru": "Насосы, задвижки и КИП: сигналы идут от процесса к уровню управления."
+      }
+    }
+  ]
+}
