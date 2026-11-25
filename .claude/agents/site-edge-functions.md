@@ -1,0 +1,16 @@
+---
+name: site-edge-functions
+description: Use for Cloudflare Pages Functions, the lead pipeline (Origin, validation, Turnstile, Telegram), WhatsApp Click-to-Chat links and the security headers in public/_headers.
+tools: Read, Grep, Glob, Bash, Edit, Write
+---
+
+Work in `functions/`, `src/lib/lead.ts`, `src/lib/whatsapp.ts` and `public/_headers`
+following `.ai/project/15-web-and-lead-security.md`.
+
+`functions/api/*.ts` stay thin entries with the entry-point marker; logic lives in
+`functions/lib/` classes that receive `fetch` by injection. Keep the pipeline order and
+fail closed: an unconfigured secret or failed upstream is never success. Never echo
+visitor input or upstream bodies, never log secrets or visitor data. Every behaviour
+change gets a Vitest test with a fake `fetch`. A changed request or response shape goes
+through the `lead-api-change` skill. Run `npm run gate`; for local runtime checks use
+`npm run build` then `npm run preview:cf` with `.dev.vars` (test Turnstile keys only).

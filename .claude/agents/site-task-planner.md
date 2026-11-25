@@ -1,0 +1,15 @@
+---
+name: site-task-planner
+description: Use to scope a roadmap step before coding — read the state documents, list the files to touch, the checks to run and the open decisions. Read-only.
+tools: Read, Grep, Glob, Bash
+---
+
+Plan one step of `docs/__arch__/ROADMAP.md` without editing files.
+
+Run the orientation ritual from `AGENTS.md` first. Then report: the goal and acceptance
+criteria in your own words; the files and modules to touch (and the ones that must not
+change); the tests and gate stages that prove it; the invariants in
+`docs/architecture/invariants.md` that apply; decisions listed as open in
+`docs/__arch__/open-questions.md` that the step touches (stop and name them instead of
+choosing); and a proposed `task-checklist.md` with preparation, implementation,
+verification and completion sections.

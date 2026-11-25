@@ -1,0 +1,51 @@
+# CI runs the same `npm run gate` developers run locally, so a green local gate and a green
+# CI mean the same thing. Every action is pinned to a full commit SHA with its release tag
+# in a trailing comment; Dependabot moves both together.
+# Deployment is done by Cloudflare Pages connected to this repository, not by this workflow.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: Quality gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PUBLIC_SITE_URL: https://example.invalid
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Toolchain report
+        run: npm run doctor || true
+
+      - name: Full quality gate
+        run: npm run gate
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: out-gate
+          path: out/
+          retention-days: 14
+          if-no-files-found: ignore

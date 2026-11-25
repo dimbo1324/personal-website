@@ -1,0 +1,14 @@
+name: Bug
+description: Something does not work as specified
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened and what was expected
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Relevant lines from out/logs (never secrets or visitor data)

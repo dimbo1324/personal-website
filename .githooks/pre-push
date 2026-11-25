@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# -----------
+# entry point
+# -----------
+# Refuses to push code that fails the quick gate: rules sync, formatting, entry points,
+# git-clean safety and ESLint. The full gate (types, tests, build) runs in CI.
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+exec node tools/xtask/main.ts gate --quick

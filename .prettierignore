@@ -1,0 +1,11 @@
+dist/
+.astro/
+.wrangler/
+out/
+node_modules/
+coverage/
+package-lock.json
+AGENTS.md
+.codex/agents/
+.codex/skills/
+docs/__arch__/reference/

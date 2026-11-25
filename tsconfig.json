@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": true,
+    "types": ["node"]
+  },
+  "include": [".astro/types.d.ts", "src/**/*", "tests/**/*", "tools/**/*", "vitest.config.ts"],
+  "exclude": ["dist", "node_modules", "functions", "out", "docs/__arch__/reference"]
+}

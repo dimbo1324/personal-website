@@ -1,0 +1,16 @@
+name: Task
+description: A unit of work for a ROADMAP step
+body:
+  - type: input
+    id: step
+    attributes:
+      label: ROADMAP step
+      placeholder: W1
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal and acceptance criteria
+    validations:
+      required: true

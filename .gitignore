@@ -1,0 +1,55 @@
+# --- Logs, test reports, gate transcripts: everything a run produces ------------------
+/out/
+
+# --- Build results and framework caches -----------------------------------------------
+/dist/
+/.astro/
+/.wrangler/
+
+# --- Dependencies ---------------------------------------------------------------------
+/node_modules/
+**/node_modules/
+
+# --- Secrets and local runtime variables ----------------------------------------------
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+
+# --- Test coverage and stray logs outside out/ ----------------------------------------
+/coverage/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# --- Python helpers (if used locally) -------------------------------------------------
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- Editors and OS -------------------------------------------------------------------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.fleet/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Assistant-local state (shared rules live in .ai/, .claude/, .codex/) -------------
+.claude/settings.local.json
+.claude/worktrees/
+.codex/*.local.toml
+.gemini/settings.local.json

@@ -1,0 +1,16 @@
+# Copy to .dev.vars for local `wrangler pages dev` (never commit .dev.vars).
+# In production, set these as encrypted Secrets in Cloudflare Pages dashboard.
+
+# Cloudflare Turnstile secret key (server-side verification only).
+# Cloudflare testing secret key (always passes): 1x0000000000000000000000000000000AA
+TURNSTILE_SECRET_KEY=
+
+# Telegram Bot API token from @BotFather (server-side only).
+TELEGRAM_BOT_TOKEN=
+
+# Target Telegram chat/channel ID that receives lead submissions.
+TELEGRAM_CHAT_ID=
+
+# Allowed origin for POST /api/lead CSRF check (e.g. https://dmitriiprikhodko.com).
+# Leave empty locally to allow localhost/127.0.0.1 in development.
+ALLOWED_ORIGIN=

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# -----------
+# entry point
+# -----------
+# Formats the staged files and re-stages them, so every commit is already formatted.
+# Partially staged files are skipped and named. Logic lives in `fmt --staged`.
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+exec node tools/xtask/main.ts fmt --staged
