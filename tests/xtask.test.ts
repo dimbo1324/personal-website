@@ -43,6 +43,15 @@ describe("EntryPoints", () => {
     expect(EntryPoints.isEntryPoint("functions/lib/leadHandler.ts", "x")).toBe(false);
     expect(EntryPoints.isEntryPoint(".githooks/pre-push", "#!/usr/bin/env bash\n")).toBe(true);
   });
+
+  it("uses hash comments for shell entries and skips the archived reference", () => {
+    const shell = "#!/usr/bin/env bash\n# -----------\n# entry point\n# -----------\nset -e\n";
+
+    expect(EntryPoints.inspect(shell).findings).toEqual([]);
+    expect(
+      EntryPoints.isEntryPoint("docs/__arch__/reference/x/build.py", "#!/usr/bin/env python"),
+    ).toBe(false);
+  });
 });
 
 describe("CleanSafe", () => {

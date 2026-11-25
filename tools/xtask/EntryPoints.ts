@@ -5,6 +5,7 @@ import type { Workspace } from "./Workspace.ts";
 const MAX_CODE_LINES = 15;
 const MARKER = ["-----------", "entry point", "-----------"];
 const PAGES_FUNCTION_ENTRY = /^functions\/api\/.+\.ts$/;
+const EXEMPT_PREFIXES = ["docs/__arch__/reference/"];
 
 export type EntryFinding = "missing_marker" | `too_many_lines:${number}`;
 
@@ -16,6 +17,10 @@ export class EntryPoints {
   }
 
   static isEntryPoint(path: string, content: string): boolean {
+    if (EXEMPT_PREFIXES.some((prefix) => path.startsWith(prefix))) {
+      return false;
+    }
+
     return (
       content.startsWith("#!") || path === "tools/xtask/main.ts" || PAGES_FUNCTION_ENTRY.test(path)
     );
@@ -23,13 +28,17 @@ export class EntryPoints {
 
   static inspect(content: string): { codeLines: number; findings: EntryFinding[] } {
     const lines = content.replace(/\r\n/g, "\n").split("\n");
+    const shebang = lines[0]?.startsWith("#!") ?? false;
+    const comment = shebang ? "#" : "//";
 
-    if (lines[0]?.startsWith("#!")) {
+    if (shebang) {
       lines.shift();
     }
 
     const findings: EntryFinding[] = [];
-    const markerPresent = MARKER.every((text, index) => lines[index]?.trimEnd() === `// ${text}`);
+    const markerPresent = MARKER.every(
+      (text, index) => lines[index]?.trimEnd() === `${comment} ${text}`,
+    );
 
     if (!markerPresent) {
       findings.push("missing_marker");

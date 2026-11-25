@@ -27,10 +27,10 @@ stack, connect the whole stack locally, verify it and publish to `main`. Work di
 [ ] `npm run sync-agents` generates AGENTS.md within the budget
 [ ] `npm run gate` green (rules sync, format, entry points, git clean, ESLint, types, tests, build)
 [ ] Local runtime check: `wrangler pages dev` serves the page and `/api/lead` fails closed
-[ ] Hooks installed and the commit-msg hook rejects a bad message
+[+] Hooks installed; the commit-msg hook rejected update; the pre-push quick gate caught an entry-point rule bug (fixed)
 
 ## Completion
 
-[ ] Fill this checklist honestly and commit
+[+] Fill this checklist honestly and commit
 [ ] Push to `origin/main`; check the CI run
-[ ] Final report to the owner in Russian
+[+] Final report to the owner in Russian
