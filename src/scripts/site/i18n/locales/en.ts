@@ -238,8 +238,13 @@ const messages: Dictionary = {
   "theater.pause": "Pause",
   "contact.call": "Call {number}",
   "contact.whatsapp": "Write on WhatsApp",
+  "contact.whatsapp.stub": "WhatsApp — demo mode",
+  "contact.whatsapp.unavailable": "WhatsApp is not connected yet",
+  "contact.whatsapp.prefill":
+    "Hello Dmitrii! I found your website and would like to discuss a project.",
   "form.hint.mailto": "Opens your email app with everything already filled in.",
   "form.hint.http": "Goes straight to my inbox — no email app needed.",
+  "form.hint.demo": "Demo mode: the request stays in your browser and is not sent anywhere.",
   "form.status.invalid": {
     one: "Please check {count} field above.",
     other: "Please check {count} fields above.",
@@ -250,6 +255,8 @@ const messages: Dictionary = {
     "Your email app should open with the request addressed to {recipient}. Just press “Send”. If nothing opened, copy the request and email it manually.",
   "form.result.delivered":
     "Thank you! Your request has been delivered — I will reply within one business day.",
+  "form.result.demo":
+    "Demo mode: the request was validated but not sent. Copy it and send it by email if you want a reply.",
   "form.result.failed":
     "The request could not be sent. Please try again or use the email link above.",
   "form.error.lastName": "Please enter your last name.",

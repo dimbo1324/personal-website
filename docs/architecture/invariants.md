@@ -8,6 +8,9 @@ Changing an entry here requires the owner's explicit approval (see
    exposed through `PUBLIC_*` variables or bundled code.
 2. **Fail closed.** An error, timeout, unconfigured secret or unverified Turnstile token
    never yields a success response from `/api/lead`. No mock-success path outside tests.
+   Demo modes (`PUBLIC_LEAD_MODE=demo`, `LEAD_DELIVERY_MODE=stub`) are opt-in only,
+   visibly marked as demo in every response/UI, never enabled by typo or default, and
+   excluded from production by keeping production free of these variables.
 3. **Turnstile is verified server-side on every lead request,** before anything is sent to
    Telegram.
 4. **Visitor data is not stored or logged by the site.** Name, contact and message are

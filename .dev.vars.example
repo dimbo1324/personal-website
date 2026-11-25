@@ -11,6 +11,10 @@ TELEGRAM_BOT_TOKEN=
 # Target Telegram chat/channel ID that receives lead submissions.
 TELEGRAM_CHAT_ID=
 
+# Telegram delivery on the server: "telegram" (default) or "stub" for a local demo.
+# Never set "stub" in production: it acknowledges without delivering.
+LEAD_DELIVERY_MODE=telegram
+
 # Allowed origin for POST /api/lead CSRF check (e.g. https://dmitriiprikhodko.com).
 # Leave empty locally to allow localhost/127.0.0.1 in development.
 ALLOWED_ORIGIN=

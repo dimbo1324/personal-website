@@ -28,7 +28,7 @@ describe("TelegramNotifier", () => {
   it("delivers the lead with the expected payload", async () => {
     const fetchImpl = vi.fn().mockResolvedValue(json({ ok: true })) as unknown as FetchLike;
     const result = await new TelegramNotifier(fetchImpl).sendLead(input);
-    expect(result).toEqual({ ok: true });
+    expect(result).toEqual({ ok: true, mode: "telegram" });
     expect(fetchImpl).toHaveBeenCalledWith(
       "https://api.telegram.org/botbot-secret/sendMessage",
       expect.objectContaining({ method: "POST" }),

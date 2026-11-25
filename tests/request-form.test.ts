@@ -17,7 +17,7 @@ function field(name: string, control = "input"): string {
   return `<div data-field="${name}"><${control} name="${name}"></${control}><p data-field-error></p></div>`;
 }
 
-function mountForm(): {
+function mountForm(config: typeof REQUEST_CONFIG = REQUEST_CONFIG): {
   form: HTMLFormElement;
   success: HTMLElement;
   status: HTMLElement;
@@ -46,7 +46,7 @@ function mountForm(): {
   };
   const clipboard = new CopyToClipboard(new Toast(get("toast")), i18n);
   new RequestForm(get("form") as HTMLFormElement, {
-    config: REQUEST_CONFIG,
+    config,
     i18n,
     clipboard,
     ui: {
@@ -148,5 +148,30 @@ describe("RequestForm", () => {
     document.querySelector<HTMLButtonElement>('[data-js="reset"]')?.click();
     expect(success.hidden).toBe(true);
     expect(form.hidden).toBe(false);
+  });
+
+  it("shows the demo hint and acknowledges without sending anything", async () => {
+    const fetchSpy = vi.fn();
+    vi.stubGlobal("fetch", fetchSpy);
+    const { form, success, status } = mountForm({ ...REQUEST_CONFIG, transport: "demo" });
+
+    expect(document.querySelector('[data-js="hint"]')?.textContent).toContain("Demo mode");
+
+    fill(form, {
+      lastName: "Prikhodko",
+      firstName: "Dmitrii",
+      phone: "+598 96 671 725",
+      consent: "on",
+      message: "Need a SCADA engineer",
+    });
+    const consent = form.querySelector<HTMLInputElement>('[name="consent"]');
+    if (consent) consent.checked = true;
+
+    submit(form);
+    await vi.waitFor(() => expect(success.hidden).toBe(false));
+    expect(status.textContent).toBe("");
+    expect(document.querySelector('[data-js="success-text"]')?.textContent).toContain("not sent");
+    expect(fetchSpy).not.toHaveBeenCalled();
+    expect(sessionStorage.getItem("dp.request-draft")).toBeNull();
   });
 });

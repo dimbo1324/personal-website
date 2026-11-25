@@ -1,23 +1,19 @@
-import type { LeadSubmission } from "../../src/lib/lead";
-import type { FetchLike, TelegramDeliveryResult } from "./types";
+import type { LeadDeliveryInput, LeadDeliveryResult, LeadNotifier } from "./notifier";
+import type { FetchLike } from "./types";
 
 interface TelegramApiResponse {
   readonly ok?: boolean;
 }
 
-export class TelegramNotifier {
+export class TelegramNotifier implements LeadNotifier {
+  readonly mode = "telegram";
   readonly #fetch: FetchLike;
 
   constructor(fetchImpl: FetchLike = fetch) {
     this.#fetch = fetchImpl;
   }
 
-  async sendLead(input: {
-    readonly botToken: string;
-    readonly chatId: string;
-    readonly lead: LeadSubmission;
-    readonly receivedAtIso: string;
-  }): Promise<TelegramDeliveryResult> {
+  async sendLead(input: LeadDeliveryInput): Promise<LeadDeliveryResult> {
     if (input.botToken.trim().length === 0 || input.chatId.trim().length === 0) {
       return { ok: false, reason: "telegram_not_configured" };
     }
@@ -55,7 +51,7 @@ export class TelegramNotifier {
         return { ok: false, reason: "telegram_rejected" };
       }
 
-      return { ok: true };
+      return { ok: true, mode: "telegram" };
     } catch {
       return { ok: false, reason: "telegram_network_error" };
     }

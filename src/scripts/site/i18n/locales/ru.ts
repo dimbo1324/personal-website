@@ -247,8 +247,12 @@ const messages: Dictionary = {
   "theater.pause": "Пауза",
   "contact.call": "Позвонить: {number}",
   "contact.whatsapp": "Написать в WhatsApp",
+  "contact.whatsapp.stub": "WhatsApp — демо-режим",
+  "contact.whatsapp.unavailable": "WhatsApp пока не подключён",
+  "contact.whatsapp.prefill": "Здравствуйте, Дмитрий! Нашёл ваш сайт и хочу обсудить проект.",
   "form.hint.mailto": "Откроет почтовую программу с уже заполненным письмом.",
   "form.hint.http": "Придёт прямо ко мне на почту — почтовая программа не нужна.",
+  "form.hint.demo": "Демо-режим: заявка остаётся в браузере и никуда не отправляется.",
   "form.status.invalid": {
     one: "Проверьте {count} поле выше.",
     few: "Проверьте {count} поля выше.",
@@ -260,6 +264,8 @@ const messages: Dictionary = {
   "form.result.mailto":
     "Должна открыться почтовая программа с письмом на {recipient}. Просто нажмите «Отправить». Если ничего не открылось, скопируйте заявку и отправьте её вручную.",
   "form.result.delivered": "Спасибо! Заявка доставлена — отвечу в течение одного рабочего дня.",
+  "form.result.demo":
+    "Демо-режим: заявка проверена, но не отправлена. Скопируйте её и отправьте по email, если нужен ответ.",
   "form.result.failed":
     "Не удалось отправить заявку. Попробуйте ещё раз или напишите на email выше.",
   "form.error.lastName": "Укажите фамилию.",

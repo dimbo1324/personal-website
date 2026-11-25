@@ -247,8 +247,13 @@ const messages: Dictionary = {
   "theater.pause": "Pausa",
   "contact.call": "Llamar al {number}",
   "contact.whatsapp": "Escribir por WhatsApp",
+  "contact.whatsapp.stub": "WhatsApp — modo demo",
+  "contact.whatsapp.unavailable": "WhatsApp todavía no está conectado",
+  "contact.whatsapp.prefill":
+    "¡Hola, Dmitrii! Encontré tu sitio y quisiera conversar sobre un proyecto.",
   "form.hint.mailto": "Abre tu app de correo con todo ya completado.",
   "form.hint.http": "Llega directo a mi bandeja de entrada, sin abrir tu correo.",
+  "form.hint.demo": "Modo demo: la solicitud queda en tu navegador y no se envía a ningún lado.",
   "form.status.invalid": {
     one: "Revisá {count} campo de arriba.",
     other: "Revisá {count} campos de arriba.",
@@ -258,6 +263,8 @@ const messages: Dictionary = {
   "form.result.mailto":
     "Tu app de correo debería abrirse con la solicitud dirigida a {recipient}. Solo tocá «Enviar». Si no se abrió nada, copiá la solicitud y enviala por email.",
   "form.result.delivered": "¡Gracias! Tu solicitud llegó; te respondo dentro de un día hábil.",
+  "form.result.demo":
+    "Modo demo: la solicitud se validó pero no se envió. Copiala y enviala por email si querés una respuesta.",
   "form.result.failed": "No se pudo enviar la solicitud. Probá de nuevo o usá el email de arriba.",
   "form.error.lastName": "Ingresá tu apellido.",
   "form.error.firstName": "Ingresá tu nombre.",

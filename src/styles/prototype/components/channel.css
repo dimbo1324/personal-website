@@ -100,6 +100,15 @@
 .channel__chip:hover {
   background: color-mix(in srgb, var(--accent) 26%, transparent);
 }
+.channel__chip--disabled {
+  border: 1px dashed var(--line-strong);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: default;
+}
+.channel__chip--disabled:hover {
+  background: transparent;
+}
 .channel--reveal.is-revealed .channel__link {
   animation: channel-reveal 420ms var(--ease-out);
 }

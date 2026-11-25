@@ -1,5 +1,6 @@
 import { LeadValidator } from "../../src/lib/lead";
-import { TelegramNotifier } from "./telegram";
+import { createLeadNotifier } from "./notifier";
+import type { LeadNotifier } from "./notifier";
 import { TurnstileVerifier } from "./turnstile";
 import type { FetchLike, LeadEnv } from "./types";
 
@@ -8,20 +9,22 @@ const MAX_BODY_BYTES = 16_384;
 export interface LeadHandlerDependencies {
   readonly validator?: LeadValidator;
   readonly turnstile?: TurnstileVerifier;
-  readonly telegram?: TelegramNotifier;
+  readonly notifier?: LeadNotifier;
   readonly now?: () => Date;
 }
 
 export class LeadApiHandler {
   readonly #validator: LeadValidator;
   readonly #turnstile: TurnstileVerifier;
-  readonly #telegram: TelegramNotifier;
+  readonly #notifier: LeadNotifier | null;
+  readonly #fetch: FetchLike;
   readonly #now: () => Date;
 
   constructor(deps: LeadHandlerDependencies = {}, fetchImpl: FetchLike = fetch) {
     this.#validator = deps.validator ?? new LeadValidator();
     this.#turnstile = deps.turnstile ?? new TurnstileVerifier(fetchImpl);
-    this.#telegram = deps.telegram ?? new TelegramNotifier(fetchImpl);
+    this.#notifier = deps.notifier ?? null;
+    this.#fetch = fetchImpl;
     this.#now = deps.now ?? (() => new Date());
   }
 
@@ -53,7 +56,8 @@ export class LeadApiHandler {
       return this.#json(status, { ok: false, error: turnstile.reason });
     }
 
-    const delivery = await this.#telegram.sendLead({
+    const notifier = this.#notifier ?? createLeadNotifier(env, this.#fetch);
+    const delivery = await notifier.sendLead({
       botToken: env.TELEGRAM_BOT_TOKEN ?? "",
       chatId: env.TELEGRAM_CHAT_ID ?? "",
       lead: validation.data,
@@ -65,7 +69,7 @@ export class LeadApiHandler {
       return this.#json(status, { ok: false, error: delivery.reason });
     }
 
-    return this.#json(200, { ok: true });
+    return this.#json(200, { ok: true, delivery: delivery.mode });
   }
 
   #isOriginAllowed(request: Request, allowedOrigin: string | undefined): boolean {

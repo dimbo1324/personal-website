@@ -53,7 +53,35 @@ describe("LeadApiHandler", () => {
 
     expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toBe("no-store");
-    expect(await response.json()).toEqual({ ok: true });
+    expect(await response.json()).toEqual({ ok: true, delivery: "telegram" });
+  });
+
+  it("uses the stub notifier in explicit demo mode without calling Telegram", async () => {
+    const calls: string[] = [];
+    const handler = new LeadApiHandler({}, async (input) => {
+      calls.push(String(input));
+      return json({ success: true });
+    });
+    const response = await handler.handle(makeRequest(BODY), {
+      ...ENV,
+      LEAD_DELIVERY_MODE: "stub",
+    });
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ ok: true, delivery: "stub" });
+    expect(calls).toHaveLength(1);
+    expect(calls[0]).toContain("siteverify");
+  });
+
+  it("fails closed when Telegram is not configured", async () => {
+    const handler = new LeadApiHandler({}, routed(json({ success: true }), null));
+    const response = await handler.handle(makeRequest(BODY), {
+      ...ENV,
+      TELEGRAM_BOT_TOKEN: "",
+    });
+
+    expect(response.status).toBe(503);
+    expect(await response.json()).toEqual({ ok: false, error: "telegram_not_configured" });
   });
 
   it("rejects a foreign Origin before any outbound call", async () => {

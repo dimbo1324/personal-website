@@ -16,10 +16,24 @@ export interface AnalyticsEnvironment {
   readonly websiteId: string | null;
 }
 
+export interface WhatsAppEnvironment {
+  readonly phone: string | null;
+  readonly mode: string;
+}
+
+export type LeadMode = "live" | "demo";
+
 export interface SiteEnvironment {
   readonly siteUrl: string | null;
   readonly form: FormEnvironment;
   readonly analytics: AnalyticsEnvironment;
+  readonly whatsapp: WhatsAppEnvironment;
+  readonly leadMode: LeadMode;
+}
+
+/** Only an explicit "demo" turns the demo contour on; a typo stays live. */
+export function resolveLeadMode(value: string | undefined): LeadMode {
+  return value?.trim().toLowerCase() === "demo" ? "demo" : "live";
 }
 
 export const ENV: SiteEnvironment = Object.freeze({
@@ -35,4 +49,9 @@ export const ENV: SiteEnvironment = Object.freeze({
     src: text(env.PUBLIC_ANALYTICS_SRC),
     websiteId: text(env.PUBLIC_ANALYTICS_WEBSITE_ID),
   }),
+  whatsapp: Object.freeze({
+    phone: text(env.PUBLIC_WHATSAPP_PHONE),
+    mode: text(env.PUBLIC_WHATSAPP_MODE) ?? "auto",
+  }),
+  leadMode: resolveLeadMode(env.PUBLIC_LEAD_MODE),
 });

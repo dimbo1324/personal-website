@@ -7,18 +7,30 @@ Cloudflare Pages. Visitors reach the owner through a Turnstile-protected request
 
 ## Stack
 
-| Area          | Choice                                              |
-| ------------- | --------------------------------------------------- |
-| Framework     | Astro 7 (static output)                             |
-| Language      | TypeScript (strict)                                 |
-| Styling       | Tailwind CSS v4 (`@tailwindcss/vite`)               |
-| Icons         | Lucide (`@lucide/astro`)                            |
-| Interactivity | Vanilla TypeScript; React or Svelte only point-wise |
-| Spam defence  | Cloudflare Turnstile (verified server-side)         |
-| Lead delivery | Cloudflare Pages Functions → Telegram Bot API       |
-| WhatsApp      | `wa.me` Click-to-Chat link                          |
-| Hosting       | Cloudflare Pages, auto-deploy from GitHub `main`    |
-| Tooling       | Node.js 22+, Vitest, ESLint, Prettier, Wrangler     |
+| Area          | Choice                                                                            |
+| ------------- | --------------------------------------------------------------------------------- |
+| Framework     | Astro 7 (static output)                                                           |
+| Language      | TypeScript (strict)                                                               |
+| Styling       | Tailwind CSS v4 (`@tailwindcss/vite`)                                             |
+| Icons         | Lucide (`@lucide/astro`)                                                          |
+| Interactivity | Vanilla TypeScript; React or Svelte only point-wise                               |
+| Spam defence  | Cloudflare Turnstile (verified server-side)                                       |
+| Lead delivery | Cloudflare Pages Functions → Telegram Bot API; demo stub behind explicit env flag |
+| WhatsApp      | `wa.me` Click-to-Chat link with `auto` / `real` / `stub` / `off` modes            |
+| Hosting       | Cloudflare Pages, auto-deploy from GitHub `main`                                  |
+| Tooling       | Node.js 22+, Vitest, ESLint, Prettier, Wrangler                                   |
+
+## Demo modes (local development only)
+
+| Mode              | Variable               | Default    | What it does                                                  |
+| ----------------- | ---------------------- | ---------- | ------------------------------------------------------------- |
+| Lead form demo    | `PUBLIC_LEAD_MODE`     | `live`     | `demo` validates and acknowledges in-browser, no network call |
+| Telegram delivery | `LEAD_DELIVERY_MODE`   | `telegram` | `stub` acknowledges without calling Telegram                  |
+| WhatsApp channel  | `PUBLIC_WHATSAPP_MODE` | `auto`     | `auto`/`real`/`stub`/`off` — link or honest placeholder       |
+
+Demo modes are opt-in only, visibly marked "demo", never enabled by default or
+by a typo, and must not be set in production. The full go-live order is in
+`docs/__arch__/integrations.md`.
 
 ## Repository layout
 

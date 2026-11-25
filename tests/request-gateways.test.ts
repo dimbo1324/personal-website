@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { RequestPayload } from "../src/scripts/site/features/request/RequestPayload";
+import { DemoGateway } from "../src/scripts/site/features/request/gateways/DemoGateway";
 import { MailtoGateway } from "../src/scripts/site/features/request/gateways/MailtoGateway";
 import { HttpGateway } from "../src/scripts/site/features/request/gateways/HttpGateway";
 import { createGateway } from "../src/scripts/site/features/request/gateways/createGateway";
@@ -77,6 +78,14 @@ describe("HttpGateway", () => {
   });
 });
 
+describe("DemoGateway", () => {
+  it("acknowledges without a network call and without a payload", async () => {
+    const gateway = new DemoGateway();
+    expect(gateway.kind).toBe("demo");
+    expect(await gateway.send(payload)).toEqual({ ok: true, messageKey: "form.result.demo" });
+  });
+});
+
 describe("createGateway", () => {
   it("chooses mailto by default and http when configured", () => {
     expect(createGateway(baseConfig).kind).toBe("mailto");
@@ -96,6 +105,21 @@ describe("createGateway", () => {
         http: { ...baseConfig.http, endpoint: "https://form.invalid" },
       }).kind,
     ).toBe("http");
+    expect(
+      createGateway({
+        ...baseConfig,
+        transport: "http",
+        http: { ...baseConfig.http, endpoint: "https://form.invalid" },
+      }).kind,
+    ).toBe("http");
+  });
+
+  it("selects the demo gateway for the explicit demo transport", () => {
+    expect(createGateway({ ...baseConfig, transport: "demo" }).kind).toBe("demo");
+  });
+
+  it("keeps the live path for the auto and explicit transports", () => {
+    expect(createGateway({ ...baseConfig, transport: "auto" }).kind).toBe("mailto");
     expect(
       createGateway({
         ...baseConfig,

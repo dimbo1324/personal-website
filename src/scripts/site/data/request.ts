@@ -1,7 +1,7 @@
 import type { FormEnvironment } from "../config/env";
 import { ENV } from "../config/env";
 
-export type RequestTransport = "auto" | "http" | "mailto";
+export type RequestTransport = "auto" | "http" | "mailto" | "demo";
 
 export interface RequestLimits {
   readonly name: number;
@@ -23,10 +23,12 @@ export interface RequestConfig {
  * transport: "auto"   — POST when a form back-end is configured, otherwise mailto
  *            "http"   — always POST to `http` (Web3Forms, Formspree, own API)
  *            "mailto" — always open the visitor's mail app (works on any static host)
- * The back-end comes from PUBLIC_FORM_* build variables (.env.example).
+ *            "demo"   — validate and acknowledge without a network call
+ * The back-end comes from PUBLIC_FORM_* build variables (.env.example); the demo
+ * transport appears only when PUBLIC_LEAD_MODE=demo is set explicitly.
  */
 export const REQUEST_CONFIG: RequestConfig = Object.freeze({
-  transport: "auto",
+  transport: ENV.leadMode === "demo" ? "demo" : "auto",
   http: ENV.form,
   recipient: "dmitriiprikhodko9@gmail.com",
   subjectPrefix: "Website request",
